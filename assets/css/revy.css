@@ -19,6 +19,10 @@
  font-size: 70px;
 }
 
+.custom-navbar.affix .nav-link.btn-main-red {
+    color: #fff !important;
+}
+
 .btn-main-red {
     color: #fff;
     background-color: #CC2127;
@@ -52,3 +56,24 @@
   .show > .btn-main-red.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 66, 105, 0.5);
   }
+
+.header-content {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 140px 15% 15%;
+}
+
+@media(max-width: 992px) {
+    .header-content {
+        padding: 140px 6% 6%;
+    }
+
+    .custom-navbar {
+        background-color: black;
+    }
+    .custom-navbar .navbar-nav {
+        padding-bottom: 20px;
+    }
+}
