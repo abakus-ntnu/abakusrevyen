@@ -58,7 +58,7 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
-
+/* Endring her */
 body {
   margin: 0;
   font-family: "Fira Sans", sans-serif;
@@ -67,7 +67,8 @@ body {
   line-height: 1.5;
   color: #495057;
   text-align: left;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: fff5c3;
 }
 
 [tabindex="-1"]:focus {
@@ -2734,7 +2735,7 @@ textarea.form-control {
           user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
-  padding: 1.48rem 1.75rem;
+  padding: 0.48rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.2rem;
@@ -11794,8 +11795,11 @@ pre .code {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
+  /* endring her */
+  /* background: rgba(0, 0, 0, 0.45); */
+  background: rgba(255, 245, 195, 0.45);
+  color: #FFF5C3;
+  /* color: #fff; */
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -11871,9 +11875,15 @@ html {
 section {
   padding: 100px 0;
 }
-
+/* endring her */
 section:nth-child(odd) {
-  background-color: #fbfcfc;
+  /* background-color: #fbfcfc; */
+  background-color: #EB6E44;
+}
+/* helt ny kode */
+section:nth-child(even) {
+  /* background-color: #fbfcfc; */
+  background-color: #8DCDC1;
 }
 
 section.py-sm,
