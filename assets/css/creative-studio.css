@@ -11624,7 +11624,9 @@ pre .code {
   position: fixed;
   width: 100%;
   max-width: 100%;
-  background: #fff;
+  /* endret her */
+  /* background: #fff; */
+  background: #FFFBE7;
   -webkit-animation-name: affix;
           animation-name: affix;
   -webkit-animation-duration: .6s;
