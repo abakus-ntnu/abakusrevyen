@@ -60,7 +60,7 @@
   .header {
     height: 100%;
     min-height: 600px;
-    background: url(../imgs/gruppebilde.png) no-repeat center center fixed;
+    background: url(../imgs/gruppebilder/grevens_tid_gruppebilde.png) no-repeat center center fixed;
     background-size: cover;
   }
 
@@ -78,7 +78,7 @@
     }
 
     .custom-navbar {
-        background-color: black;
+        background-color: rgb(15, 15, 15);
     }
     .custom-navbar .navbar-nav {
         padding-bottom: 20px;
