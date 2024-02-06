@@ -46,3 +46,8 @@ function lesMer() {
       moreText.style.display = "inline";
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var currentYear = new Date().getFullYear();
+    document.getElementById('baby').textContent = '0' + (currentYear - 2018).toString;
+   });
