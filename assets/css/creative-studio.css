@@ -5054,9 +5054,9 @@ input[type="button"].btn-block {
           flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #80787f;
   background-clip: border-box;
-  border: 1px solid #eaf0fc;
+  border: 1px solid #746e73;
   border-radius: 0.2rem;
   /* Linje added kommentar by Lorgen */
   height: calc(100% - 2rem)
@@ -11803,7 +11803,7 @@ pre .code {
   /* endring her */
   /* background: rgba(0, 0, 0, 0.45); */
   background: rgba(255, 245, 195, 0.45);
-  color: #FFF5C3;
+  color: #2A2A2A;
   /* color: #fff; */
   display: -webkit-box;
   display: -webkit-flex;
@@ -11883,12 +11883,12 @@ section {
 /* endring her */
 section:nth-child(odd) {
   /* background-color: #fbfcfc; */
-  background-color: #EB6E44;
+  background-color: #000000;
 }
 /* helt ny kode */
 section:nth-child(even) {
   /* background-color: #fbfcfc; */
-  background-color: #8DCDC1;
+  background-color: #E41418;
 }
 
 section.py-sm,
