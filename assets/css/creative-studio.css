@@ -58,6 +58,9 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
+
+#more {display: none;}
+
 /* Endring her */
 body {
   margin: 0;
