@@ -61,10 +61,10 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 #more {display: none;}
 .center_ol{
-  text-align: center;
+  text-align: left;
   list-style-position: inside;
   display: inline-block;
-  margin-left: 40%;
+  margin-left: auto;
   margin-right: auto;
 }
 
