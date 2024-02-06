@@ -265,9 +265,9 @@
 
     <section id="100spm">
         <div class="container" style="align-items: center;">
-            <h6 class="section-subtitle text-center" style="color: #fff;">100 Spørsmål</h6>
-            <h5 class="section-title text-center mb-6" style="color: #fff;">Av sosialgruppen</h5> 
-            <ol style="color: #fff;">
+            <h6 class="section-subtitle text-center" style="color: #fff;">Sosialgruppen</h6>
+            <h5 class="section-title text-center mb-6" style="color: #fff;">100 Spørsmål</h5> 
+            <ol style="color: #fff;" class="text-center">
                 <li>Er i feil revygruppe</li>
                 <span id="dots">...</span><span id="more">
                     <li>Passer inn på Dragvoll</li>
@@ -398,8 +398,9 @@
     <!-- Finn babyalder -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-         var currentYear = new Date().getFullYear();
-         document.getElementById('currentYear').textContent = currentYear;
+          var currentYear = new Date().getFullYear();
+          var age = (currentYear - 2018).toString();
+          document.getElementById('baby').textContent = '0' + age;
         });
     </script>
 
