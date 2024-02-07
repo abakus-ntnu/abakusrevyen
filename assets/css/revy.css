@@ -23,16 +23,32 @@
     color: #fff !important;
 }
 
+
 .btn-main-red {
     color: #fff;
     background-color: #CC2127;
     border-color: #CC2127;
   }
+
+  .btn-main-red .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
   
-  .btn-main-red:hover {
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .btn-main-red:hover .btn-hover-text {
     color: #fff;
     background-color: #B81E23;
     border-color: #B81E23;
+    visibility: visible;
   }
   
   .btn-main-red:focus, .btn-main-red.focus {
