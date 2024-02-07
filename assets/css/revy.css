@@ -44,10 +44,14 @@
     z-index: 1;
   }
   
-  .btn-main-red:hover .btn-hover-text {
+  .btn-main-red:hover {
     color: #fff;
     background-color: #B81E23;
     border-color: #B81E23;
+    visibility: visible;
+  }
+  
+  .btn-main-red:hover .btn-hover-text {
     visibility: visible;
   }
   
