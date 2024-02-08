@@ -47,6 +47,22 @@ function lesMer() {
     }
   }
 
+function lesMerTopp() {
+  var dots = document.getElementById("dotsTopp");
+  var moreText = document.getElementById("moreTopp");
+  var btnText = document.getElementById("lesMerBtnTopp");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Les mer";
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Les mindre";
+    moreText.style.display = "inline";
+  }
+}
+
   document.addEventListener('DOMContentLoaded', function() {
     var currentYear = new Date().getFullYear();
     var age = (currentYear - 2018).toString();

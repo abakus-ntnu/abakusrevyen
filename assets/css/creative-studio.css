@@ -60,6 +60,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 }
 
 #more {display: none;}
+#moreTopp {display: none;}
 
 .center_ol{
   text-align: left;
