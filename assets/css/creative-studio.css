@@ -11971,6 +11971,7 @@ section .section-subtitle {
   font-weight: 300;
   margin-bottom: 5px;
   opacity: .6;
+  color: fff;
 }
 
 @media (min-width: 992px) {
