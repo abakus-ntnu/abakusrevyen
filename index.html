@@ -21,7 +21,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
@@ -95,15 +94,68 @@
         </div>    
     </header>
 
-    <!-- Årets (promo)video -->
-    <section id="promo">
+    <!-- Årets (promo)video 
+    <section id="promo">-->
         <!-- Kommenter ut til høsten -->
-        <div class="container video-wrapper">
+        <!--<div class="container video-wrapper">
             <iframe width="40%" src="https://www.youtube.com/embed/GPF18pEBkRc?si=IFTBIyJJhTB_2wCz" title="Abakusrevyen 2024" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/dkYKra5Qq4U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
-        </div>
+        </div>-->
 
         <!-- Legg inn den nyligste revy-videoen her -->
+        <!--
+        <div class="container video-wrapper">
+            <iframe width="40%" src="https://www.youtube.com/embed/GPF18pEBkRc?si=IFTBIyJJhTB_2wCz" title="Abakusrevyen 2024" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>-->
+    <!--</section>-->
+
+    <section id="allmøte">
+        <div class="container">
+            <h6 class="section-subtitle text-center">Allmøte</h6>
+            <h5 class="section-title text-center mb-6">Valg av trio og diskusjon av saker</h5> 
+            
+            <h6>Stillingsbeskrivelser</h6>
+            <div class="row">
+                <div class="card-body">
+                    <h6 style="color: #fff;"><b>Revysjef</b></h6>
+                    <p style="color: #fff;">Tekst kommer</p>
+                    <span id="dots1">...</span><span id="more1">
+                        Mer tekst her
+                    </span>
+                    <button class="btn btn-main-red btn-sm ml-lg-3" style="align-self: center; text-align: center;" type="button" onclick="lesMer1()" id="lesMerBtn1">Les mer</button>
+                </div>
+                <div class="card-body">
+                    <h6 style="color: #fff;"><b>Nestleder</b></h6>
+                    <p style="color: #fff;">Tekst kommer</p>
+                    <!--<span id="dots2">...</span><span id="more2">
+                        Mer tekst her
+                    </span>
+                    <button class="btn btn-main-red btn-sm ml-lg-3" style="align-self: center; text-align: center;" type="button" onclick="lesMer2()" id="lesMerBtn2">Les mer</button>-->
+                </div>
+                <div class="card-body">
+                    <h6 style="color: #fff;"><b>Økonomiansvarlig</b></h6>
+                    <p style="color: #fff;">Tekst kommer</p>
+                    <!--<span id="dots3">...</span><span id="more3">
+                        Mer tekst her
+                    </span>
+                    <button class="btn btn-main-red btn-sm ml-lg-3" style="align-self: center; text-align: center;" type="button" onclick="lesMer3()" id="lesMerBtn3">Les mer</button>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="card-body">
+                    <p style="color: #fff;"><b><a style="color: #fff;" href=https://forms.gle/95mruFHaMVnCWc1c8>Nominer</a></b> <br> (frist 10. mars 23:59)</p>
+                </div>
+                <div class="card-body">
+                    <p style="color: #fff;"><b><a style="color: #fff;" href=https://forms.gle/NocjtnvAu3yEWYTy7>Forhåndsstill</a></b> <br> (frist 11. mars 23:59)</p>
+                </div>
+            </div>
+            
+            <h6>Diskusjonssaker</h6>
+            <div class="card-body">
+                <p style="color: #fff;">Om du har noe på hjertet om hvordan Abakusrevyen kan bli enda bedre er det mulig å sende inn saker gjennom skjemaet under. De som sender inn saker vil da presentere saken sin og deltakerne på allmøte vil kunne diskutere saken først i grupper og så i plenum. Den nye trioen vil dermed kunne ta med disse punktene videre til neste års revy. </p>
+                <p style="color: #fff;"><b><a style="color: #fff;" href=https://forms.gle/4ScErEjHoFqJUewm9>Send inn diskusjonssak her</a></b> <br> (frist 5. mars 23:59)</p>
+            </div>
+
+        </div>
     </section>
 
 
@@ -111,7 +163,7 @@
     <section id="arkiv">
         <div class="container">
             <h6 class="section-subtitle text-center">Arkiv</h6>
-            <h5 class="section-title text-center mb-6">Tidligere Revyer</h5> 
+            <h5 class="section-title text-center mb-6">Tidligere revyer</h5> 
             <div class="row">
                 <!-- Første rad -->
                 <div class="col-sm-4 col-md-3">
@@ -199,7 +251,9 @@
                     </div>
                 </div>
                 -->
-            </div>  
+            </div> 
+            <!--<h5 class="section-title text-center mb-6">Bilder idk</h5> -->
+
         </div>
     </section>
 
@@ -329,7 +383,8 @@
     
     <section id="kontaktOss">
         <div class="container" style="align-items: center; text-align: center;">
-            <h5 class="section-title text-center mb-6" style="color: #fff;">Kontakt Oss</h5>
+            <h6 class="section-subtitle text-center" style="color: #fff;">Revystyret</h6>
+            <h5 class="section-title text-center mb-6" style="color: #fff;">Kontakt oss</h5>
             <div class="row">
                 <div class="card-body">
                     <i class="fa fa-instagram" style="color: #fff;font-size:36px"></i>
