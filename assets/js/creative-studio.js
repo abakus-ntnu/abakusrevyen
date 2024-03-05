@@ -47,10 +47,10 @@ function lesMer() {
     }
   }
 
-function lesMer1() {
-  var dots = document.getElementById("dots1");
-  var moreText = document.getElementById("more1");
-  var btnText = document.getElementById("lesMerBtn1");
+function lesMerRevysjef() {
+  var dots = document.getElementById("dotsRevysjef");
+  var moreText = document.getElementById("moreRevysjef");
+  var btnText = document.getElementById("lesMerBtnRevysjef");
 
   if (dots.style.display === "none") {
     dots.style.display = "inline";
@@ -63,10 +63,10 @@ function lesMer1() {
   }
 }
 
-function lesMer2() {
-    var dots = document.getElementById("dots2");
-    var moreText = document.getElementById("more2");
-    var btnText = document.getElementById("lesMerBtn2");
+function lesMerNestled() {
+    var dots = document.getElementById("dotsNestled");
+    var moreText = document.getElementById("moreNestled");
+    var btnText = document.getElementById("lesMerBtnNestled");
   
     if (dots.style.display === "none") {
       dots.style.display = "inline";
@@ -79,10 +79,10 @@ function lesMer2() {
     }
   }
 
-function lesMer3() {
-    var dots = document.getElementById("dots3");
-    var moreText = document.getElementById("more3");
-    var btnText = document.getElementById("lesMerBtn3");
+function lesMerØkans() {
+    var dots = document.getElementById("dotsØkans");
+    var moreText = document.getElementById("moreØkans");
+    var btnText = document.getElementById("lesMerBtnØkans");
   
     if (dots.style.display === "none") {
       dots.style.display = "inline";
