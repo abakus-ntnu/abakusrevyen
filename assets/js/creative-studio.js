@@ -79,10 +79,10 @@ function lesMerNestled() {
     }
   }
 
-function lesMerØkans() {
-    var dots = document.getElementById("dotsØkans");
-    var moreText = document.getElementById("moreØkans");
-    var btnText = document.getElementById("lesMerBtnØkans");
+function lesMerOkans() {
+    var dots = document.getElementById("dotsOkans");
+    var moreText = document.getElementById("moreOkans");
+    var btnText = document.getElementById("lesMerBtnOkans");
   
     if (dots.style.display === "none") {
       dots.style.display = "inline";
