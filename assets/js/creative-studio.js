@@ -12,7 +12,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */ 
 
-// smooth scroll
+// smooth scroll 
 $(document).ready(function(){
     $(".navbar .nav-link").on('click', function(event) {
 
