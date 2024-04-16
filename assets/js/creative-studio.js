@@ -12,6 +12,34 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */ 
 
+const dict = {
+  revySjef: ["dotsRevysjef", "moreRevysjef", "lesMerBtnRevysjef"], 
+  nestLed: ["dotsNestled", "moreNestled", "lesMerBtnNestled"], 
+  okAns: ["dotsOkans",  "moreOkans", "lesMerBtnOkans"],
+  topp: ["dotsTopp", "moreTopp", "lesMerBtnTopp"],
+  spm: ["dotsSpm", "moreSpm", "lesMerSpmBtn"],
+
+  band: ["dotsBand", "moreBand", "lesMerBtnBand"],
+  dans: ["dotsDans", "moreDans", "lesMerBtnDans"],
+  kostyme: ["dotsKostyme", "moreKostyme", "lesMerBtnKostyme"],
+  manus: ["dotsManus", "moreManus", "lesMerBtnManus"],
+  pr: ["dotsPR", "morePR", "lesMerBtnPR"],
+  scene: ["dotsScene", "moreScene", "lesMerBtnScene"],
+  skuespill: ["dotsSkuespill", "moreSkuespill", "lesMerBtnSkuespill"],
+  sosial: ["dotsSosial", "moreSosial", "lesMerBtnSosial"],
+  teknikk: ["dotsTeknikk", "moreTeknikk", "lesMerBtnTeknikk"],
+  regissoer: ["dotsRegissoer", "moreRegissoer", "lesMerBtnRegissoer"],
+  musRegissoer: ["dotsMusRegissoer", "moreMusRegissoer", "lesMerBtnMusRegissoer"],
+  
+  regi1: ["dotsRegi1", "moreRegi1", "lesMerBtnRegi1"],
+  regi2: ["dotsRegi2", "moreRegi2", "lesMerBtnRegi2"],
+  regi3: ["dotsRegi3", "moreRegi3", "lesMerBtnRegi3"]
+};
+
+const grupper = Object.keys(dict).slice(5);
+
+
+
 // smooth scroll 
 $(document).ready(function(){
     $(".navbar .nav-link").on('click', function(event) {
@@ -31,85 +59,35 @@ $(document).ready(function(){
     });
 }); 
 
-function lesMer() {
-    var dots = document.getElementById("dots");
-    var moreText = document.getElementById("more");
-    var btnText = document.getElementById("lesMerBtn");
-  
-    if (dots.style.display === "none") {
-      dots.style.display = "inline";
-      btnText.innerHTML = "Les mer";
-      moreText.style.display = "none";
-    } else {
-      dots.style.display = "none";
-      btnText.innerHTML = "Les mindre";
-      moreText.style.display = "inline";
-    }
-  }
-
-function lesMerRevysjef() {
-  var dots = document.getElementById("dotsRevysjef");
-  var moreText = document.getElementById("moreRevysjef");
-  var btnText = document.getElementById("lesMerBtnRevysjef");
-
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Les mer";
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Les mindre";
-    moreText.style.display = "inline";
-  }
+const getKeyByValue = (val) => {
+  return Object.keys(dict).find(key => dict[key].includes(val))
 }
 
-function lesMerNestled() {
-    var dots = document.getElementById("dotsNestled");
-    var moreText = document.getElementById("moreNestled");
-    var btnText = document.getElementById("lesMerBtnNestled");
-  
+function lesMer(id) {
+    var buttonPlace = getKeyByValue(id);
+
+    var dots = document.getElementById(dict[buttonPlace][0]);
+    var moreText = document.getElementById(dict[buttonPlace][1]);
+    var btnText = document.getElementById(dict[buttonPlace][2]);
+
     if (dots.style.display === "none") {
+      if(buttonPlace in grupper  || btnText.innerHTML == "Lukk beskrivelse") {
+        btnText.innerHTML = "Les beskrivelse";
+      } else {
+        btnText.innerHTML = "Les mer";
+      }
       dots.style.display = "inline";
-      btnText.innerHTML = "Les mer";
       moreText.style.display = "none";
     } else {
+      if(buttonPlace in grupper || btnText.innerHTML == "Les beskrivelse") {
+        btnText.innerHTML = "Lukk beskrivelse";
+      } else {
+        btnText.innerHTML = "Les mindre";
+      }
       dots.style.display = "none";
-      btnText.innerHTML = "Les mindre";
       moreText.style.display = "inline";
     }
   }
-
-function lesMerOkans() {
-    var dots = document.getElementById("dotsOkans");
-    var moreText = document.getElementById("moreOkans");
-    var btnText = document.getElementById("lesMerBtnOkans");
-  
-    if (dots.style.display === "none") {
-      dots.style.display = "inline";
-      btnText.innerHTML = "Les mer";
-      moreText.style.display = "none";
-    } else {
-      dots.style.display = "none";
-      btnText.innerHTML = "Les mindre";
-      moreText.style.display = "inline";
-    }
-  }
-
-function lesMerTopp() {
-  var dots = document.getElementById("dotsTopp");
-  var moreText = document.getElementById("moreTopp");
-  var btnText = document.getElementById("lesMerBtnTopp");
-
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Les mer";
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Les mindre";
-    moreText.style.display = "inline";
-  }
-}
 
   document.addEventListener('DOMContentLoaded', function() {
     var currentYear = new Date().getFullYear();
