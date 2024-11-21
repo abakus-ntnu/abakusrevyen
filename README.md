@@ -2,6 +2,12 @@
 
 Dette er koden til Abakusrevyen sin nettside. Utviklet med 🌯 av Teknikk.
 
+## 📋 Oppdater innhold
+
+Må du oppdatere nettsidens innhold? Her er en sjekkliste!
+
+- [ ] Det er ingenting å oppdatere! Nettsiden er under utvikling!
+
 ## 🏗️ Utvikling
 
 For å starte nettsiden lokalt i utviklingsmodus kan du kjøre følgende kommandoer
@@ -46,6 +52,12 @@ $ pnpm install
 # Bygg nettsiden og vis den lokalt
 $ pnpm run build
 $ pnpm run preview
+```
+
+Hvis alt funker, kan du oppdatere den offentlige nettsiden med
+
+```sh
+$ ops! har ikke kommet så langt
 ```
 
 ## 🔋 STACK
