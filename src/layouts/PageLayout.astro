@@ -6,4 +6,7 @@ import Header from "@/components/Header/Header.astro";
 
 <RootLayout {...Astro.props}>
   <Header />
+  <main>
+    <slot> Default </slot>
+  </main>
 </RootLayout>
