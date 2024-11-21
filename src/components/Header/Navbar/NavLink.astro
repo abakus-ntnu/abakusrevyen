@@ -1,0 +1,10 @@
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<a
+  class:list={["text-lg hover:text-gray-700 transition-colors", className]}
+  {...rest}
+>
+  <slot />
+</a>
