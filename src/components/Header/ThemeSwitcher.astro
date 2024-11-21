@@ -1,0 +1,31 @@
+---
+import { Sun, MoonStar } from "lucide-astro";
+---
+
+<button
+  id="themeSwitcher"
+  class="text-foreground hover:text-accent transition-colors"
+>
+  <span class="hidden dark:block hover:text-yellow-500">
+    <Sun />
+  </span>
+  <span class="block dark:hidden">
+    <MoonStar />
+  </span>
+</button>
+
+<script is:inline>
+  let startInDarkTheme = localStorage.getItem("darkTheme") === "true";
+  if (startInDarkTheme) {
+    window.document.documentElement.classList.add("dark");
+  }
+
+  function switchTheme() {
+    let nowPresent = window.document.documentElement.classList.toggle("dark");
+    localStorage.setItem("darkTheme", nowPresent);
+  }
+
+  window.document
+    .getElementById("themeSwitcher")
+    .addEventListener("click", switchTheme);
+</script>

@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import Navbar from "./Navbar/Navbar.astro";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
 ---
 
 <header class="w-full">
@@ -9,6 +10,9 @@ import Navbar from "./Navbar/Navbar.astro";
       <Logo />
     </a>
 
-    <Navbar />
+    <div class="flex gap-6">
+      <Navbar />
+      <ThemeSwitcher />
+    </div>
   </div>
 </header>

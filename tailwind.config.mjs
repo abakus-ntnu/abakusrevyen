@@ -3,6 +3,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  darkMode: "selector",
   theme: {
     extend: {
       fontFamily: {
@@ -21,9 +22,10 @@ export default {
       colors: {
         foreground: "var(--foreground)",
         background: "var(--background)",
+        accent: "var(--accent)",
 
         primary: "#E21617",
-        accent: "#C81917",
+        secondary: "#C81917",
 
         gray: {
           100: "#f2f2f2",
