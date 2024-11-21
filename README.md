@@ -1,5 +1,7 @@
 # <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](abakusrevyen.no)
 
+⚠️ **Har du et problem, eller vil du delta med utviklingen til nettsiden? Se [CONTRIBUTING.md](CONTRIBUTING.md) først!** ⚠️
+
 Dette er koden til Abakusrevyen sin nettside. Utviklet med 🌯 av Teknikk.
 
 ## 📋 Oppdater innhold
@@ -19,27 +21,6 @@ $ pnpm install
 # Start den lokale dev-serveren
 $ pnpm run dev
 ```
-
-### Filstruktur
-
-```
- 📂 ./
- ┣ 📂 src/
- ┃ ┣ 📂 components/          Komponenter
- ┃ ┃ ┣ 📂 islands/           Interaktive komponenter
- ┃ ┣ 📂 images/              Bilder
- ┃ ┣ 📂 layouts/             Underside-maler
- ┃ ┣ 📂 lib/                 Kode
- ┃ ┣ 📂 pages/               Undersider
- ┃ ┣ 📂 styles/              Delte CSS stil-filer
- ┃ ┣ 📜 page-1.md
- ┣ 📂 public/
- ┃ ┣ 📂 fonts/               Statiske font-filer
-```
-
-Filer i `📂 ./src` vil bli kompilert og optimisert. Filter i `📂 ./public` vil bli kopiert uendret til den kompilerte nettsiden.
-
-Bilder og andre store filer som [Astro](astro.build) kan optimere bør være i `📂 ./src` slik at de blir det.
 
 ## 👔 Produksjon
 
