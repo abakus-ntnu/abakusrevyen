@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        serif: ["Inter", ...defaultTheme.fontFamily.serif],
+        serif: ["Tauri", ...defaultTheme.fontFamily.serif],
       },
       fontSize: {
         xs: "0.7rem",
@@ -16,6 +16,7 @@ export default {
         md: "1rem",
         lg: "1.125rem",
         xl: "1.875rem",
+        "2xl": "2.3rem",
       },
       colors: {
         foreground: "var(--foreground)",

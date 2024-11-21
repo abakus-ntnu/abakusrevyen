@@ -1,0 +1,17 @@
+---
+import RevyLogo from "@/images/revy-logo.webp";
+
+import { Image } from "astro:assets";
+---
+
+<div class="flex justify-center items-center gap-1.5">
+  <Image
+    src={RevyLogo}
+    class="h-[2.2rem] w-[2.2rem]"
+    alt="Logoen til Abakusrevyen"
+    loading="eager"
+  />
+  <span class="font-medium font-serif text-2xl tracking-tight">
+    Abakusrevyen
+  </span>
+</div>
