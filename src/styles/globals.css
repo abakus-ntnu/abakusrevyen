@@ -13,4 +13,17 @@
     font-style: italic;
     src: url(/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf) format(truetype);
   }
+
+  /* Variable CSS colors */
+  :root {
+    color-scheme: light;
+    --foreground: #1D1D1B;
+    --background: #F8F9FA;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --foreground: #F8F9FA;
+    --background: #1D1D1B;
+  }
 }
