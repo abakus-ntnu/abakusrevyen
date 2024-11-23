@@ -1,7 +1,11 @@
 ---
 import "../styles/globals.css";
 
-const { title = "Abakusrevyen" } = Astro.props;
+const DOMAIN_NAME = "Abakusrevyen.no";
+
+const { title } = Astro.props;
+
+const fullTitle = title ? `${title} | ${DOMAIN_NAME}` : DOMAIN_NAME;
 ---
 
 <html lang="en">
@@ -11,7 +15,7 @@ const { title = "Abakusrevyen" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{title}</title>
+    <title>{fullTitle}</title>
   </head>
   <body class="bg-background text-foreground transition-colors">
     <slot />
