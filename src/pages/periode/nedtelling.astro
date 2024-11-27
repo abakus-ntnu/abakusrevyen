@@ -1,0 +1,13 @@
+---
+import HomePageLayout from "@/layouts/HomePageLayout.astro";
+
+interface Props {
+  to: Date;
+}
+
+const { to } = Astro.props;
+---
+
+<HomePageLayout>
+  <p slot="hero">Nedtelling til {to.toLocaleDateString()}</p>
+</HomePageLayout>

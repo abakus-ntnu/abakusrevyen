@@ -1,13 +1,19 @@
 ---
 import Live from "./periode/live.astro";
+import Nedtelling from "./periode/nedtelling.astro";
 import Opptak from "./periode/opptak.astro";
 import Pause from "./periode/pause.astro";
 
+const RECRUITMENT_START = new Date(2024, 7, 15);
+const RECRUITMENT_END = new Date(2024, 8, 15);
+const SHOW_START = new Date(2025, 2, 10);
+const SHOW_END = new Date(2025, 2, 17);
+
 const periods: { period: Period; from: Date }[] = [
-  { from: new Date(2025, 7, 15), period: "recruitment" },
-  { from: new Date(2025, 8, 15), period: "showStarting" },
-  { from: new Date(2025, 2, 10), period: "showCurrent" },
-  { from: new Date(2025, 2, 17), period: "pause" },
+  { from: RECRUITMENT_START, period: "recruitment" },
+  { from: RECRUITMENT_END, period: "showStarting" },
+  { from: SHOW_START, period: "showCurrent" },
+  { from: SHOW_END, period: "pause" },
 ];
 
 type Period = "recruitment" | "showStarting" | "showCurrent" | "pause";
@@ -32,7 +38,9 @@ const period = getCurrentPeriod();
     <Pause />
   ) : period == "recruitment" ? (
     <Opptak />
-  ) : (
+  ) : period == "showCurrent" ? (
     <Live />
+  ) : (
+    <Nedtelling to={SHOW_START} />
   )
 }
