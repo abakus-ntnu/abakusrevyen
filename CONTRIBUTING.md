@@ -12,7 +12,7 @@ Nettsiden utvikles av Abakusrevyens [Teknikkgruppe](https://abakus.no/pages/grup
 
 ### Språk
 
-Kun det *offentlige innholdet* skrives på 🇳🇴 norsk. Resten av koden, kommentarene og annet skrives på 🇬🇧 engelsk, ettersom at programmeringsspråkene, bibliotekene, rammeverkene og det meste annet også er skrevet på engelsk.
+Kun det _offentlige innholdet_ skrives på 🇳🇴 norsk. Resten av koden, kommentarene og annet skrives på 🇬🇧 engelsk, ettersom at programmeringsspråkene, bibliotekene, rammeverkene og det meste annet også er skrevet på engelsk.
 
 ### Konvensjoner
 
@@ -55,32 +55,3 @@ Komponenter bør plasseres i `📂 ./src/components/` mappen. Alle komponenter b
 - **📊 Variabler** og **🧮 Funksjoner:** `camelCase` navn.
 
 Navn burde være korte og konsise. Unngå uvanlige forkortelser og indiskripte navn.
-
-#### Importering
-
-```ts
-import Layout from "@/layouts/...";
-
-import ComponentA from "@/components/A";
-import ComponentB from "@/components/B";
-import ComponentC from "@/components/C";
-
-import IslandA from "@/components/islands/A";
-import IslandB from "@/components/islands/B";
-
-import ImageA from "@/images/A";
-import ImageB from "@/images/B";
-import ImageC from "@/images/C";
-
-import { functionOne, functionTwo, CONSTANT, ... } from "@/lib/...";
-
-import "@/styles/...";
-```
-
-Importerte navn burde passe overens med `📜 Filnavnet` i så stor grad som mulig.
-
-Sortering av importene i hver blokk burde sorteres i med denne prioriteringen:
-
-1. **📍 Hvor** det importeres fra. `astro` importer bør grupperes, `@` importer bør grupperes, `../..` importer bør grupperes, osv.
-2. **{ } Formen** på importen. `import "path"` importer bør grupperes, `import Thing from "path"` bør grupperes og `import { A, B, C } from "path"` bør grupperes.
-3. **🔤 Alfabetisk**. Det gjør det lettere å finne importen man ser etter.
