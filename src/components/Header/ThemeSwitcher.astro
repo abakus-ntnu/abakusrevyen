@@ -15,11 +15,6 @@ import { Sun, MoonStar } from "lucide-astro";
 </button>
 
 <script is:inline>
-  let startInDarkTheme = localStorage.getItem("darkTheme") === "true";
-  if (startInDarkTheme) {
-    window.document.documentElement.classList.add("dark");
-  }
-
   function switchTheme() {
     let nowPresent = window.document.documentElement.classList.toggle("dark");
     localStorage.setItem("darkTheme", nowPresent);

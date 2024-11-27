@@ -16,6 +16,13 @@ const fullTitle = title ? `${title} | ${DOMAIN_NAME}` : DOMAIN_NAME;
     <meta name="generator" content={Astro.generator} />
 
     <title>{fullTitle}</title>
+
+    <script is:inline>
+      let startInDarkTheme = localStorage.getItem("darkTheme") === "true";
+      if (startInDarkTheme) {
+        window.document.documentElement.classList.add("dark");
+      }
+    </script>
   </head>
   <body class="bg-background text-foreground transition-colors">
     <slot />
