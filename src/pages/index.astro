@@ -1,22 +1,22 @@
 ---
-import Live from "./periode/live.astro";
-import Nedtelling from "./periode/nedtelling.astro";
-import Opptak from "./periode/opptak.astro";
-import Pause from "./periode/pause.astro";
+import Countdown from "@/layouts/Home/Countdown.astro";
+import Live from "@/layouts/Home/Live.astro";
+import Break from "@/layouts/Home/Break.astro";
+import Recruitment from "@/layouts/Home/Recruitment.astro";
 
 const RECRUITMENT_START = new Date(2024, 7, 15);
 const RECRUITMENT_END = new Date(2024, 8, 15);
 const SHOW_START = new Date(2025, 2, 10);
 const SHOW_END = new Date(2025, 2, 17);
 
+type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
+
 const periods: { period: Period; from: Date }[] = [
   { from: RECRUITMENT_START, period: "recruitment" },
   { from: RECRUITMENT_END, period: "showStarting" },
   { from: SHOW_START, period: "showCurrent" },
-  { from: SHOW_END, period: "pause" },
+  { from: SHOW_END, period: "break" },
 ];
-
-type Period = "recruitment" | "showStarting" | "showCurrent" | "pause";
 
 function getCurrentPeriod(): Period {
   let now = new Date();
@@ -27,20 +27,20 @@ function getCurrentPeriod(): Period {
     }
   }
 
-  return "pause";
+  return "break";
 }
 
 const period = getCurrentPeriod();
 ---
 
 {
-  period == "pause" ? (
-    <Pause />
+  period == "break" ? (
+    <Break />
   ) : period == "recruitment" ? (
-    <Opptak />
+    <Recruitment />
   ) : period == "showCurrent" ? (
     <Live />
   ) : (
-    <Nedtelling to={SHOW_START} />
+    <Countdown to={SHOW_START} />
   )
 }
