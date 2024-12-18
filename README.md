@@ -15,6 +15,9 @@ Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 For å starte nettsiden lokalt i utviklingsmodus kan du kjøre følgende kommandoer
 
 ```sh
+# Aktiver utviklerverktøy (kun for nix brukere)
+$ nix-shell shell.nix
+
 # Installer avhengigheter
 $ pnpm install
 
@@ -27,6 +30,9 @@ $ pnpm run dev
 For å bygge og vise nettsiden lokalt i produksjonsmodus kan du istedenfor kjøre følgende kommandoer
 
 ```sh
+# Aktiver utviklerverktøy (kun for nix brukere)
+$ nix-shell shell.nix
+
 # Installer avhengigheter
 $ pnpm install
 
@@ -48,3 +54,4 @@ $ ops! har ikke kommet så langt
 - [Prettier](prettier.io) for formatering av kode
 - [pnpm](pnpm.io) for avhengigheter
 - [Typescript](typescriptlang.org) som programmeringspråk
+- [nix](https://nixos.org/) for utviklerverktøy
