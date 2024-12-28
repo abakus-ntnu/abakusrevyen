@@ -1,4 +1,4 @@
-# <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](abakusrevyen.no)
+# <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](https://abakusrevyen.no/)
 
 ⚠️ **Har du et problem, eller vil du delta med utviklingen til nettsiden? Se [CONTRIBUTING.md](CONTRIBUTING.md) først!** ⚠️
 
