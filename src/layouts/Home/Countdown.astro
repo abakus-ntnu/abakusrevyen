@@ -4,27 +4,27 @@ import HomePageLayout from "./HomePageLayout.astro";
 interface Props {
   to: Date | string; // Target date to count down to - can be Date object or ISO string
   theme?: {
-    primary: string;    // Primary color for gradients and accents
-    secondary: string;  // Secondary color for gradients
-    text: string;      // Main text color
+    primary: string; // Primary color for gradients and accents
+    secondary: string; // Secondary color for gradients
+    text: string; // Main text color
     boxBackground: string; // Background color for time boxes
     boxShadow: string; // Shadow color for time boxes
   };
 }
 
-const { 
+const {
   to,
   theme = {
-    primary: '#2563eb',    // Default blue
-    secondary: '#7c3aed',  // Default purple
-    text: '#1f2937',       // Default dark gray
-    boxBackground: '#ffffff',
-    boxShadow: 'rgba(0, 0, 0, 0.1)'
-  }
+    primary: "#2563eb", // Default blue
+    secondary: "#7c3aed", // Default purple
+    text: "#1f2937", // Default dark gray
+    boxBackground: "#ffffff",
+    boxShadow: "rgba(0, 0, 0, 0.1)",
+  },
 } = Astro.props;
 
 // Convert string date to Date object if needed
-const targetDate = typeof to === 'string' ? new Date(to) : to;
+const targetDate = typeof to === "string" ? new Date(to) : to;
 
 // Format date in Norwegian locale
 const formattedDate = targetDate.toLocaleDateString("nb-NO", {
@@ -58,13 +58,15 @@ const formattedDate = targetDate.toLocaleDateString("nb-NO", {
   </div>
 </HomePageLayout>
 
-<style define:vars={{
-  primary: theme.primary,
-  secondary: theme.secondary,
-  text: theme.text,
-  boxBackground: theme.boxBackground,
-  boxShadow: theme.boxShadow
-}}>
+<style
+  define:vars={{
+    primary: theme.primary,
+    secondary: theme.secondary,
+    text: theme.text,
+    boxBackground: theme.boxBackground,
+    boxShadow: theme.boxShadow,
+  }}
+>
   .countdown-wrapper {
     text-align: center;
     padding: 2rem;
@@ -118,25 +120,39 @@ const formattedDate = targetDate.toLocaleDateString("nb-NO", {
   }
 
   @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 </style>
 
 <script define:vars={{ targetDate: targetDate.getTime() }}>
-  const countdown = setInterval(() => {
+  function updateCountdown() {
     const now = new Date().getTime();
     const distance = targetDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     // Add leading zeros and update
     document.getElementById("days").textContent = String(days).padStart(2, "0");
-    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("minutes").textContent = String(minutes).padStart(
+      2,
+      "0"
+    );
 
     // Add pulse animation to seconds
     const secondsEl = document.getElementById("seconds");
@@ -152,5 +168,8 @@ const formattedDate = targetDate.toLocaleDateString("nb-NO", {
         document.getElementById(id).textContent = "00";
       });
     }
-  }, 1000);
+  }
+
+  const countdown = setInterval(updateCountdown, 1000);
+  updateCountdown();
 </script>
