@@ -24,7 +24,6 @@ Generelle stilregler ikke dekket av prettier. Mye av dette er bare råd, og må 
  📂 ./
  ┣ 📂 src/
  ┃ ┣ 📂 components/          Komponenter
- ┃ ┃ ┣ 📂 islands/           Interaktive komponenter
  ┃ ┣ 📂 content/             Statisk innhold
  ┃ ┣ 📂 images/              Bilder
  ┃ ┣ 📂 layouts/             Underside-maler
