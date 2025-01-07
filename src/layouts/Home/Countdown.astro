@@ -2,12 +2,155 @@
 import HomePageLayout from "./HomePageLayout.astro";
 
 interface Props {
-  to: Date;
+  to: Date | string; // Target date to count down to - can be Date object or ISO string
+  theme?: {
+    primary: string;    // Primary color for gradients and accents
+    secondary: string;  // Secondary color for gradients
+    text: string;      // Main text color
+    boxBackground: string; // Background color for time boxes
+    boxShadow: string; // Shadow color for time boxes
+  };
 }
 
-const { to } = Astro.props;
+const { 
+  to,
+  theme = {
+    primary: '#2563eb',    // Default blue
+    secondary: '#7c3aed',  // Default purple
+    text: '#1f2937',       // Default dark gray
+    boxBackground: '#ffffff',
+    boxShadow: 'rgba(0, 0, 0, 0.1)'
+  }
+} = Astro.props;
+
+// Convert string date to Date object if needed
+const targetDate = typeof to === 'string' ? new Date(to) : to;
+
+// Format date in Norwegian locale
+const formattedDate = targetDate.toLocaleDateString("nb-NO", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 ---
 
 <HomePageLayout>
-  <p slot="hero">Nedtelling til {to.toLocaleDateString()}</p>
+  <div slot="hero" class="countdown-wrapper">
+    <h1 class="text-3xl font-bold mb-8 text-gradient">{formattedDate}</h1>
+    <div class="countdown-grid">
+      <div class="time-box">
+        <span class="number" id="days">00</span>
+        <span class="label">Dager</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="hours">00</span>
+        <span class="label">Timer</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="minutes">00</span>
+        <span class="label">Minutter</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="seconds">00</span>
+        <span class="label">Sekunder</span>
+      </div>
+    </div>
+  </div>
 </HomePageLayout>
+
+<style define:vars={{
+  primary: theme.primary,
+  secondary: theme.secondary,
+  text: theme.text,
+  boxBackground: theme.boxBackground,
+  boxShadow: theme.boxShadow
+}}>
+  .countdown-wrapper {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text);
+  }
+
+  .text-gradient {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .time-box {
+    background: var(--boxBackground);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 30px var(--boxShadow);
+    border: 1px solid var(--boxShadow);
+    transition: all 0.3s ease;
+  }
+
+  .time-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 40px var(--boxShadow);
+  }
+
+  .number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary);
+    display: block;
+  }
+
+  .label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text);
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+</style>
+
+<script define:vars={{ targetDate: targetDate.getTime() }}>
+  const countdown = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Add leading zeros and update
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+
+    // Add pulse animation to seconds
+    const secondsEl = document.getElementById("seconds");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+    secondsEl.style.animation = "pulse 1s";
+    secondsEl.addEventListener("animationend", () => {
+      secondsEl.style.animation = "";
+    });
+
+    if (distance < 0) {
+      clearInterval(countdown);
+      ["days", "hours", "minutes", "seconds"].forEach((id) => {
+        document.getElementById(id).textContent = "00";
+      });
+    }
+  }, 1000);
+</script>
