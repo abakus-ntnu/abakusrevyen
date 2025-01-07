@@ -17,7 +17,7 @@ export default function MobileNavbar({
   );
 
   const navItems = Object.entries(items).map(([href, title]) => (
-    <li className="text-lg text-foreground hover:text-accent">
+    <li key={href} className="text-lg text-foreground hover:text-accent">
       <a href={href}>{title}</a>
     </li>
   ));
