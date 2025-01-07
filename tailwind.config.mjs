@@ -6,6 +6,12 @@ export default {
   darkMode: "selector",
   theme: {
     extend: {
+      container: {
+        screens: {
+          xl: "1100px",
+          "2xl": "1100px",
+        }
+      },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         serif: ["Tauri", ...defaultTheme.fontFamily.serif],

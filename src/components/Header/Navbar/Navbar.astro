@@ -1,12 +1,19 @@
 ---
 import NavLink from "./NavLink.astro";
+
+interface Props {
+  items: { [href: string]: string };
+}
+
+const { items } = Astro.props;
 ---
 
 <nav class="flex justify-center items-center">
-  <ul class="flex gap-6">
-    <NavLink href="/opptak/">Opptak</NavLink>
-    <NavLink href="/oss/">Om oss</NavLink>
-    <NavLink href="/galleri/">Bildegalleri</NavLink>
-    <NavLink href="/revyer/">Tidligere revyer</NavLink>
+  <ul class="flex gap-4 lg:gap-6">
+    {
+      Object.entries(items).map(([href, title], i) => (
+        <NavLink href={href}>{title}</NavLink>
+      ))
+    }
   </ul>
 </nav>
