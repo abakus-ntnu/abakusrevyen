@@ -1,19 +1,21 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import { getCollection  } from "astro:content";
+import { getCollection, getEntry, render  } from "astro:content";
 
-
-
-const oss = await getCollection('oss')
+const getListCollection = async (collectionName) => {
+    const collection = await getCollection(collectionName);
+    return collection.map(
+        (entry) => `<li><a href="/om_oss/${entry.id}">${entry.data.title}</a></li>`
+    ).join('');
+};
+const oss = await getCollection('oss');
+console.log("OSS Collection Entries:", oss);
+const collectionOss = await getListCollection('oss')
 ---
 
 <PageLayout title="Om oss">
     <h1>Om oss</h1>
     <a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fermentum elit metus, ac consequat arcu hendrerit at. Donec ac arcu pharetra, feugiat nisl vel, auctor erat. Donec quis erat id tellus mattis interdum vitae sed ante. Nullam vehicula sit amet velit sed volutpat. Sed id facilisis velit. Nunc facilisis rutrum nunc et blandit. Maecenas lobortis risus vel ante euismod, sed lacinia quam pellentesque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</a>
-    <ul>
-        {oss.map(oss => (
-            <li><a href={`/om_oss/${oss.id}`}>{oss.data.title}</a></li>
-        ))}
-    </ul>
+    <ul set:html={collectionOss}></ul>
   </PageLayout>
   

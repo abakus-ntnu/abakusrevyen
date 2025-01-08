@@ -9,7 +9,6 @@ export async function getStaticPaths() {
     .map(e => ({
         params: { slug: e.id.toString() } // Convert `id` to a string if necessary
     }));
-
     return list;
 }
 
