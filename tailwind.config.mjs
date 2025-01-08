@@ -15,6 +15,7 @@ export default {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         serif: ["Tauri", ...defaultTheme.fontFamily.serif],
+        lcd: ["Lcd", "Inter", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         xs: "0.7rem",
