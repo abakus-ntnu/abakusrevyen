@@ -1,0 +1,84 @@
+---
+interface Props {
+  date: Date | string;
+}
+
+const { date } = Astro.props;
+
+// Convert string date to Date object if needed
+const targetDate = typeof date === "string" ? new Date(date) : date;
+
+// Format date in Norwegian locale
+const formattedDate = targetDate.toLocaleDateString("nb-NO", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<div class="flex font-lcd space-x-1.5">
+  <div class="segment">
+    <span class="digit" id="days">00</span><span>DD</span>
+  </div>
+  <div class="segment">
+    <span class="digit" id="hours">00</span><span>HH</span>
+  </div>
+  <div class="segment">
+    <span class="digit" id="minutes">00</span><span>MIN</span>
+  </div>
+  <div class="segment">
+    <span class="digit" id="seconds">00</span><span>SEC</span>
+  </div>
+</div>
+
+<style>
+  .segment {
+    @apply flex flex-col items-center;
+  }
+
+  .digit {
+    @apply text-2xl;
+  }
+</style>
+
+<script is:inline define:vars={{ targetDate: targetDate.getTime() }}>
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Add leading zeros and update
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("minutes").textContent = String(minutes).padStart(
+      2,
+      "0"
+    );
+
+    // Add pulse animation to seconds
+    const secondsEl = document.getElementById("seconds");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+    secondsEl.style.animation = "pulse 1s";
+    secondsEl.addEventListener("animationend", () => {
+      secondsEl.style.animation = "";
+    });
+
+    if (distance < 0) {
+      clearInterval(countdown);
+      ["days", "hours", "minutes", "seconds"].forEach((id) => {
+        document.getElementById(id).textContent = "00";
+      });
+    }
+  }
+
+  const countdown = setInterval(updateCountdown, 100);
+  updateCountdown();
+</script>
