@@ -2,6 +2,8 @@
 import { Image } from "astro:assets";
 import HomePageLayout from "./HomePageLayout.astro";
 import CountdownComp from "@/components/Countdown/Countdown.astro";
+import Card from "@/components/Card/Card.astro";
+import CardDetail from "@/components/Card/CardDetail.astro";
 
 import SvinPaaSkogenLogo from "@/images/revy_logoer/Svin_paa_skogen_logo.png";
 
@@ -47,16 +49,31 @@ if (isToday) {
         class="w-[50vh]"
       />
     </div>
-    <div class="bg-primary text-white flex px-6 py-3 rounded-lg gap-6">
-      <div class="flex gap-3">
-        <MapPin /><span>Byscenen i Trondheim</span>
+    <Card>
+      <div class="grid md:grid-cols-3 grid-cols-1 gap-6">
+
+        <Card class="p-0">
+          <CardDetail class="flex gap-3">
+            <span slot="title">Hvor</span>
+            <MapPin /><span>Byscenen, Trondheim</span>
+          </CardDetail>
+        </Card>
+
+        <Card class="p-0">
+          <CardDetail class="flex gap-3">
+            <span slot="title">Når</span>
+            <Clock /><span>{targetDate}</span>
+          </CardDetail>
+        </Card>
+
+        <Card class="p-0">
+          <CardDetail class="flex gap-3">
+            <span slot="title">Kjøp bilett</span>
+            <Ticket />
+            <a href="">Ticketmaster</a>
+          </CardDetail>
+        </Card>
       </div>
-      <div class="flex gap-3">
-        <Clock /><span>{targetDate}</span>
-      </div>
-      <div class="flex gap-3">
-        <Ticket /><span><button>Kjøp bilett</button></span>
-      </div>
-    </div>
+    </Card>
   </div>
 </HomePageLayout>
