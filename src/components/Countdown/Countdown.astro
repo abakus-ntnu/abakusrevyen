@@ -72,6 +72,7 @@ const formattedDate = targetDate.toLocaleDateString("nb-NO", {
     });
 
     if (distance < 0) {
+      window.location.reload();
       clearInterval(countdown);
       ["days", "hours", "minutes", "seconds"].forEach((id) => {
         document.getElementById(id).textContent = "00";

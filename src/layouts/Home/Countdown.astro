@@ -5,23 +5,58 @@ import CountdownComp from "@/components/Countdown/Countdown.astro";
 
 import SvinPaaSkogenLogo from "@/images/revy_logoer/Svin_paa_skogen_logo.png";
 
+import { Clock, MapPin, Ticket } from "lucide-astro";
+
 interface Props {
   date: Date;
 }
 
 const { date } = Astro.props;
+const today = new Date();
+const isToday =
+  today.getDay() == date.getDay() &&
+  today.getMonth() == date.getMonth() &&
+  today.getFullYear() == date.getFullYear();
+
+let targetDate;
+
+if (isToday) {
+  targetDate =
+    "Idag fra kl. " +
+    date.toLocaleString("no-NB", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+} else {
+  targetDate = date.toLocaleString("no-NB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 ---
 
 <HomePageLayout>
-  <div class="w-full flex flex-col justify-center items-center">
+  <div class="w-full flex flex-col justify-center items-center gap-6">
     <CountdownComp date={date} />
     <div class="">
-      <Image src={SvinPaaSkogenLogo} alt="Revy logo" class="w-[50vh]" />
+      <Image
+        loading="eager"
+        src={SvinPaaSkogenLogo}
+        alt="Revy logo"
+        class="w-[50vh]"
+      />
     </div>
-    <div>
-      <span>Byscenen</span>
-      <span>{date.toLocaleDateString()}</span>
-      <span><button>Kjøp bilett</button></span>
+    <div class="bg-primary text-white flex px-6 py-3 rounded-lg gap-6">
+      <div class="flex gap-3">
+        <MapPin /><span>Byscenen i Trondheim</span>
+      </div>
+      <div class="flex gap-3">
+        <Clock /><span>{targetDate}</span>
+      </div>
+      <div class="flex gap-3">
+        <Ticket /><span><button>Kjøp bilett</button></span>
+      </div>
     </div>
   </div>
 </HomePageLayout>
