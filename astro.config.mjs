@@ -11,7 +11,7 @@ export default defineConfig({
     defaultStrategy: "hover",
     prefetchAll: true,
   },
-
+  experimental: { contentLayer: true },
   integrations: [tailwind({
     applyBaseStyles: false,
   }), react()],
