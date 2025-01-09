@@ -20,6 +20,7 @@ import { Image } from "astro:assets";
                   src={revue.image}
                   alt={`Logo for ${revue.name}`}
                   class="rounded-t-md aspect-square object-contain"
+                  loading="eager"
                 />
                 <h2 class={revue.dark ? "text-white" : "text-black"}>
                   {revue.year}: {revue.name}

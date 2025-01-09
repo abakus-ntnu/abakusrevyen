@@ -67,7 +67,7 @@ export const PREVIOUS_REVUES = [
     year: "2017",
     name: "Push Pop Baluba!",
     image: PushPopBalubaImage,
-    color: "bg-[#2d222a]",
+    color: "!bg-[#2d222a]",
     dark: true,
     links: [
       {
@@ -84,7 +84,7 @@ export const PREVIOUS_REVUES = [
     year: "2018",
     name: "Solidarisk",
     image: SolidariskImage,
-    color: "bg-[#000000]",
+    color: "!bg-[#000000]",
     dark: true,
     links: [
       {
@@ -101,7 +101,7 @@ export const PREVIOUS_REVUES = [
     year: "2019",
     name: "Kult!",
     image: KultImage,
-    color: "bg-[#e8dbb7]",
+    color: "!bg-[#e8dbb7]",
     dark: false,
     links: [
       {
@@ -114,7 +114,7 @@ export const PREVIOUS_REVUES = [
     year: "2020",
     name: "Satte Spor",
     image: SatteSporImage,
-    color: "bg-[#ef8b72]",
+    color: "!bg-[#ef8b72]",
     dark: false,
     links: [
       {
@@ -127,7 +127,7 @@ export const PREVIOUS_REVUES = [
     year: "2021",
     name: "Marionett",
     image: MarionettImage,
-    color: "bg-[#1d3060]",
+    color: "!bg-[#1d3060]",
     dark: true,
     links: [
       {
@@ -140,7 +140,7 @@ export const PREVIOUS_REVUES = [
     year: "2022",
     name: "Svin På Skogen",
     image: SvinPaaSkogenImage,
-    color: "bg-[#790420]",
+    color: "!bg-[#790420]",
     dark: true,
     links: [
       {
@@ -153,7 +153,7 @@ export const PREVIOUS_REVUES = [
     year: "2023",
     name: "Grevens Tid – 23:59",
     image: GrevensTidImage,
-    color: "bg-[#410507]",
+    color: "!bg-[#410507]",
     dark: true,
     links: [
       {
@@ -166,7 +166,7 @@ export const PREVIOUS_REVUES = [
     year: "2024",
     name: "Best før",
     image: BestFoerImage,
-    color: "bg-[#f7cee5]",
+    color: "!bg-[#f7cee5]",
     dark: false,
     links: [
       {
