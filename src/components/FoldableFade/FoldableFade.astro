@@ -51,9 +51,14 @@ const {
 >
   const fold = document.getElementById("fold");
   let collapsed = startCollapsed;
+  updateFold();
 
   function toggleFold() {
     collapsed = !collapsed;
+    updateFold();
+  }
+
+  function updateFold() {
     fold.classList.toggle("collapsed", collapsed);
 
     if (collapsed) {
