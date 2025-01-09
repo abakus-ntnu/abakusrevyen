@@ -30,6 +30,7 @@ export default {
         foreground: "var(--foreground)",
         background: "var(--background)",
         accent: "var(--accent)",
+        "bg-accent": "var(--background-accent)",
 
         primary: "#E21617",
         secondary: "#C81917",

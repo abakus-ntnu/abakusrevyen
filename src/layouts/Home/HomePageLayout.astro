@@ -1,12 +1,53 @@
 ---
 import PageLayout from "../PageLayout.astro";
+
+import Card from "@/components/Card/Card.astro";
+
+import { Facebook, Instagram, Mail } from "lucide-astro";
+
+const SOCIALS = [
+  {
+    name: "Facebook",
+    profile: "Abakusrevyen",
+    href: "https://facebook.com/Abakusrevyen",
+    Icon: Facebook,
+  },
+  {
+    name: "Instagram",
+    profile: "abakusrevyen",
+    href: "https://instagram.com/abakusrevyen",
+    Icon: Instagram,
+  },
+  {
+    name: "Mail",
+    profile: "revy@abakus.no",
+    href: "mailto:revy@abakus.no",
+    Icon: Mail,
+  },
+];
 ---
 
 <PageLayout {...Astro.props}>
-  <div class="container p-3 mx-auto">
+  <div class="container p-3 mx-auto space-y-6">
     <slot />
     <slot name="contact">
-      <h2>Kontakt</h2>
+      <h2 class="font-medium text-xl text-center">Kontakt oss</h2>
+      <div
+        class="max-w-screen-md mx-auto px-6 grid md:grid-cols-3 grid-cols-1 gap-6"
+      >
+        {
+          SOCIALS.map(({ name, href, Icon, profile }) => (
+            <a href={href} aria-label={name}>
+              <Card class="hover:bg-gray-100 transition-colors">
+                <div class="flex flex-col items-center gap-3">
+                  {<Icon />}
+                  {profile}
+                </div>
+              </Card>
+            </a>
+          ))
+        }
+      </div>
     </slot>
     <slot name="recruitment">
       <h2>Opptaket er over!</h2>
