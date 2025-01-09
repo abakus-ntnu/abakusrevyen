@@ -1,0 +1,74 @@
+---
+import { Facebook, Instagram, Mail } from "lucide-astro";
+
+const SUBPAGES = [
+  {
+    name: "Opptak",
+    href: "/opptak",
+  },
+  {
+    name: "Om oss",
+    href: "/om_oss",
+  },
+  {
+    name: "Bildegalleri",
+    href: "/galleri",
+  },
+  {
+    name: "Revyer",
+    href: "/revyer",
+  },
+];
+
+const SOCIALS = [
+  {
+    name: "Facebook",
+    href: "https://facebook.com/Abakusrevyen",
+    Icon: Facebook,
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com/abakusrevyen",
+    Icon: Instagram,
+  },
+  {
+    name: "Mail",
+    href: "mailto:revy@abakus.no",
+    Icon: Mail,
+  },
+];
+---
+
+<footer class="bg-background text-accent">
+  <div
+    class="container mx-auto grid md:grid-cols-3 grid-cols-1 gap-6 px-6 py-3 items-center border-t-[1px] border-accent"
+  >
+    <div class="md:ml-0 mx-auto w-min">
+      <h1 class="font-medium font-serif text-xl tracking-tight">
+        Abakusrevyen
+      </h1>
+    </div>
+
+    <ul class="mx-auto flex gap-3">
+      {
+        SUBPAGES.map(({ name, href }) => (
+          <li>
+            <a href={href}>{name}</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <ul class="md:mr-0 mx-auto w-min flex gap-3">
+      {
+        SOCIALS.map(({ name, href, Icon }) => (
+          <li id={name}>
+            <a target="_blank" href={href} aria-label={name}>
+              {<Icon />}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

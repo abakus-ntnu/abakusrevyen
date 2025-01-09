@@ -2,11 +2,17 @@
 import RootLayout from "./RootLayout.astro";
 
 import Header from "@/components/Header/Header.astro";
+import Footer from "@/components/Footer/Footer.astro";
 ---
 
 <RootLayout {...Astro.props}>
-  <Header />
-  <main>
-    <slot> Default </slot>
-  </main>
+  <div class="min-h-screen flex flex-col justify-between">
+    <div>
+      <Header />
+      <main>
+        <slot> Default </slot>
+      </main>
+    </div>
+    <Footer />
+  </div>
 </RootLayout>
