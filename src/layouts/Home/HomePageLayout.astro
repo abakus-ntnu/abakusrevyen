@@ -59,15 +59,13 @@ import revyLogo from "@/images/revy-logo.webp";
           class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
         >
           {
-            SUBGROUPS.map(({ name }) => (
+            SUBGROUPS.map(({ name, brief }) => (
               <Card>
                 <div class="flex gap-3 font-medium">
                   <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
                   {name}
                 </div>
-                <CardDetail>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </CardDetail>
+                <CardDetail>{brief}</CardDetail>
               </Card>
             ))
           }

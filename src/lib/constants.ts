@@ -32,33 +32,43 @@ export const SOCIALS = [
 export const SUBGROUPS = [
   {
     name: "Revybandet",
+    brief: "Bandet til revyen.",
   },
   {
     name: "Koret",
+    brief: "Koret til revyen.",
   },
   {
     name: "Sosialgjengen",
+    brief: "Vi sørger for at alle har det gøy!",
   },
   {
     name: "Scene",
+    brief: "Vi lager og driver scenen!",
   },
   {
     name: "Teknikk",
+    brief: "Vi ordner alt det tekniske!",
   },
   {
     name: "Dans",
+    brief: "💃💃💃",
   },
   {
     name: "Regi",
+    brief: "Vi skriver og dirigerer revyen!",
   },
   {
     name: "Kostyme",
+    brief: "Her lages alle kostymene!",
   },
   {
     name: "Skuespill",
+    brief: "De fra dramaklubben.",
   },
   {
     name: "PR",
+    brief: "...",
   },
 ];
 
