@@ -3,6 +3,7 @@ import PageLayout from "../PageLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
 import CardDetail from "@/components/Card/CardDetail.astro";
+import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import { Image } from "astro:assets";
 
 import { SOCIALS, SUBGROUPS } from "@/lib/constants";
@@ -11,7 +12,7 @@ import revyLogo from "@/images/revy-logo.webp";
 ---
 
 <PageLayout {...Astro.props}>
-  <div class="container p-3 mx-auto space-y-6">
+  <div class="container p-3 mx-auto space-y-12 mb-12">
     <slot />
     <slot name="contact">
       <h2 class="font-medium text-xl text-center">Kontakt oss</h2>
@@ -37,23 +38,25 @@ import revyLogo from "@/images/revy-logo.webp";
         Bli med i <span class="text-primary">Revyen!</span>
       </h2>
 
-      <div
-        class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
-      >
-        {
-          SUBGROUPS.map(({ name }) => (
-            <Card>
-              <div class="flex gap-3">
-                <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
-                {name}
-              </div>
-              <CardDetail>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </CardDetail>
-            </Card>
-          ))
-        }
-      </div>
+      <FoldableFade>
+        <div
+          class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+        >
+          {
+            SUBGROUPS.map(({ name }) => (
+              <Card>
+                <div class="flex gap-3 font-medium">
+                  <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
+                  {name}
+                </div>
+                <CardDetail>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </CardDetail>
+              </Card>
+            ))
+          }
+        </div>
+      </FoldableFade>
     </slot>
   </div>
 </PageLayout>

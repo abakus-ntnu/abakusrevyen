@@ -1,0 +1,69 @@
+---
+import { ChevronDown, ChevronUp } from "lucide-astro";
+
+const {
+  collapsedHeight = "h-96",
+  startCollapsed = true,
+  class: className,
+} = Astro.props;
+---
+
+<div id="fold" class="relative pb-8">
+  <div class:list={["overflow-hidden transition-transform", className]}>
+    <slot />
+  </div>
+  <button
+    id="foldableFadeToggle"
+    class="absolute bottom-0 left-1/2 -translate-x-1/2"
+  >
+    <span id="chevronUp">
+      <ChevronUp />
+    </span>
+    <span id="chevronDown">
+      <ChevronDown />
+    </span>
+  </button>
+</div>
+
+<style>
+  #fold.collapsed > div {
+    @apply h-96;
+  }
+
+  #fold:not(.collapsed) > div {
+    @apply h-full;
+  }
+
+  #fold.collapsed > button > #chevronUp {
+    @apply hidden;
+  }
+
+  #fold:not(.collapsed) > button > #chevronDown {
+    @apply hidden;
+  }
+</style>
+
+<script
+  define:vars={{
+    startCollapsed: startCollapsed,
+    collapsedHeight: collapsedHeight,
+  }}
+>
+  const fold = document.getElementById("fold");
+  let collapsed = startCollapsed;
+
+  function toggleFold() {
+    collapsed = !collapsed;
+    fold.classList.toggle("collapsed", collapsed);
+
+    if (collapsed) {
+      fold.classList.add(collapsedHeight);
+    } else {
+      fold.classList.remove(collapsedHeight);
+    }
+  }
+
+  document
+    .getElementById("foldableFadeToggle")
+    ?.addEventListener("click", toggleFold);
+</script>
