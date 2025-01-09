@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  external?: boolean;
+  style?: "primary" | "secondary";
+  class?: string;
+}
+
+const { href, external, style = "primary", class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "p-1 px-2 text-center rounded-md border-2 transition-colors",
+    style === "primary" &&
+      "text-white bg-secondary border-secondary hover:bg-primary hover:border-primary",
+    style === "secondary" && "text-black bg-white hover:bg-gray-200",
+    className,
+  ]}
+  {...external && { target: "_blank", rel: "noopener noreferrer" }}><slot /></a
+>

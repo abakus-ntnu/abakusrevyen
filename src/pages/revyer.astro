@@ -3,6 +3,7 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import { PREVIOUS_REVUES } from "../lib/constants";
 import Card from "../components/Card/Card.astro";
 import { Image } from "astro:assets";
+import LinkButton from "../components/LinkButton/LinkButton.astro";
 ---
 
 <PageLayout title="Tidligere Revyer">
@@ -28,15 +29,16 @@ import { Image } from "astro:assets";
                 <div class="flex gap-2">
                   {revue.links.map((link) =>
                     link.href ? (
-                      <a
-                        class="flex-grow text-center p-1 rounded-md border-2 bg-white text-black hover:bg-gray-200 transition-colors"
+                      <LinkButton
                         href={link.href}
-                        target="_blank"
+                        class="flex-grow"
+                        style={"secondary"}
+                        external
                       >
                         {link.name}
-                      </a>
+                      </LinkButton>
                     ) : (
-                      <i class="flex-grow text-center p-1 rounded-md border-2 border-gray-300 bg-gray-300 cursor-not-allowed">
+                      <i class="flex-grow text-black text-center p-1 rounded-md border-2 border-gray-300 bg-gray-300 cursor-not-allowed">
                         {link.name}
                       </i>
                     ),
