@@ -26,14 +26,21 @@ import { Image } from "astro:assets";
                   {revue.year}: {revue.name}
                 </h2>
                 <div class="flex gap-2">
-                  {revue.links.map((link) => (
-                    <a
-                      class="flex-grow text-center p-1 rounded-md border-2 bg-white text-black hover:bg-gray-200  transition-colors"
-                      href={link.href}
-                    >
-                      {link.name}
-                    </a>
-                  ))}
+                  {revue.links.map((link) =>
+                    link.href ? (
+                      <a
+                        class="flex-grow text-center p-1 rounded-md border-2 bg-white text-black hover:bg-gray-200 transition-colors"
+                        href={link.href}
+                        target="_blank"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <i class="flex-grow text-center p-1 rounded-md border-2 border-gray-300 bg-gray-300 cursor-not-allowed">
+                        {link.name}
+                      </i>
+                    ),
+                  )}
                 </div>
               </Card>
             </li>
