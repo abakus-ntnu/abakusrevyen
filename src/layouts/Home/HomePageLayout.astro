@@ -9,6 +9,7 @@ import { Image } from "astro:assets";
 import { SOCIALS, SUBGROUPS } from "@/lib/constants";
 
 import revyLogo from "@/images/revy-logo.webp";
+import LinkButton from "../../components/LinkButton/LinkButton.astro";
 ---
 
 <PageLayout {...Astro.props}>
@@ -29,6 +30,9 @@ import revyLogo from "@/images/revy-logo.webp";
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen></iframe>
+      <LinkButton class="block m-auto w-fit !mt-4" href="/revyer">
+        Andre tidligere revyer
+      </LinkButton>
     </slot>
     <slot name="contact">
       <h2 class="font-medium text-xl text-center">Kontakt oss</h2>
