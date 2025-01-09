@@ -31,6 +31,8 @@
     --background: #f8f9fa;
     --accent: #595959;
     --background-accent: #fff;
+    --primary: #e21617;
+    --secondary: #c81917;
   }
 
   .dark {
@@ -39,5 +41,10 @@
     --background: #0d0d0d;
     --accent: #d9d9d9;
     --background-accent: #222;
+  }
+
+  .online {
+    --primary: #127dbd;
+    --secondary: #0d5474;
   }
 }

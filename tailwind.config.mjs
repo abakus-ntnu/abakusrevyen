@@ -32,8 +32,8 @@ export default {
         accent: "var(--accent)",
         "bg-accent": "var(--background-accent)",
 
-        primary: "#E21617",
-        secondary: "#C81917",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
 
         gray: {
           100: "#f2f2f2",
