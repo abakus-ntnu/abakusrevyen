@@ -6,9 +6,13 @@ import Footer from "@/components/Footer/Footer.astro";
 ---
 
 <RootLayout {...Astro.props}>
-  <Header />
-  <main>
-    <slot> Default </slot>
-  </main>
-  <Footer />
+  <div class="min-h-screen flex flex-col justify-between">
+    <div>
+      <Header />
+      <main>
+        <slot> Default </slot>
+      </main>
+    </div>
+    <Footer />
+  </div>
 </RootLayout>
