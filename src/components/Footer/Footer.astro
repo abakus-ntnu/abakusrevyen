@@ -1,5 +1,5 @@
 ---
-import { Twitter, Facebook, Instagram, Mail } from "lucide-astro";
+import { Facebook, Instagram, Mail } from "lucide-astro";
 
 const SUBPAGES = [
   {
@@ -23,22 +23,17 @@ const SUBPAGES = [
 const SOCIALS = [
   {
     name: "Facebook",
-    href: "https://facebook.com",
+    href: "https://facebook.com/Abakusrevyen",
     Icon: Facebook,
   },
   {
     name: "Instagram",
-    href: "https://instagram.com",
+    href: "https://instagram.com/abakusrevyen",
     Icon: Instagram,
   },
   {
-    name: "Twitter",
-    href: "https://x.com",
-    Icon: Twitter,
-  },
-  {
     name: "Mail",
-    href: "",
+    href: "mailto:revy@abakus.no",
     Icon: Mail,
   },
 ];
@@ -73,7 +68,9 @@ const SOCIALS = [
         {
           SOCIALS.map(({ name, href, Icon }) => (
             <li id={name}>
-              <a href={href}>{<Icon />}</a>
+              <a target="_blank" href={href}>
+                {<Icon />}
+              </a>
             </li>
           ))
         }
