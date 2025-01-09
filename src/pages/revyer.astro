@@ -1,7 +1,44 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
+import { PREVIOUS_REVUES } from "../lib/constants";
+import Card from "../components/Card/Card.astro";
+import { Image } from "astro:assets";
 ---
 
 <PageLayout title="Tidligere Revyer">
-  <h1>Revyer</h1>
+  <div class="container mx-auto mb-12 p-3">
+    <h1 class="font-medium text-xl text-center pb-2">Tidligere Revyer</h1>
+    <ul
+      class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+    >
+      {
+        PREVIOUS_REVUES.sort((a, b) => b.year.localeCompare(a.year)).map(
+          (revue) => (
+            <li>
+              <Card class={revue.color}>
+                <Image
+                  src={revue.image}
+                  alt={`Logo for ${revue.name}`}
+                  class="rounded-t-md aspect-square object-contain"
+                />
+                <h2 class={revue.dark ? "text-white" : "text-black"}>
+                  {revue.year}: {revue.name}
+                </h2>
+                <div class="flex gap-2">
+                  {revue.links.map((link) => (
+                    <a
+                      class="flex-grow text-center p-1 rounded-md border-2 bg-white text-black hover:bg-gray-200  transition-colors"
+                      href={link.href}
+                    >
+                      {link.name}
+                    </a>
+                  ))}
+                </div>
+              </Card>
+            </li>
+          ),
+        )
+      }
+    </ul>
+  </div>
 </PageLayout>
