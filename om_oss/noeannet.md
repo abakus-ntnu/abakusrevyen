@@ -3,7 +3,7 @@ title: "NoeAnnet"
 description: "Informasjon om noe annet"
 pubDate: "2025-01-08"
 updateDate: "2025-01-08"
-language: 'no'
+language: "no"
 ---
 
 # Test

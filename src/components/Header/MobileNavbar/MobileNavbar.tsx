@@ -29,9 +29,7 @@ export default function MobileNavbar({
           visible ? "" : "hidden"
         } top-32 left-0 w-screen h-[calc(100vh-128px)] z-50 bg-background`}
       >
-        <ul className="flex w-full flex-col items-center gap-6">
-          {navItems}
-        </ul>
+        <ul className="flex w-full flex-col items-center gap-6">{navItems}</ul>
       </div>
       {hamburgerButton}
     </>

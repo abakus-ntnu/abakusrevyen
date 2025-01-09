@@ -12,7 +12,10 @@ export default defineConfig({
     prefetchAll: true,
   },
   experimental: { contentLayer: true },
-  integrations: [tailwind({
-    applyBaseStyles: false,
-  }), react()],
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    react(),
+  ],
 });

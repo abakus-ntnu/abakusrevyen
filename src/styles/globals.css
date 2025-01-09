@@ -18,7 +18,7 @@
     font-family: "Tauri";
     src: url(/fonts/Tauri/Tauri-Regular.ttf) format(truetype);
   }
-  
+
   @font-face {
     font-family: "Lcd";
     src: url(/fonts/Lcd/LCD14.otf) format(truetype);

@@ -10,7 +10,7 @@ export default {
         screens: {
           xl: "1100px",
           "2xl": "1100px",
-        }
+        },
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

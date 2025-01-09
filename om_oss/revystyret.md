@@ -3,7 +3,7 @@ title: "Revystyret"
 description: "Informasjon om Revystyret"
 pubDate: "2025-01-07"
 updateDate: "2025-01-07"
-language: 'no'
+language: "no"
 ---
 
 # Revystyret
