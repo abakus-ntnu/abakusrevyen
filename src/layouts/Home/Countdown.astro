@@ -1,78 +1,21 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
+
 import CountdownComp from "@/components/Countdown/Countdown.astro";
-import Card from "@/components/Card/Card.astro";
-import CardDetail from "@/components/Card/CardDetail.astro";
-import { Image } from "astro:assets";
-
-import SvinPaaSkogenLogo from "@/images/revy_logoer/Svin_paa_skogen_logo.png";
-
-import { Clock, MapPin, Ticket } from "lucide-astro";
+import ShowLogo from "@/components/Branding/ShowLogo.astro";
+import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
 
 interface Props {
   date: Date;
 }
 
 const { date } = Astro.props;
-const today = new Date();
-const isToday =
-  today.getDay() == date.getDay() &&
-  today.getMonth() == date.getMonth() &&
-  today.getFullYear() == date.getFullYear();
-
-let targetDate;
-
-if (isToday) {
-  targetDate =
-    "Idag fra kl. " +
-    date.toLocaleString("no-NB", {
-      hour: "numeric",
-      minute: "2-digit",
-    });
-} else {
-  targetDate = date.toLocaleString("no-NB", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 ---
 
 <HomePageLayout>
   <div class="w-full flex flex-col justify-center items-center gap-6">
     <CountdownComp date={date} />
-    <div class="">
-      <Image
-        loading="eager"
-        src={SvinPaaSkogenLogo}
-        alt="Revy logo"
-        class="w-[50vh]"
-      />
-    </div>
-    <Card class="bg-primary !border-0 text-white">
-      <div class="grid md:grid-cols-3 grid-cols-1 gap-6">
-        <Card class="!border-0 bg-primary p-0">
-          <CardDetail class="!bg-secondary flex gap-3">
-            <span slot="title">Hvor</span>
-            <MapPin /><span>Byscenen, Trondheim</span>
-          </CardDetail>
-        </Card>
-
-        <Card class="!border-0 bg-primary p-0">
-          <CardDetail class="!bg-secondary flex gap-3">
-            <span slot="title">Når</span>
-            <Clock /><span>{targetDate}</span>
-          </CardDetail>
-        </Card>
-
-        <Card class="!border-0 bg-primary p-0">
-          <CardDetail class="!bg-secondary flex gap-3">
-            <span slot="title">Kjøp bilett</span>
-            <Ticket />
-            <a href="https://vier.live/c/abakusrevyen">Ticketmaster</a>
-          </CardDetail>
-        </Card>
-      </div>
-    </Card>
+    <ShowLogo />
+    <ShowDetailsCard when={date} />
   </div>
 </HomePageLayout>

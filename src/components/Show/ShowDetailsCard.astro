@@ -1,0 +1,66 @@
+---
+import Card from "../Card/Card.astro";
+import CardDetail from "../Card/CardDetail.astro";
+
+import { Clock, MapPin, Ticket } from "lucide-astro";
+
+interface Props {
+  where?: string;
+  when: Date | string;
+}
+
+const { where = "Byscenen, Trondheim", when } = Astro.props;
+
+let whenText;
+
+if (typeof when === "string") {
+  whenText = when;
+} else {
+  const today = new Date();
+  const isToday =
+    today.getDay() == when.getDay() &&
+    today.getMonth() == when.getMonth() &&
+    today.getFullYear() == when.getFullYear();
+
+  if (isToday) {
+    whenText =
+      "Idag fra kl. " +
+      when.toLocaleString("no-NB", {
+        hour: "numeric",
+        minute: "2-digit",
+      });
+  } else {
+    whenText = when.toLocaleString("no-NB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+}
+---
+
+<Card class="bg-primary !border-0 text-white">
+  <div class="grid md:grid-cols-3 grid-cols-1 gap-6">
+    <Card class="!border-0 bg-primary p-0">
+      <CardDetail class="!bg-secondary flex gap-3">
+        <span slot="title">Hvor</span>
+        <MapPin /><span>{where}</span>
+      </CardDetail>
+    </Card>
+
+    <Card class="!border-0 bg-primary p-0">
+      <CardDetail class="!bg-secondary flex gap-3">
+        <span slot="title">Når</span>
+        <Clock /><span>{whenText}</span>
+      </CardDetail>
+    </Card>
+
+    <Card class="!border-0 bg-primary p-0">
+      <CardDetail class="!bg-secondary flex gap-3">
+        <span slot="title">Kjøp bilett</span>
+        <Ticket />
+        <a href="https://vier.live/c/abakusrevyen">Ticketmaster</a>
+      </CardDetail>
+    </Card>
+  </div>
+</Card>
