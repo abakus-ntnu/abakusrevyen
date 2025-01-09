@@ -20,23 +20,7 @@ const SUBPAGES = [
   },
 ];
 
-const SOCIALS = [
-  {
-    name: "Facebook",
-    href: "https://facebook.com/Abakusrevyen",
-    Icon: Facebook,
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/abakusrevyen",
-    Icon: Instagram,
-  },
-  {
-    name: "Mail",
-    href: "mailto:revy@abakus.no",
-    Icon: Mail,
-  },
-];
+import { SOCIALS } from "@/lib/constants";
 ---
 
 <footer class="bg-background text-accent">
@@ -61,9 +45,9 @@ const SOCIALS = [
 
     <ul class="md:mr-0 mx-auto w-min flex gap-3">
       {
-        SOCIALS.map(({ name, href, Icon }) => (
+        SOCIALS.map(({ name, profile, href, Icon }) => (
           <li id={name}>
-            <a target="_blank" href={href} aria-label={name}>
+            <a target="_blank" href={href} aria-label={name + " " + profile}>
               {<Icon />}
             </a>
           </li>

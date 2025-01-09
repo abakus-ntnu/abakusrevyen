@@ -2,29 +2,12 @@
 import PageLayout from "../PageLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
+import CardDetail from "@/components/Card/CardDetail.astro";
+import { Image } from "astro:assets";
 
-import { Facebook, Instagram, Mail } from "lucide-astro";
+import { SOCIALS, SUBGROUPS } from "@/lib/constants";
 
-const SOCIALS = [
-  {
-    name: "Facebook",
-    profile: "Abakusrevyen",
-    href: "https://facebook.com/Abakusrevyen",
-    Icon: Facebook,
-  },
-  {
-    name: "Instagram",
-    profile: "abakusrevyen",
-    href: "https://instagram.com/abakusrevyen",
-    Icon: Instagram,
-  },
-  {
-    name: "Mail",
-    profile: "revy@abakus.no",
-    href: "mailto:revy@abakus.no",
-    Icon: Mail,
-  },
-];
+import revyLogo from "@/images/revy-logo.webp";
 ---
 
 <PageLayout {...Astro.props}>
@@ -50,7 +33,27 @@ const SOCIALS = [
       </div>
     </slot>
     <slot name="recruitment">
-      <h2>Opptaket er over!</h2>
+      <h2 class="font-medium text-xl text-center">
+        Bli med i <span class="text-primary">Revyen!</span>
+      </h2>
+
+      <div
+        class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+      >
+        {
+          SUBGROUPS.map(({ name }) => (
+            <Card>
+              <div class="flex gap-3">
+                <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
+                {name}
+              </div>
+              <CardDetail>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </CardDetail>
+            </Card>
+          ))
+        }
+      </div>
     </slot>
   </div>
 </PageLayout>
