@@ -2,10 +2,49 @@
 import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import HomePageLayout from "./HomePageLayout.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
+
+import { PREVIOUS_REVUES, SUBGROUPS } from "@/lib/constants";
+import { Image } from "astro:assets";
+import LinkButton from "@/components/LinkButton/LinkButton.astro";
+import CardDetail from "@/components/Card/CardDetail.astro";
 ---
 
 <HomePageLayout>
-  <h1>Opptak</h1>
+  <div class="md:space-y-6 space-y-3">
+    <h1 class="text-2xl font-medium text-center">Abakusrevyen har opptak!</h1>
+
+    <div class="grid grid-flow-col md:grid-rows-1 grid-rows-2 px-6 max-w-full">
+      {
+        PREVIOUS_REVUES.slice(0, 8).map(({ name, image, links }) => (
+          <div class="w-[1fr] even:rotate-12 odd:-rotate-12 hover:scale-110 transition-transform">
+            <a href={links[0].href}>
+              <Image src={image} alt={`${name} logo`} />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="md:space-y-6 space-y-3">
+    <p class="text-center">Søk på verv i revyen og bli å lage årets revy!</p>
+
+    <div
+      class="max-w-screen-sm mx-auto md:h-auto h-28 overflow-scroll grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+    >
+      {
+        SUBGROUPS.map(({ name }) => (
+          <CardDetail>
+            <span class="font-medium">{name}</span>
+          </CardDetail>
+        ))
+      }
+    </div>
+
+    <div class="flex justify-center">
+      <LinkButton href="#">Søk her!</LinkButton>
+    </div>
+  </div>
 
   <div slot="recruitment" class="space-y-6">
     <h2 class="font-medium text-xl text-center">
