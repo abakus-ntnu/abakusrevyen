@@ -30,9 +30,12 @@ function disableOnlineTheme() {
   window.location.reload();
 }
 
+function onlineThemeIsEnabled() {
+  return window.localStorage.getItem("onlineThemeEnabled") === "true";
+}
+
 function onLoad() {
-  const enabled = localStorage.getItem("onlineThemeEnabled") === "true";
-  if (enabled) {
+  if (onlineThemeIsEnabled()) {
     enableOnlineTheme();
   }
 }
@@ -49,7 +52,7 @@ function onKeyDown(e: KeyboardEvent) {
   if (currentString === PHRASE) {
     enableOnlineTheme();
     alert("La oss få deg online! :)");
-  } else {
+  } else if (onlineThemeIsEnabled()) {
     disableOnlineTheme();
   }
 }
