@@ -1,14 +1,4 @@
-const SHOWS = [
-  {
-    name: "Abakusrevyen premiere",
-    when: new Date(14, 2, 2025, 20, 0, 0),
-    where: "Byscenen i Trondheim",
-  },
-  {
-    name: "Forestilling 2",
-    when: new Date(15, 2, 2025, 12, 0, 0),
-  },
-];
+import { SHOWS } from "./constants";
 
 export function getCalenderURL() {
   const formatDate = (date: Date) => {

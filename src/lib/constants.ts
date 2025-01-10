@@ -19,6 +19,24 @@ import SkuespillLogo from "../images/undergrupper_logoer/skuespill-logo.jpg";
 import SocialLogo from "../images/undergrupper_logoer/social-logo.jpg";
 import TeknikkLogo from "../images/undergrupper_logoer/teknikk-logo.jpg";
 
+// Perioder
+export const RECRUITMENT_START = new Date(2024, 7, 15);
+export const RECRUITMENT_END = new Date(2024, 8, 15);
+export const SHOW_START = new Date(2025, 2, 14, 19, 0, 0);
+export const SHOW_END = new Date(2025, 2, 16);
+
+export const SHOWS = [
+  {
+    name: "Abakusrevyen premiere",
+    when: new Date(14, 2, 2025, 20, 0, 0),
+    where: "Byscenen i Trondheim",
+  },
+  {
+    name: "Forestilling 2",
+    when: new Date(15, 2, 2025, 12, 0, 0),
+  },
+];
+
 export const SOCIALS = [
   {
     name: "Facebook",

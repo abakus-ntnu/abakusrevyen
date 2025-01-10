@@ -8,7 +8,30 @@ Dette er koden til Abakusrevyen sin nettside. Utviklet med 🌯 av Teknikk.
 
 Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 
-- [ ] Det er ingenting å oppdatere! Nettsiden er under utvikling!
+### Ny revy!
+
+- [ ] `src/lib/constants.ts`
+  - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
+  - [ ] Oppdater datoene for forestillingene (`SHOWS`).
+- [ ] `src/images`
+  - [ ] Oppdater revylogoen
+  - [ ] Oppdater logoen til undergruppene i revyen
+
+### Slipp av revyen
+
+- [ ] `src/images/revy_logoer`
+  - [ ] Legg til logoen til den nye revyen
+- [ ] `src/components/branding/ShowLogo.astro`
+  - [ ] Oppdater logoen på nettsiden
+
+### Revyslutt
+
+- [ ] `src/lib/constants.ts`
+  - [ ] Oppdater `PREVIOUS_REVUES` med revyen. Husk rekkefølgen!
+- [ ] `src/images/gruppebilder`
+  - [ ] Legg til årets gruppebilde
+- [ ] `src/layouts/Home/Break.astro`
+  - [ ] Oppdater gruppebilde
 
 ## 🏗️ Utvikling
 

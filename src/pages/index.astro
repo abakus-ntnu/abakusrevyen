@@ -4,10 +4,12 @@ import Live from "@/layouts/Home/Live.astro";
 import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
-const RECRUITMENT_START = new Date(2024, 7, 15);
-const RECRUITMENT_END = new Date(2024, 8, 15);
-const SHOW_START = new Date(2025, 2, 14, 19, 0, 0);
-const SHOW_END = new Date(2025, 2, 16);
+import {
+  RECRUITMENT_START,
+  RECRUITMENT_END,
+  SHOW_START,
+  SHOW_END,
+} from "@/lib/constants";
 
 type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
 
