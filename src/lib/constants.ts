@@ -18,6 +18,10 @@ import SceneLogo from "../images/undergrupper_logoer/scene-logo.jpg";
 import SkuespillLogo from "../images/undergrupper_logoer/skuespill-logo.jpg";
 import SocialLogo from "../images/undergrupper_logoer/social-logo.jpg";
 import TeknikkLogo from "../images/undergrupper_logoer/teknikk-logo.jpg";
+import BestFoerGruppebilde from "../images/gruppebilder/best_foer_gruppebilde2.png";
+import Forsidebilde from "../images/gruppebilder/forsidebilde.png";
+import GrevensTidGruppebilde from "../images/gruppebilder/grevens_tid_gruppebilde.png";
+import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebilde.jpg";
 
 // Perioder
 export const RECRUITMENT_START = new Date(2024, 7, 15);
@@ -223,5 +227,24 @@ export const PREVIOUS_REVUES = [
         href: "",
       },
     ],
+  },
+];
+
+export const GALLERY_IMAGES = [
+  {
+    src: BestFoerGruppebilde,
+    alt: "Gruppebilde fra Best før 2024",
+  },
+  {
+    src: Forsidebilde,
+    alt: "Forsidebilde fra Grevens Tid 2023",
+  },
+  {
+    src: GrevensTidGruppebilde,
+    alt: "Gruppebilde fra Grevens Tid 2023",
+  },
+  {
+    src: SvinPaaSkogenGruppebilde,
+    alt: "Gruppebilde fra Svin På Skogen 2022",
   },
 ];

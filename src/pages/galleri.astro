@@ -1,7 +1,120 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { GALLERY_IMAGES } from "../lib/constants";
+import { Image } from "astro:assets";
 ---
 
 <PageLayout title="Bildegalleri">
-  <h1 class="font-medium text-xl text-center pb-2">Galleri</h1>
+  <div class="container mx-auto mb-12 p-3">
+    <h1 class="font-medium text-xl text-center pb-2">Galleri</h1>
+
+    <div class="swiper">
+      <div class="swiper-wrapper pb-10 pt-0.5 bg-background-accent">
+        {
+          GALLERY_IMAGES.map((image) => (
+            <div class="swiper-slide">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                class="w-full h-full object-cover"
+              />
+            </div>
+          ))
+        }
+      </div>
+      <!-- Add Pagination Dots -->
+      <div class="swiper-pagination"></div>
+
+      <!-- Add Navigation Arrows -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <div class="autoplay-progress h-0.5">
+        <div></div>
+      </div>
+    </div>
+  </div>
 </PageLayout>
+
+<style>
+  :root {
+    --swiper-theme-color: var(--primary);
+    --swiper-pagination-bottom: 5px;
+    --swiper-pagination-bullet-inactive-color: var(--accent);
+
+    --border: 2px solid #dddddd;
+    &.dark {
+      --border: 2px solid #333333;
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    bottom: 0;
+    top: auto;
+    background-color: var(--background-accent);
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    border: var(--border);
+
+    &:after {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+  }
+
+  .autoplay-progress {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 10;
+
+    & > div {
+      --progress: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: calc(100% - var(--progress));
+      z-index: 10;
+      height: 100%;
+      background-color: var(--swiper-theme-color);
+    }
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation, Pagination, Autoplay } from "swiper/modules";
+  const progressIndicator = document.querySelector<HTMLDivElement>(
+    ".autoplay-progress > div",
+  );
+  const swiper = new Swiper(".swiper", {
+    modules: [Navigation, Pagination, Autoplay],
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+      delay: 5000,
+      pauseOnMouseEnter: true,
+    },
+    on: {
+      autoplayTimeLeft(s, time, progress) {
+        progressIndicator?.style.setProperty(
+          "--progress",
+          `${(1 - progress) * 100}%`,
+        );
+      },
+    },
+  });
+</script>
