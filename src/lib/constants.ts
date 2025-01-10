@@ -223,8 +223,8 @@ export const PREVIOUS_REVUES = [
     dark: false,
     links: [
       {
-        name: "Opptak kommer",
-        href: "",
+        name: "Se opptak av stream",
+        href: "https://vier.live/act/abakusrevyen-2024---best-f-r-2024",
       },
     ],
   },
