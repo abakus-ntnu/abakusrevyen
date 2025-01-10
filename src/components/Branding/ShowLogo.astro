@@ -1,16 +1,11 @@
 ---
 import { Image } from "astro:assets";
 
-import SvinPaaSkogenLogo from "@/images/revy_logoer/Svin_paa_skogen_logo.png";
+import IGrevensTid from "@/images/revy_logoer/grevens_tid_logo.png";
 
 const { class: className } = Astro.props;
 ---
 
 <div class={className}>
-  <Image
-    loading="eager"
-    src={SvinPaaSkogenLogo}
-    alt="Revy logo"
-    class="w-[50vh]"
-  />
+  <Image loading="eager" src={IGrevensTid} alt="Revy logo" class="w-[50vh]" />
 </div>

@@ -7,11 +7,15 @@ import { Image } from "astro:assets";
 <div class="flex justify-center items-center gap-1.5">
   <Image
     src={RevyLogo}
+    id="navbar-logo"
     class="h-[2.2rem] w-[2.2rem]"
     alt="Logoen til Abakusrevyen"
     loading="eager"
   />
-  <span class="font-medium font-serif text-xl md:text-2xl tracking-tight">
+  <span
+    id="navbar-title"
+    class="font-medium font-serif text-xl md:text-2xl tracking-tight"
+  >
     Abakusrevyen
   </span>
 </div>
