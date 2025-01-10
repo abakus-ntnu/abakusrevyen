@@ -1,0 +1,25 @@
+---
+import Card from "../Card/Card.astro";
+import CardDetail from "../Card/CardDetail.astro";
+import { Image } from "astro:assets";
+
+import { SUBGROUPS } from "@/lib/constants";
+
+import revyLogo from "@/images/revy-logo.webp";
+---
+
+<div
+  class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+>
+  {
+    SUBGROUPS.map(({ name, brief }) => (
+      <Card>
+        <div class="flex gap-3 font-medium">
+          <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
+          {name}
+        </div>
+        <CardDetail>{brief}</CardDetail>
+      </Card>
+    ))
+  }
+</div>

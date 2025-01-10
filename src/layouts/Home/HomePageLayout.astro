@@ -2,14 +2,12 @@
 import PageLayout from "../PageLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
-import CardDetail from "@/components/Card/CardDetail.astro";
 import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
+import LinkButton from "../../components/LinkButton/LinkButton.astro";
+import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 import { Image } from "astro:assets";
 
-import { SOCIALS, SUBGROUPS } from "@/lib/constants";
-
-import revyLogo from "@/images/revy-logo.webp";
-import LinkButton from "../../components/LinkButton/LinkButton.astro";
+import { SOCIALS } from "@/lib/constants";
 ---
 
 <PageLayout {...Astro.props}>
@@ -59,21 +57,7 @@ import LinkButton from "../../components/LinkButton/LinkButton.astro";
       </h2>
 
       <FoldableFade>
-        <div
-          class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
-        >
-          {
-            SUBGROUPS.map(({ name, brief }) => (
-              <Card>
-                <div class="flex gap-3 font-medium">
-                  <Image class="w-6" src={revyLogo} alt={`${name} logo`} />
-                  {name}
-                </div>
-                <CardDetail>{brief}</CardDetail>
-              </Card>
-            ))
-          }
-        </div>
+        <SubgroupGrid />
       </FoldableFade>
     </slot>
   </div>

@@ -1,9 +1,24 @@
 ---
+import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import HomePageLayout from "./HomePageLayout.astro";
+import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 ---
 
 <HomePageLayout>
-  <p>Opptak</p>
+  <h1>Opptak</h1>
 
-  <h2 slot="recruitment">Opptaket er nå!</h2>
+  <div slot="recruitment" class="space-y-6">
+    <h2 class="font-medium text-xl text-center">
+      Opptaket er <span class="text-primary">nå</span>!
+    </h2>
+
+    <p class="mx-auto max-w-prose">
+      Revyen har opptak nå! Søk på verv i revyen og bli med oss å lage nok en
+      topp revy!
+    </p>
+
+    <FoldableFade>
+      <SubgroupGrid />
+    </FoldableFade>
+  </div>
 </HomePageLayout>
