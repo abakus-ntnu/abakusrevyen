@@ -7,6 +7,17 @@ import MarionettImage from "../images/revy_logoer/marionett.png";
 import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.png";
 import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.png";
 import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.png";
+import BandLogo from "../images/undergrupper_logoer/band-logo.jpg";
+import DansLogo from "../images/undergrupper_logoer/dans-logo.jpg";
+import KorLogo from "../images/undergrupper_logoer/kor-logo.jpg";
+import KostymeLogo from "../images/undergrupper_logoer/kostyme-logo.jpg";
+import PRLogo from "../images/undergrupper_logoer/pr-logo.jpg";
+import RegiLogo from "../images/undergrupper_logoer/regi-logo.jpg";
+import RevystyretLogo from "../images/undergrupper_logoer/revystyret-logo.jpg";
+import SceneLogo from "../images/undergrupper_logoer/scene-logo.jpg";
+import SkuespillLogo from "../images/undergrupper_logoer/skuespill-logo.jpg";
+import SocialLogo from "../images/undergrupper_logoer/social-logo.jpg";
+import TeknikkLogo from "../images/undergrupper_logoer/teknikk-logo.jpg";
 
 export const SOCIALS = [
   {
@@ -33,42 +44,52 @@ export const SUBGROUPS = [
   {
     name: "Revybandet",
     brief: "Bandet til revyen.",
+    image: BandLogo,
   },
   {
     name: "Koret",
     brief: "Koret til revyen.",
+    image: KorLogo,
   },
   {
     name: "Sosialgjengen",
     brief: "Vi sørger for at alle har det gøy!",
+    image: SocialLogo,
   },
   {
     name: "Scene",
     brief: "Vi lager og driver scenen!",
+    image: SceneLogo,
   },
   {
     name: "Teknikk",
     brief: "Vi ordner alt det tekniske!",
+    image: TeknikkLogo,
   },
   {
     name: "Dans",
     brief: "💃💃💃",
+    image: DansLogo,
   },
   {
     name: "Regi",
     brief: "Vi skriver og dirigerer revyen!",
+    image: RegiLogo,
   },
   {
     name: "Kostyme",
     brief: "Her lages alle kostymene!",
+    image: KostymeLogo,
   },
   {
     name: "Skuespill",
     brief: "De fra dramaklubben.",
+    image: SkuespillLogo,
   },
   {
     name: "PR",
     brief: "...",
+    image: PRLogo,
   },
 ];
 
