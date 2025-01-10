@@ -4,6 +4,8 @@ import CardDetail from "../Card/CardDetail.astro";
 
 import { Clock, MapPin, Ticket } from "lucide-astro";
 
+import { getCalenderURL } from "@/lib/calender";
+
 interface Props {
   where?: string;
   when: Date | string;
@@ -49,9 +51,11 @@ if (typeof when === "string") {
     </Card>
 
     <Card class="!border-0 bg-primary p-0">
-      <CardDetail class="!bg-secondary flex gap-3">
+      <CardDetail class="!bg-secondary">
         <span slot="title">Når</span>
-        <Clock /><span>{whenText}</span>
+        <a href={getCalenderURL()} class="flex gap-3">
+          <Clock /><span>{whenText}</span>
+        </a>
       </CardDetail>
     </Card>
 
