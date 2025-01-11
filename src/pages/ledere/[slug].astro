@@ -13,6 +13,7 @@ import {
   type ValidContentEntrySlug,
 } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import CardField from "@/components/Card/CardField.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("ledere");
@@ -23,7 +24,7 @@ export async function getStaticPaths() {
 const { slug }: { slug: ValidContentEntrySlug<"ledere"> } = Astro.params;
 
 const entry = await getEntry("ledere", slug);
-const { name, image, leaderOf } = entry.data;
+const { name, email, image, leaderOf } = entry.data;
 
 const groups = await getEntries(leaderOf.map((ref) => ref.group));
 
@@ -67,21 +68,30 @@ const { Content } = await render(entry);
   <Content />
 
   <Card class="mt-12 max-w-screen-sm w-full">
-    <h2 class="text-lg leading-none mt-0 mb-3">Grupper</h2>
+    <h2 class="card-header">Kontakt</h2>
+
+    <CardField title="Email">
+      <Link href={`mailto:${email}`}>{email}</Link>
+    </CardField>
+
+    <h2 class="card-header">Grupper</h2>
     {
       Object.entries(leaderOfGroups).map(([title, groups]) => (
-        <div class="font-medium flex sm:flex-row flex-col gap-1">
-          {title}:
-          <div class="flex sm:flex-row flex-col">
-            {groups.map((group) => (
-              <>
-                <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
-                <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
-              </>
-            ))}
-          </div>
-        </div>
+        <CardField title={title}>
+          {groups.map((group) => (
+            <>
+              <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
+              <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
+            </>
+          ))}
+        </CardField>
       ))
     }
   </Card>
 </ArticleLayout>
+
+<style>
+  .card-header {
+    @apply text-lg leading-none my-0;
+  }
+</style>
