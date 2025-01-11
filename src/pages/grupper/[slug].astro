@@ -1,9 +1,17 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
-import { getEntry, render, getCollection } from "astro:content";
+import Card from "@/components/Card/Card.astro";
 import { Image } from "astro:assets";
-import type { ValidContentEntrySlug } from "astro:content";
+
+import {
+  getEntry,
+  render,
+  getCollection,
+  type ValidContentEntrySlug,
+  type CollectionEntry,
+} from "astro:content";
+import Link from "@/components/LinkButton/Link.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("grupper");
@@ -13,12 +21,47 @@ export async function getStaticPaths() {
 
 const { slug }: { slug: ValidContentEntrySlug<"grupper"> } = Astro.params;
 const entry = await getEntry("grupper", slug);
-const { name, logo } = entry.data;
+const { name, logo, leaders } = entry.data;
+
+const rankedLeaders = await (leaders ?? []).reduce<
+  | { [title: string]: CollectionEntry<"ledere">[] }
+  | Promise<{ [title: string]: CollectionEntry<"ledere">[] }>
+>(async (acc, ref) => {
+  const leader = await getEntry(ref);
+  const title =
+    leader.data.leaderOf.find((group) => group.group.slug === slug)?.title ??
+    "Leder";
+  let nextAcc = await acc;
+  nextAcc[title] = [leader, ...(nextAcc[title] ?? [])];
+  return nextAcc;
+}, {});
+
+console.log(rankedLeaders);
 
 const { Content } = await render(entry);
 ---
 
 <ArticleLayout title={name}>
   <Image src={logo} alt={`${name} logo`} class="rounded-lg w-56" />
+
   <Content />
+
+  <Card class="mt-12 max-w-screen-sm w-full">
+    <h2 class="text-lg leading-none mt-0 mb-3">Ledelse</h2>
+    {
+      Object.entries(rankedLeaders).map(([title, leaders]) => (
+        <div class="font-medium flex sm:flex-row flex-col gap-1">
+          {title}:
+          <div class="flex sm:flex-row flex-col">
+            {leaders.map((leader) => (
+              <>
+                <Link href={`/ledere/${leader.slug}`}>{leader.data.name}</Link>
+                <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
+              </>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </Card>
 </ArticleLayout>

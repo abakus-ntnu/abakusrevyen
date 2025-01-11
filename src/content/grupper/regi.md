@@ -4,6 +4,8 @@ brief: "Vi skriver og dirigerer revyen!"
 logo: "@/images/undergrupper_logoer/regi-logo.jpg"
 leaders:
   - schjonsby
+  - ji
+  - santi
 ---
 
 # Regi
