@@ -4,7 +4,7 @@ import PageLayout from "./PageLayout.astro";
 
 <PageLayout {...Astro.props}>
   <article
-    class="container mx-auto prose-base prose-headings:font-medium prose-headings:text-center"
+    class="container mx-auto flex flex-col px-6 items-center prose-base prose-headings:font-medium prose-p:max-w-prose"
   >
     <slot />
   </article>
