@@ -13,9 +13,17 @@ Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 - [ ] `src/lib/constants.ts`
   - [ ] Oppdater datoene for forestillingene (`SHOWS`).
   - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
+- [ ] `src/content/ledere`
+  - [ ] Fjern fjorårets ledere som ikke er med/ikke er ledere i år
+  - [ ] Lag/Oppdater lederne for denne revyen
+- [ ] `src/content/grupper`
+  - [ ] Legg til nye grupper/Fjern gamle grupper (hvis noen)
+  - [ ] Oppdater ledelsen i gruppene
 - [ ] `src/images`
   - [ ] Oppdater revylogoen
   - [ ] Oppdater logoen til undergruppene i revyen
+  - [ ] Oppdater gruppelogoene
+  - [ ] Legg til/Oppdater leder bildene
 
 ### Slipp av revyen
 
