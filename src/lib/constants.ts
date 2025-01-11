@@ -12,13 +12,7 @@ import Forsidebilde from "../images/gruppebilder/forsidebilde.png";
 import GrevensTidGruppebilde from "../images/gruppebilder/grevens_tid_gruppebilde.png";
 import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebilde.jpg";
 
-// Perioder
-export const RECRUITMENT_START = new Date(2024, 7, 15);
-export const RECRUITMENT_END = new Date(2024, 8, 15);
-export const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
-export const SHOW_START = new Date(2025, 2, 14, 19, 0, 0); // Premiære
-export const SHOW_END = new Date(2025, 2, 16);
-
+// Forestillinger. Husk å sortere basert på tid med premiæren først
 export const SHOWS = [
   {
     name: "Abakusrevyen premiere",
@@ -29,6 +23,23 @@ export const SHOWS = [
     name: "Forestilling 2",
     when: new Date(15, 2, 2025, 12, 0, 0),
   },
+];
+
+// Perioder
+const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
+const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
+const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
+
+const SHOW_START = SHOWS[0].when; // Premiære
+const SHOW_END = SHOWS.toReversed()[0].when; // Siste forestilling
+
+export type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
+export const periods: { from: Date; period: Period }[] = [
+  { from: RECRUITMENT_START, period: "recruitment" },
+  { from: RECRUITMENT_END, period: "break" },
+  { from: COUNTDOWN_START, period: "showStarting" },
+  { from: SHOW_START, period: "showCurrent" },
+  { from: SHOW_END, period: "break" },
 ];
 
 export const SOCIALS = [

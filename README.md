@@ -11,8 +11,8 @@ Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 ### Ny revy!
 
 - [ ] `src/lib/constants.ts`
-  - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
   - [ ] Oppdater datoene for forestillingene (`SHOWS`).
+  - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
 - [ ] `src/images`
   - [ ] Oppdater revylogoen
   - [ ] Oppdater logoen til undergruppene i revyen
@@ -28,6 +28,7 @@ Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 
 - [ ] `src/lib/constants.ts`
   - [ ] Oppdater `PREVIOUS_REVUES` med revyen. Husk rekkefølgen!
+  - [ ] Legg til nye bilder i bildegaleriet! (`GALLERY_IMAGES`)
 - [ ] `src/images/gruppebilder`
   - [ ] Legg til årets gruppebilde
 - [ ] `src/layouts/Home/Break.astro`
