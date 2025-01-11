@@ -3,17 +3,17 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import { getEntry, render, getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("oss");
+  const entries = await getCollection("om_oss");
 
   const list = entries.map((e) => ({
-    params: { slug: e.id.toString() }, // Convert `id` to a string if necessary
+    params: { slug: e.slug },
   }));
   return list;
 }
 
 const { slug } = Astro.params;
-const oss = await getEntry("oss", slug);
-const { Content, headings } = await render(oss);
+const entry = await getEntry("om_oss", slug);
+const { Content } = await render(entry);
 ---
 
 <PageLayout title="Om oss">

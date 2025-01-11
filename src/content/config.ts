@@ -1,8 +1,8 @@
 import { defineCollection, z } from "astro:content";
 import { glob, file } from "astro/loaders";
 
-const oss = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./om_oss" }),
+const om_oss = defineCollection({
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -12,4 +12,14 @@ const oss = defineCollection({
   }),
 });
 
-export const collections = { oss };
+const grupper = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
+      logo: image(),
+    }),
+});
+
+export const collections = { om_oss, grupper };
