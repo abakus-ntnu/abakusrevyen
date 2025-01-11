@@ -33,9 +33,10 @@ const { images } = Astro.props;
                 width={500}
                 height={500}
                 class="w-full"
+                loading="eager"
               />
             ) : (
-              <Image src={src} alt={alt} class="w-full" />
+              <Image src={src} alt={alt} class="w-full" loading="eager" />
             )}
           </div>
         ))

@@ -26,7 +26,7 @@ const leaders = await getCollection("ledere");
             alt: `${group.data.name} logo`,
           }))}
         >
-          Grupper
+          Revygruppene
         </MultiImageCard>
       </a>
 
@@ -34,10 +34,10 @@ const leaders = await getCollection("ledere");
         <MultiImageCard
           images={leaders.map((leader) => ({
             src: leader.data.image,
-            alt: `${leader.data.name} picture`,
+            alt: `${leader.data.name}`,
           }))}
         >
-          Ledere
+          Lederene
         </MultiImageCard>
       </a>
     </div>
