@@ -98,7 +98,7 @@ import { GALLERY_IMAGES } from "../lib/constants";
   const progressIndicator = document.querySelector<HTMLDivElement>(
     ".autoplay-progress > div",
   );
-  const swiper = new Swiper(".swiper", {
+  const _swiper = new Swiper(".swiper", {
     modules: [Navigation, Pagination, Autoplay],
     spaceBetween: 10,
     pagination: {
@@ -113,7 +113,7 @@ import { GALLERY_IMAGES } from "../lib/constants";
       pauseOnMouseEnter: true,
     },
     on: {
-      autoplayTimeLeft(s, time, progress) {
+      autoplayTimeLeft(_s, _time, progress) {
         progressIndicator?.style.setProperty(
           "--progress",
           `${(1 - progress) * 100}%`,

@@ -1,5 +1,4 @@
 import { defineCollection, reference, z } from "astro:content";
-import { glob, file } from "astro/loaders";
 
 const om_oss = defineCollection({
   type: "content",
@@ -28,21 +27,20 @@ const grupper = defineCollection({
 
 const ledere = defineCollection({
   type: "content",
-  schema: ({ image }) =>
-    z.object({
-      name: z.string(),
-      email: z.string().email("Not a valid email"),
-      image: z.string().url(),
-      gender: z.enum(["male", "female", "other"]),
-      leaderOf: z
-        .array(
-          z.object({
-            group: reference("grupper"),
-            title: z.string().default("Leder"),
-          }),
-        )
-        .min(1, "Not a leader of any group"),
-    }),
+  schema: z.object({
+    name: z.string(),
+    email: z.string().email("Not a valid email"),
+    image: z.string().url(),
+    gender: z.enum(["male", "female", "other"]),
+    leaderOf: z
+      .array(
+        z.object({
+          group: reference("grupper"),
+          title: z.string().default("Leder"),
+        }),
+      )
+      .min(1, "Not a leader of any group"),
+  }),
 });
 
 export const collections = { om_oss, grupper, ledere };

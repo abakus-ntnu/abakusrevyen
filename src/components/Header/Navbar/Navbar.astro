@@ -11,7 +11,7 @@ const { items } = Astro.props;
 <nav class="flex justify-center items-center">
   <ul class="flex gap-4 lg:gap-6">
     {
-      Object.entries(items).map(([href, title], i) => (
+      Object.entries(items).map(([href, title]) => (
         <NavLink href={href}>{title}</NavLink>
       ))
     }

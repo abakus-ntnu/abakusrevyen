@@ -1,15 +1,10 @@
-import { HeartOff } from "lucide-astro";
 import { useState, type AllHTMLAttributes } from "react";
 
 interface Props extends AllHTMLAttributes<HTMLDivElement> {
   items: { [href: string]: string };
 }
 
-export default function MobileNavbar({
-  items,
-  children,
-  ...rest
-}: Readonly<Props>) {
+export default function MobileNavbar({ items, children }: Readonly<Props>) {
   const [visible, setVisible] = useState(false);
 
   const hamburgerButton = (
