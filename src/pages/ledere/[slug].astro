@@ -1,19 +1,37 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
-import { getEntry, render, getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { getEntries } from "astro:content";
+import {
+  getEntry,
+  render,
+  getCollection,
+  type ValidContentEntrySlug,
+} from "astro:content";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("om_oss");
+  const entries = await getCollection("ledere");
   const list = entries.map((entry) => ({ params: { slug: entry.slug } }));
   return list;
 }
 
-const { slug } = Astro.params;
-const entry = await getEntry("om_oss", slug);
+const { slug }: { slug: ValidContentEntrySlug<"ledere"> } = Astro.params;
+
+const entry = await getEntry("ledere", slug);
+const { name, image, leaderOf } = entry.data;
+
 const { Content } = await render(entry);
+
+const groups = await getEntries(leaderOf);
 ---
 
-<ArticleLayout title={slug}>
+<ArticleLayout title={name}>
+  <img
+    src={image}
+    width="auto"
+    height="auto"
+    alt={`Leder av ${leaderOf.map((ref) => ref.slug).join(", ")}`}
+  />
   <Content />
 </ArticleLayout>

@@ -19,6 +19,10 @@ const grupper = defineCollection({
       name: z.string(),
       brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
       logo: image(),
+      leaders: z
+        .array(reference("ledere"))
+        .min(1, "At least one leader must be provided")
+        .optional(),
     }),
 });
 
@@ -28,8 +32,10 @@ const ledere = defineCollection({
     z.object({
       name: z.string(),
       email: z.string().email("Not a valid email"),
-      image: image(),
-      leaderOf: reference("grupper"),
+      image: z.string().url(),
+      leaderOf: z
+        .array(reference("grupper"))
+        .min(1, "Not a leader of any group"),
     }),
 });
 

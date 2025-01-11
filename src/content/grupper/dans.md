@@ -2,6 +2,8 @@
 name: "Dans"
 brief: "💃💃💃"
 logo: "@/images/undergrupper_logoer/dans-logo.jpg"
+leaders:
+  - frohaug
 ---
 
 # Dans

@@ -2,6 +2,9 @@
 name: "Skuespill"
 brief: "De fra dramaklubben"
 logo: "@/images/undergrupper_logoer/skuespill-logo.jpg"
+leaders:
+  - hansen
+  - schjonsby
 ---
 
 # Skuespill

@@ -2,6 +2,8 @@
 name: "Kostyme"
 brief: "Vi lager kostymene"
 logo: "@/images/undergrupper_logoer/kostyme-logo.jpg"
+leaders:
+  - ahlgren
 ---
 
 # Kostyme
