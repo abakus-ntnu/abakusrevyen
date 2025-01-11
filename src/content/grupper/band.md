@@ -6,4 +6,4 @@ logo: "@/images/undergrupper_logoer/band-logo.jpg"
 
 # Band
 
-Revyets band
+Kanskje åpenbart hva vi gjør, siden vi skrev ikke noe om oss selv på nettsiden!

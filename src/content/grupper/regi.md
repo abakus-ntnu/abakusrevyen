@@ -4,6 +4,6 @@ brief: "Vi skriver og dirigerer revyen!"
 logo: "@/images/undergrupper_logoer/regi-logo.jpg"
 ---
 
-# Regu
+# Regi
 
-Vi skriver og dirigerer revyen!
+Vi har ikke skrevet noe om oss selv enda!

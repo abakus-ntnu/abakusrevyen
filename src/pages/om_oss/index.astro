@@ -33,7 +33,7 @@ const groups = await getCollection("grupper");
       groups.map(({ slug, data: { name, brief, logo } }) => (
         <li>
           <Image src={logo} alt={`${name} logo`} />
-          <a href={`/om_oss/${slug}`}>{name}</a>
+          <a href={`/grupper/${slug}`}>{name}</a>
         </li>
       ))
     }

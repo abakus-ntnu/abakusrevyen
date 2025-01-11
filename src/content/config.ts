@@ -1,4 +1,4 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection, reference, z } from "astro:content";
 import { glob, file } from "astro/loaders";
 
 const om_oss = defineCollection({
@@ -19,6 +19,18 @@ const grupper = defineCollection({
       name: z.string(),
       brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
       logo: image(),
+      leader: reference("ledere").optional(),
+    }),
+});
+
+const ledere = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      email: z.string().email("Not a valid email"),
+      image: image(),
+      leaderOf: reference("grupper"),
     }),
 });
 

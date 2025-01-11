@@ -6,4 +6,4 @@ logo: "@/images/undergrupper_logoer/kor-logo.jpg"
 
 # Kor
 
-Halelujah! Halelujah! Halelujah!
+Vi er ikke på Abakus sin nettside engang :,(

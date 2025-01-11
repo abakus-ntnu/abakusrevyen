@@ -6,4 +6,6 @@ logo: "@/images/undergrupper_logoer/sosial-logo.jpg"
 
 # Kostyme
 
-Syr og syr og syr og for noe styr! Ikke syt!
+Sosialgjengen står for å lage god stemning og spre glede.
+
+Sosial er ansvarlig for interne arrangementer som hyttetur, mat under intensiv- og revy-uka, samt lavterskel arrangementer ila året. Sosial har også ansvaret for slippfest og premierefest, dette er arrangementer som alle abakuler kan møte opp på.
