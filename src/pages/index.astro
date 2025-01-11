@@ -4,10 +4,11 @@ import Live from "@/layouts/Home/Live.astro";
 import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
-import { getCurrentPeriod } from "@/lib/periods";
-import { SHOW_START } from "@/lib/constants";
+import { getCurrentPeriod, nextShow } from "@/lib/periods";
+import { SHOWS } from "@/lib/constants";
 
-const period = getCurrentPeriod("showStarting");
+const period = getCurrentPeriod();
+const next = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
 {
@@ -18,6 +19,6 @@ const period = getCurrentPeriod("showStarting");
   ) : period == "showCurrent" ? (
     <Live />
   ) : (
-    <Countdown date={SHOW_START} />
+    <Countdown date={next.when} />
   )
 }

@@ -52,7 +52,7 @@ const now = new Date();
       <ul class="group/timeline max-w-fit">
         {
           SHOWS.map((show) => (
-            <li style={`opacity: ${now > show.when ? "100%" : "90%"}`}>
+            <li class={now < show.when ? "opacity-100" : "opacity-50"}>
               <div class="flex items-center gap-3">
                 <div class="w-3 aspect-square rounded-full bg-primary" />
                 <span class="font-medium">

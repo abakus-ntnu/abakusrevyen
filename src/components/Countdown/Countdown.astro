@@ -7,13 +7,6 @@ const { date } = Astro.props;
 
 // Convert string date to Date object if needed
 const targetDate = typeof date === "string" ? new Date(date) : date;
-
-// Format date in Norwegian locale
-const formattedDate = targetDate.toLocaleDateString("nb-NO", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 ---
 
 <div class="flex font-lcd space-x-[1.5rem]">

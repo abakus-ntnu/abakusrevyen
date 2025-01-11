@@ -1,4 +1,4 @@
-import { PERIODS, type Period } from "./constants";
+import { PERIODS, SHOWS, type Period } from "./constants";
 
 export function getCurrentPeriod(
   override: Period | undefined = undefined,
@@ -16,4 +16,16 @@ export function getCurrentPeriod(
   }
 
   return "break";
+}
+
+export function nextShow() {
+  let now = new Date();
+
+  for (let show of SHOWS) {
+    if (now < show.when) {
+      return show;
+    }
+  }
+
+  return undefined;
 }
