@@ -19,7 +19,6 @@ const grupper = defineCollection({
       name: z.string(),
       brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
       logo: image(),
-      leader: reference("ledere").optional(),
     }),
 });
 
@@ -34,4 +33,4 @@ const ledere = defineCollection({
     }),
 });
 
-export const collections = { om_oss, grupper };
+export const collections = { om_oss, grupper, ledere };

@@ -1,13 +1,11 @@
 ---
-import PageLayout from "@/layouts/PageLayout.astro";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+
 import { getEntry, render, getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const entries = await getCollection("om_oss");
-
-  const list = entries.map((e) => ({
-    params: { slug: e.slug },
-  }));
+  const list = entries.map((entry) => ({ params: { slug: entry.slug } }));
   return list;
 }
 
@@ -16,6 +14,6 @@ const entry = await getEntry("om_oss", slug);
 const { Content } = await render(entry);
 ---
 
-<PageLayout title={slug}>
+<ArticleLayout title={slug}>
   <Content />
-</PageLayout>
+</ArticleLayout>
