@@ -7,6 +7,18 @@ import Title from "@/components/Common/Title.astro";
 import { getCollection } from "astro:content";
 
 const leaders = await getCollection("ledere");
+
+const supremeLeaders = leaders.filter(
+  (leader) =>
+    leader.data.leaderOf.find((group) => group.slug === "revystyret") !==
+    undefined,
+);
+
+const plebians = leaders.filter(
+  (leader) =>
+    leader.data.leaderOf.find((group) => group.slug === "revystyret") ===
+    undefined,
+);
 ---
 
 <PageLayout title="Ledere">
@@ -15,17 +27,41 @@ const leaders = await getCollection("ledere");
       Møt revyens <span class="text-primary">ledere</span>
     </Title>
 
-    <Grid class="!gap-10">
+    <div class="flex justify-center gap-10 w-full">
       {
-        leaders.map(({ slug, data: { name, image, leaderOf } }) => (
-          <a href={`/ledere/${slug}`}>
+        supremeLeaders.map(({ slug, data: { name, image, leaderOf } }) => (
+          <a href={`/ledere/${slug}`} class="w-1/4">
             <div
-              class="bg-cover aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
+              class="bg-cover w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
               style={`background-image: url(${image})`}
             >
               <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
                 <h6 class="font-bold">{name}</h6>
-                Leder av {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+                Leder av{" "}
+                <span class="text-primary font-medium">
+                  {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <Grid class="!gap-10 pt-6">
+      {
+        plebians.map(({ slug, data: { name, image, leaderOf } }) => (
+          <a href={`/ledere/${slug}`}>
+            <div
+              class="bg-cover bg-center aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
+              style={`background-image: url(${image})`}
+            >
+              <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
+                <h6 class="font-bold">{name}</h6>
+                Leder av{" "}
+                <span class="font-medium text-primary">
+                  {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+                </span>
               </div>
             </div>
           </a>
