@@ -5,6 +5,7 @@ import Grid from "@/components/Common/Grid.astro";
 import Title from "@/components/Common/Title.astro";
 
 import { getCollection } from "astro:content";
+import type { ValidContentEntrySlug } from "astro:content";
 
 const leaders = await getCollection("ledere");
 
@@ -14,23 +15,46 @@ const supremeLeaders = leaders.filter(
     undefined,
 );
 
+const supremeLeaderPronoun =
+  supremeLeaders.length > 1
+    ? "de"
+    : supremeLeaders[0].data.gender === "male"
+      ? "han"
+      : supremeLeaders[0].data.gender === "female"
+        ? "hun"
+        : "hen";
+
 const plebians = leaders.filter(
   (leader) =>
     leader.data.leaderOf.find((group) => group.slug === "revystyret") ===
     undefined,
 );
+
+const groups = await getCollection("grupper");
+
+function getGroup(groupRef: {
+  collection: "grupper";
+  slug: ValidContentEntrySlug<"grupper">;
+}) {
+  return groups.find((group) => group.slug === groupRef.slug);
+}
 ---
 
 <PageLayout title="Ledere">
-  <div class="mx-auto container space-y-6 p-6">
+  <div class="mx-auto container space-y-6 p-6 text-center">
     <Title>
       Møt revyens <span class="text-primary">ledere</span>
     </Title>
 
-    <div class="flex justify-center gap-10 w-full">
+    <p class="mx-auto max-w-prose">
+      For å få revyen til å gå rundt må noen ta ansvaret for å lede arbeidet.
+      For årets revy er det {supremeLeaderPronoun} her!
+    </p>
+
+    <div class="flex sm:flex-row flex-col justify-center gap-10 w-full">
       {
         supremeLeaders.map(({ slug, data: { name, image, leaderOf } }) => (
-          <a href={`/ledere/${slug}`} class="w-1/4">
+          <a href={`/ledere/${slug}`} class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full">
             <div
               class="bg-cover w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
               style={`background-image: url(${image})`}
@@ -39,7 +63,9 @@ const plebians = leaders.filter(
                 <h6 class="font-bold">{name}</h6>
                 Leder av{" "}
                 <span class="text-primary font-medium">
-                  {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+                  {leaderOf
+                    .map((groupRef) => getGroup(groupRef)?.data.name)
+                    .join(", ")}
                 </span>
               </div>
             </div>
@@ -47,6 +73,14 @@ const plebians = leaders.filter(
         ))
       }
     </div>
+
+    <p class="max-w-prose mx-auto">
+      Men {supremeLeaderPronoun} kan ikke få til alt alene! For å virkelig få revyen
+      i gang trenger vi også ledere for hver av revyens <a
+        href="/grupper"
+        class="text-primary underline hover:text-secondary">grupper</a
+      >. De rollene fylles av disse fantastiske folka!
+    </p>
 
     <Grid class="!gap-10 pt-6">
       {
@@ -60,7 +94,9 @@ const plebians = leaders.filter(
                 <h6 class="font-bold">{name}</h6>
                 Leder av{" "}
                 <span class="font-medium text-primary">
-                  {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+                  {leaderOf
+                    .map((groupRef) => getGroup(groupRef)?.data.name)
+                    .join(", ")}
                 </span>
               </div>
             </div>

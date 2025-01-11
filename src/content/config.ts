@@ -33,6 +33,7 @@ const ledere = defineCollection({
       name: z.string(),
       email: z.string().email("Not a valid email"),
       image: z.string().url(),
+      gender: z.enum(["male", "female", "other"]),
       leaderOf: z
         .array(reference("grupper"))
         .min(1, "Not a leader of any group"),

@@ -2,6 +2,7 @@
 name: Daniel Yang Hansen
 email: revy-skuespill@abakus.no
 image: https://thumbor.abakus.no/JhJXIkBD4jm6dkcPU0qD0Hw08DE=/200x200/80D843F2345942CF812_MoqS1dp.jpeg
+gender: male
 leaderOf:
   - skuespill
 ---
