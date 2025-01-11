@@ -4,29 +4,8 @@ import Live from "@/layouts/Home/Live.astro";
 import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
-import {
-  RECRUITMENT_START,
-  RECRUITMENT_END,
-  COUNTDOWN_START,
-  SHOW_START,
-  SHOW_END,
-} from "@/lib/constants";
-
-function getCurrentPeriod(override: Period | undefined = undefined): Period {
-  if (override) {
-    return override;
-  }
-
-  let now = new Date();
-
-  for (let period of periods.slice().reverse()) {
-    if (period.from <= now) {
-      return period.period;
-    }
-  }
-
-  return "break";
-}
+import { getCurrentPeriod } from "@/lib/periods";
+import { SHOW_START } from "@/lib/constants";
 
 const period = getCurrentPeriod("showStarting");
 ---

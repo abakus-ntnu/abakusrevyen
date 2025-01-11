@@ -16,25 +16,26 @@ import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebild
 export const SHOWS = [
   {
     name: "Abakusrevyen premiere",
-    when: new Date(14, 2, 2025, 20, 0, 0),
+    when: new Date(2025, 2, 14, 20, 0, 0),
     where: "Byscenen i Trondheim",
   },
   {
     name: "Forestilling 2",
-    when: new Date(15, 2, 2025, 12, 0, 0),
+    when: new Date(2025, 2, 15, 12, 0, 0),
+    where: "Byscenen i Trondheim",
   },
 ];
 
 // Perioder
-const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
-const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
-const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
+export const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
+export const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
+export const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
 
-const SHOW_START = SHOWS[0].when; // Premiære
-const SHOW_END = SHOWS.toReversed()[0].when; // Siste forestilling
+export const SHOW_START = new Date(SHOWS[0].when); // Premiære
+export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
 
 export type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
-export const periods: { from: Date; period: Period }[] = [
+export const PERIODS: { from: Date; period: Period }[] = [
   { from: RECRUITMENT_START, period: "recruitment" },
   { from: RECRUITMENT_END, period: "break" },
   { from: COUNTDOWN_START, period: "showStarting" },
