@@ -1,4 +1,4 @@
-function enableOnlineTheme() {
+export function enableOnlineTheme() {
   localStorage.setItem("onlineThemeEnabled", "true");
   window.document.documentElement.classList.add("online");
 
@@ -21,7 +21,7 @@ function enableOnlineTheme() {
   }
 }
 
-function disableOnlineTheme() {
+export function disableOnlineTheme() {
   localStorage.removeItem("onlineThemeEnabled");
   window.document.documentElement.classList.remove("online");
 
@@ -30,7 +30,7 @@ function disableOnlineTheme() {
   window.location.reload();
 }
 
-function onlineThemeIsEnabled() {
+export function onlineThemeIsEnabled() {
   return window.localStorage.getItem("onlineThemeEnabled") === "true";
 }
 
