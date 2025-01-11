@@ -3,10 +3,13 @@ import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import HomePageLayout from "./HomePageLayout.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 
-import { PREVIOUS_REVUES, SUBGROUPS } from "@/lib/constants";
+import { PREVIOUS_REVUES } from "@/lib/constants";
 import { Image } from "astro:assets";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import CardDetail from "@/components/Card/CardDetail.astro";
+import { getCollection } from "astro:content";
+
+const groups = await getCollection("grupper");
 ---
 
 <HomePageLayout>
@@ -33,7 +36,7 @@ import CardDetail from "@/components/Card/CardDetail.astro";
       class="max-w-screen-sm mx-auto md:h-auto h-28 overflow-scroll grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
     >
       {
-        SUBGROUPS.map(({ name }) => (
+        groups.map(({ data: { name } }) => (
           <CardDetail>
             <span class="font-medium">{name}</span>
           </CardDetail>

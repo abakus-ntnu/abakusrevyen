@@ -15,7 +15,8 @@ import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebild
 // Perioder
 export const RECRUITMENT_START = new Date(2024, 7, 15);
 export const RECRUITMENT_END = new Date(2024, 8, 15);
-export const SHOW_START = new Date(2025, 2, 14, 19, 0, 0);
+export const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
+export const SHOW_START = new Date(2025, 2, 14, 19, 0, 0); // Premiære
 export const SHOW_END = new Date(2025, 2, 16);
 
 export const SHOWS = [

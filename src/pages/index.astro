@@ -7,6 +7,7 @@ import Recruitment from "@/layouts/Home/Recruitment.astro";
 import {
   RECRUITMENT_START,
   RECRUITMENT_END,
+  COUNTDOWN_START,
   SHOW_START,
   SHOW_END,
 } from "@/lib/constants";
@@ -15,12 +16,17 @@ type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
 
 const periods: { from: Date; period: Period }[] = [
   { from: RECRUITMENT_START, period: "recruitment" },
-  { from: RECRUITMENT_END, period: "showStarting" },
+  { from: RECRUITMENT_END, period: "break" },
+  { from: COUNTDOWN_START, period: "showStarting" },
   { from: SHOW_START, period: "showCurrent" },
   { from: SHOW_END, period: "break" },
 ];
 
-function getCurrentPeriod(): Period {
+function getCurrentPeriod(override: Period | undefined = undefined): Period {
+  if (override) {
+    return override;
+  }
+
   let now = new Date();
 
   for (let period of periods.slice().reverse()) {
@@ -32,7 +38,7 @@ function getCurrentPeriod(): Period {
   return "break";
 }
 
-const period = getCurrentPeriod();
+const period = getCurrentPeriod("showStarting");
 ---
 
 {
