@@ -15,12 +15,12 @@ import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebild
 // Forestillinger. Husk å sortere basert på tid med premiæren først
 export const SHOWS = [
   {
-    name: "Abakusrevyen premiere",
+    name: "Premiere",
     when: new Date(2025, 2, 14, 20, 0, 0),
     where: "Byscenen i Trondheim",
   },
   {
-    name: "Forestilling 2",
+    name: "Andre Forestilling",
     when: new Date(2025, 2, 15, 12, 0, 0),
     where: "Byscenen i Trondheim",
   },
