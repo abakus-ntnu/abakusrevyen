@@ -10,17 +10,23 @@ const leaders = await getCollection("ledere");
 ---
 
 <PageLayout title="Ledere">
-  <div class="mx-auto container space-y-6">
+  <div class="mx-auto container space-y-6 p-6">
     <Title>
       Møt revyens <span class="text-primary">ledere</span>
     </Title>
 
-    <Grid>
+    <Grid class="!gap-10">
       {
-        leaders.map(({ slug, data: { name, image } }) => (
+        leaders.map(({ slug, data: { name, image, leaderOf } }) => (
           <a href={`/ledere/${slug}`}>
-            <div class="rounded-lg overflow-hidden">
-              <img src={image} alt={`${name} profile picture`} />
+            <div
+              class="bg-cover aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
+              style={`background-image: url(${image})`}
+            >
+              <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
+                <h6 class="font-bold">{name}</h6>
+                Leder av {leaderOf.map((groupRef) => groupRef.slug).join(", ")}
+              </div>
             </div>
           </a>
         ))
