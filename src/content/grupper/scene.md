@@ -4,7 +4,7 @@ brief: "Vi bygger og driver scenen"
 logo: "@/images/undergrupper_logoer/scene-logo.jpg"
 ---
 
-# Revystyret
+# Scene
 
 Scenegruppa jobber med å designe og bygge den delen av scenen som bandet står på, samt lage rekvisitter og kulisser. I tillegg fungerer vi som scenearbeidere under forestillingene. Vi lager også et lysskilt som er selve ansiktet til revyen.
 
