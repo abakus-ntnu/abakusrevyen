@@ -1,4 +1,5 @@
 ---
+import Title from "@/components/Common/Title.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
@@ -9,8 +10,8 @@ const leaders = await getCollection("ledere");
 ---
 
 <PageLayout title="Om oss">
-  <div class="container mx-auto">
-    <h1 class="font-medium text-xl text-center mb-6">Om oss</h1>
+  <div class="container mx-auto space-y-6">
+    <Title>Om oss</Title>
 
     <ul>
       {

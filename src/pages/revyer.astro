@@ -1,14 +1,17 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import { PREVIOUS_REVUES } from "../lib/constants";
-import Card from "../components/Card/Card.astro";
+
+import Card from "@/components/Card/Card.astro";
+import LinkButton from "@/components/LinkButton/LinkButton.astro";
+import Title from "@/components/Common/Title.astro";
 import { Image } from "astro:assets";
-import LinkButton from "../components/LinkButton/LinkButton.astro";
+
+import { PREVIOUS_REVUES } from "@/lib/constants";
 ---
 
 <PageLayout title="Tidligere Revyer">
   <div class="container mx-auto mb-12 p-3">
-    <h1 class="font-medium text-xl text-center pb-2">Tidligere Revyer</h1>
+    <Title class="pb-2">Tidligere Revyer</Title>
     <ul
       class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
     >

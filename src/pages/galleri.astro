@@ -1,15 +1,19 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
+
+import Title from "@/components/Common/Title.astro";
+import { Image } from "astro:assets";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 import { GALLERY_IMAGES } from "../lib/constants";
-import { Image } from "astro:assets";
 ---
 
 <PageLayout title="Bildegalleri">
   <div class="container mx-auto mb-12 p-3">
-    <h1 class="font-medium text-xl text-center pb-2">Galleri</h1>
+    <Title class="pb-2">Galleri</Title>
 
     <div class="swiper">
       <div class="swiper-wrapper pb-10 pt-0.5 bg-background-accent">

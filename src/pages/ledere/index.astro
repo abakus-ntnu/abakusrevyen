@@ -1,27 +1,30 @@
 ---
-import Card from "@/components/Card/Card.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
+
+import Grid from "@/components/Common/Grid.astro";
+import Title from "@/components/Common/Title.astro";
+
 import { getCollection } from "astro:content";
 
 const leaders = await getCollection("ledere");
 ---
 
 <PageLayout title="Ledere">
-  <div class="mx-auto container">
-    <h1 class="text-2xl text-center font-medium">Ledere</h1>
-    <div
-      class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
-    >
+  <div class="mx-auto container space-y-6">
+    <Title>
+      Møt revyens <span class="text-primary">ledere</span>
+    </Title>
+
+    <Grid>
       {
         leaders.map(({ slug, data: { name, image } }) => (
           <a href={`/ledere/${slug}`}>
-            <Card>
+            <div class="rounded-lg overflow-hidden">
               <img src={image} alt={`${name} profile picture`} />
-              {name}
-            </Card>
+            </div>
           </a>
         ))
       }
-    </div>
+    </Grid>
   </div>
 </PageLayout>

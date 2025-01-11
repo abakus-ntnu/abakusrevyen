@@ -3,13 +3,12 @@ import { getCollection } from "astro:content";
 import Card from "../Card/Card.astro";
 import CardDetail from "../Card/CardDetail.astro";
 import { Image } from "astro:assets";
+import Grid from "../Common/Grid.astro";
 
 const groups = await getCollection("grupper");
 ---
 
-<div
-  class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
->
+<Grid>
   {
     groups.map(({ slug, data: { name, brief, logo } }) => (
       <a href={`/grupper/${slug}`}>
@@ -23,4 +22,4 @@ const groups = await getCollection("grupper");
       </a>
     ))
   }
-</div>
+</Grid>
