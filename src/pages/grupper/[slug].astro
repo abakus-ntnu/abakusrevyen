@@ -23,6 +23,7 @@ const { slug }: { slug: ValidContentEntrySlug<"grupper"> } = Astro.params;
 const entry = await getEntry("grupper", slug);
 const { name, logo, leaders } = entry.data;
 
+// Witchcraft? Yes. Works? Also yes. Fix if you can plz.
 const rankedLeaders = await (leaders ?? []).reduce<
   | { [title: string]: CollectionEntry<"ledere">[] }
   | Promise<{ [title: string]: CollectionEntry<"ledere">[] }>
@@ -35,8 +36,6 @@ const rankedLeaders = await (leaders ?? []).reduce<
   nextAcc[title] = [leader, ...(nextAcc[title] ?? [])];
   return nextAcc;
 }, {});
-
-console.log(rankedLeaders);
 
 const { Content } = await render(entry);
 ---

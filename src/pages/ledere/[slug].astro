@@ -1,7 +1,10 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
+import Card from "@/components/Card/Card.astro";
+import Link from "@/components/LinkButton/Link.astro";
 import { Image } from "astro:assets";
+
 import { getEntries } from "astro:content";
 import {
   getEntry,
@@ -9,6 +12,7 @@ import {
   getCollection,
   type ValidContentEntrySlug,
 } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const entries = await getCollection("ledere");
@@ -34,16 +38,50 @@ const alt = leaderOf
   .map((ref) => `${ref.title} of ${getGroup(ref.group)?.data.name}`)
   .join(", ");
 
+// Witchcraft? Yes. Works? Also yes. Fix if you can plz.
+const leaderOfGroups = await leaderOf.reduce<
+  | { [title: string]: CollectionEntry<"grupper">[] }
+  | Promise<{ [title: string]: CollectionEntry<"grupper">[] }>
+>(async (acc, ref) => {
+  let nextAcc = await acc;
+  // Fuck it, force it to be a type which probably works or something.
+  nextAcc[ref.title] = [
+    getGroup(ref.group) as CollectionEntry<"grupper">,
+    ...(nextAcc[ref.title] ?? []),
+  ];
+  return nextAcc;
+}, {});
+
 const { Content } = await render(entry);
 ---
 
 <ArticleLayout title={name}>
-  <img
+  <Image
     src={image}
-    width="auto"
-    height="auto"
+    width={500}
+    height={500}
     alt={alt}
     class="rounded-lg w-56"
   />
+
   <Content />
+
+  <Card class="mt-12 max-w-screen-sm w-full">
+    <h2 class="text-lg leading-none mt-0 mb-3">Grupper</h2>
+    {
+      Object.entries(leaderOfGroups).map(([title, groups]) => (
+        <div class="font-medium flex sm:flex-row flex-col gap-1">
+          {title}:
+          <div class="flex sm:flex-row flex-col">
+            {groups.map((group) => (
+              <>
+                <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
+                <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
+              </>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </Card>
 </ArticleLayout>
