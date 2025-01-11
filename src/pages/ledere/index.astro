@@ -9,27 +9,43 @@ import type { ValidContentEntrySlug } from "astro:content";
 
 const leaders = await getCollection("ledere");
 
-const supremeLeaders = leaders.filter(
-  (leader) =>
-    leader.data.leaderOf.find((group) => group.slug === "revystyret") !==
-    undefined,
-);
+const supremeLeaders = leaders
+  // Only get the supreme leaders
+  .filter(
+    (leader) =>
+      leader.data.leaderOf.find((group) => group.slug === "revystyret") !==
+      undefined,
+  )
+  // Sort the leaders above other titles
+  .toSorted(
+    (a, b) =>
+      (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
+  );
 
+// Find the correct pronoun for the supreme leaders
 const supremeLeaderPronoun =
   supremeLeaders.length > 1
-    ? "de"
+    ? "de" // Multiple leaders
     : supremeLeaders[0].data.gender === "male"
-      ? "han"
+      ? "han" // Male leader
       : supremeLeaders[0].data.gender === "female"
-        ? "hun"
-        : "hen";
+        ? "hun" // Female leader
+        : "hen"; // Other
 
-const plebians = leaders.filter(
-  (leader) =>
-    leader.data.leaderOf.find((group) => group.slug === "revystyret") ===
-    undefined,
-);
+const plebians = leaders
+  // Get those that arent (or arent just) supreme leaders
+  .filter(
+    (leader) =>
+      leader.data.leaderOf.find((group) => group.slug !== "revystyret") !==
+      undefined,
+  )
+  // And again sort the leaders above other titles
+  .toSorted(
+    (a, b) =>
+      (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
+  );
 
+// Get the groups of the leaders
 const groups = await getCollection("grupper");
 
 function getGroup(groupRef: {
@@ -53,24 +69,29 @@ function getGroup(groupRef: {
 
     <div class="flex sm:flex-row flex-col justify-center gap-10 w-full">
       {
-        supremeLeaders.map(({ slug, data: { name, image, leaderOf } }) => (
-          <a href={`/ledere/${slug}`} class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full">
-            <div
-              class="bg-cover w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
-              style={`background-image: url(${image})`}
+        supremeLeaders.map(
+          ({ slug, data: { name, title, image, leaderOf } }) => (
+            <a
+              href={`/ledere/${slug}`}
+              class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full"
             >
-              <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
-                <h6 class="font-bold">{name}</h6>
-                Leder av{" "}
-                <span class="text-primary font-medium">
-                  {leaderOf
-                    .map((groupRef) => getGroup(groupRef)?.data.name)
-                    .join(", ")}
-                </span>
+              <div
+                class="bg-cover w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
+                style={`background-image: url(${image})`}
+              >
+                <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
+                  <h6 class="font-bold">{name}</h6>
+                  {title} av{" "}
+                  <span class="text-primary font-medium">
+                    {leaderOf
+                      .map((groupRef) => getGroup(groupRef)?.data.name)
+                      .join(", ")}
+                  </span>
+                </div>
               </div>
-            </div>
-          </a>
-        ))
+            </a>
+          ),
+        )
       }
     </div>
 
@@ -84,7 +105,7 @@ function getGroup(groupRef: {
 
     <Grid class="!gap-10 pt-6">
       {
-        plebians.map(({ slug, data: { name, image, leaderOf } }) => (
+        plebians.map(({ slug, data: { name, title, image, leaderOf } }) => (
           <a href={`/ledere/${slug}`}>
             <div
               class="bg-cover bg-center aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
@@ -92,7 +113,7 @@ function getGroup(groupRef: {
             >
               <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
                 <h6 class="font-bold">{name}</h6>
-                Leder av{" "}
+                {title} av{" "}
                 <span class="font-medium text-primary">
                   {leaderOf
                     .map((groupRef) => getGroup(groupRef)?.data.name)

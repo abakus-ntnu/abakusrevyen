@@ -37,6 +37,7 @@ const ledere = defineCollection({
       leaderOf: z
         .array(reference("grupper"))
         .min(1, "Not a leader of any group"),
+      title: z.string().default("Leder"),
     }),
 });
 

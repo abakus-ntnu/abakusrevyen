@@ -19,11 +19,18 @@ export async function getStaticPaths() {
 const { slug }: { slug: ValidContentEntrySlug<"ledere"> } = Astro.params;
 
 const entry = await getEntry("ledere", slug);
-const { name, image, leaderOf } = entry.data;
+const { name, title, image, leaderOf } = entry.data;
 
 const { Content } = await render(entry);
 
 const groups = await getEntries(leaderOf);
+
+function getGroup(groupRef: {
+  collection: "grupper";
+  slug: ValidContentEntrySlug<"grupper">;
+}) {
+  return groups.find((group) => group.slug === groupRef.slug);
+}
 ---
 
 <ArticleLayout title={name}>
@@ -31,7 +38,7 @@ const groups = await getEntries(leaderOf);
     src={image}
     width="auto"
     height="auto"
-    alt={`Leder av ${leaderOf.map((ref) => ref.slug).join(", ")}`}
+    alt={`${title} av ${leaderOf.map((ref) => getGroup(ref)?.data.name).join(", ")}`}
     class="rounded-lg w-56"
   />
   <Content />
