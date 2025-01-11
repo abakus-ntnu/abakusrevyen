@@ -5,20 +5,13 @@ import { getCollection, getEntry, render } from "astro:content";
 
 const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
+const leaders = await getCollection("ledere");
 ---
 
 <PageLayout title="Om oss">
   <div class="container mx-auto">
-    <h1 class="font-medium text-xl text-center pb-2">Om oss</h1>
-    <a
-      >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fermentum
-      elit metus, ac consequat arcu hendrerit at. Donec ac arcu pharetra,
-      feugiat nisl vel, auctor erat. Donec quis erat id tellus mattis interdum
-      vitae sed ante. Nullam vehicula sit amet velit sed volutpat. Sed id
-      facilisis velit. Nunc facilisis rutrum nunc et blandit. Maecenas lobortis
-      risus vel ante euismod, sed lacinia quam pellentesque. Orci varius natoque
-      penatibus et magnis dis parturient montes, nascetur ridiculus mus.</a
-    >
+    <h1 class="font-medium text-xl text-center mb-6">Om oss</h1>
+
     <ul>
       {
         om_oss.map(({ slug, data: { title } }) => (
@@ -29,15 +22,32 @@ const groups = await getCollection("grupper");
       }
     </ul>
 
-    <ul>
-      {
-        groups.map(({ slug, data: { name, brief, logo } }) => (
-          <li>
-            <Image src={logo} alt={`${name} logo`} />
-            <a href={`/grupper/${slug}`}>{name}</a>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="flex gap-6">
+      <ul>
+        {
+          groups.map(({ slug, data: { name, brief, logo } }) => (
+            <li>
+              <a href={`/grupper/${slug}`}>
+                <Image src={logo} alt={`${name} logo`} />
+                {name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul>
+        {
+          leaders.map(({ slug, data: { name, image } }) => (
+            <li>
+              <a href={`/ledere/${slug}`}>
+                <img src={image} alt={`${name} profile picture`} />
+                {name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </PageLayout>
