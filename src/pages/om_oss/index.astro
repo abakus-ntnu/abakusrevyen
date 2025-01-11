@@ -1,8 +1,11 @@
 ---
-import Title from "@/components/Common/Title.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
+
+import MultiImageCard from "@/components/Card/MultiImageCard.astro";
+import Title from "@/components/Common/Title.astro";
 import { Image } from "astro:assets";
-import { getCollection, getEntry, render } from "astro:content";
+
+import { getCollection } from "astro:content";
 
 const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
@@ -13,6 +16,32 @@ const leaders = await getCollection("ledere");
   <div class="container mx-auto space-y-6">
     <Title>Om oss</Title>
 
+    <div
+      class="grid grid-cols-2 mx-auto max-w-screen-sm lg:gap-24 md:gap-16 gap-10 py-6 px-6"
+    >
+      <a href="/grupper" class="group">
+        <MultiImageCard
+          images={groups.map((group) => ({
+            src: group.data.logo,
+            alt: `${group.data.name} logo`,
+          }))}
+        >
+          Grupper
+        </MultiImageCard>
+      </a>
+
+      <a href="/ledere" class="group">
+        <MultiImageCard
+          images={leaders.map((leader) => ({
+            src: leader.data.image,
+            alt: `${leader.data.name} picture`,
+          }))}
+        >
+          Ledere
+        </MultiImageCard>
+      </a>
+    </div>
+
     <ul>
       {
         om_oss.map(({ slug, data: { title } }) => (
@@ -22,33 +51,5 @@ const leaders = await getCollection("ledere");
         ))
       }
     </ul>
-
-    <div class="flex gap-6">
-      <ul>
-        {
-          groups.map(({ slug, data: { name, brief, logo } }) => (
-            <li>
-              <a href={`/grupper/${slug}`}>
-                <Image src={logo} alt={`${name} logo`} />
-                {name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-
-      <ul>
-        {
-          leaders.map(({ slug, data: { name, image } }) => (
-            <li>
-              <a href={`/ledere/${slug}`}>
-                <img src={image} alt={`${name} profile picture`} />
-                {name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
   </div>
 </PageLayout>

@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  images: {
+    src: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
+    alt: string;
+  }[];
+}
+
+const { images } = Astro.props;
+---
+
+<div>
+  <div
+    class="group relative hover:scale-105 w-auto aspect-square transition-transform m-5 max-w-full"
+  >
+    {
+      images
+        .slice(0, 3)
+        .map(({ src, alt }) => (
+          <div
+            class:list={[
+              "absolute top-0 left-0 w-full rounded-lg overflow-hidden aspect-square transition-transform",
+              "first:-rotate-12 last:rotate-12 first:-z-10 last:-z-10",
+              "group-hover:-translate-y-5 group-hover:first:-translate-x-5 group-hover:last:translate-x-5 group-hover:first:-rotate-[20deg] group-hover:last:rotate-[20deg]",
+            ]}
+          >
+            {typeof src === "string" ? (
+              <Image
+                src={src}
+                alt={alt}
+                width={500}
+                height={500}
+                class="w-full"
+              />
+            ) : (
+              <Image src={src} alt={alt} class="w-full" />
+            )}
+          </div>
+        ))
+    }
+  </div>
+  <h2
+    class="text-lg font-medium text-center group-hover:scale-105 transition-transform"
+  >
+    <slot />
+  </h2>
+</div>
