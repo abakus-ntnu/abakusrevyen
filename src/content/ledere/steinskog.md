@@ -4,7 +4,7 @@ email: revy-sosial@abakus.no
 image: https://thumbor.abakus.no/aerppWtursvpbwTU4FS2KEReT54=/200x200/IMG_3804.jpeg
 gender: female
 leaderOf:
-  - sosial
+  - group: sosial
 ---
 
 # Dina Hagen Steinskog

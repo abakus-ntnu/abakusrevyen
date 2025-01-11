@@ -1,0 +1,17 @@
+---
+const { name, image } = Astro.props;
+---
+
+<div
+  class="bg-cover bg-center w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end"
+  style={`background-image: url(${image})`}
+>
+  <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
+    <slot name="name">
+      <h6 class="font-bold">
+        {name}
+      </h6>
+    </slot>
+    <slot />
+  </div>
+</div>

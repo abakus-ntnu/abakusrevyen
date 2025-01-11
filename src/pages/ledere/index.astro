@@ -3,6 +3,8 @@ import PageLayout from "@/layouts/PageLayout.astro";
 
 import Grid from "@/components/Common/Grid.astro";
 import Title from "@/components/Common/Title.astro";
+import PersonCard from "@/components/Card/PersonCard.astro";
+import Link from "@/components/LinkButton/Link.astro";
 
 import { getCollection } from "astro:content";
 import type { ValidContentEntrySlug } from "astro:content";
@@ -13,10 +15,19 @@ const supremeLeaders = leaders
   // Only get the supreme leaders
   .filter(
     (leader) =>
-      leader.data.leaderOf.find((group) => group.slug === "revystyret") !==
+      leader.data.leaderOf.find(({ group }) => group.slug === "revystyret") !==
       undefined,
   )
   // Sort the leaders above other titles
+  .map((leader) => ({
+    ...leader,
+    data: {
+      ...leader.data,
+      title: leader.data.leaderOf.find(
+        ({ group }) => group.slug === "revystyret",
+      )?.title,
+    },
+  }))
   .toSorted(
     (a, b) =>
       (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
@@ -36,10 +47,19 @@ const plebians = leaders
   // Get those that arent (or arent just) supreme leaders
   .filter(
     (leader) =>
-      leader.data.leaderOf.find((group) => group.slug !== "revystyret") !==
+      leader.data.leaderOf.find(({ group }) => group.slug !== "revystyret") !==
       undefined,
   )
   // And again sort the leaders above other titles
+  .map((leader) => ({
+    ...leader,
+    data: {
+      ...leader.data,
+      title: leader.data.leaderOf.reduce((last, curr) =>
+        curr.title === "Leder" ? curr : last,
+      ).title,
+    },
+  }))
   .toSorted(
     (a, b) =>
       (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
@@ -73,22 +93,16 @@ function getGroup(groupRef: {
           ({ slug, data: { name, title, image, leaderOf } }) => (
             <a
               href={`/ledere/${slug}`}
-              class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full"
+              class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full transition-transform hover:scale-105"
             >
-              <div
-                class="bg-cover w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
-                style={`background-image: url(${image})`}
-              >
-                <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
-                  <h6 class="font-bold">{name}</h6>
-                  {title} av{" "}
-                  <span class="text-primary font-medium">
-                    {leaderOf
-                      .map((groupRef) => getGroup(groupRef)?.data.name)
-                      .join(", ")}
-                  </span>
-                </div>
-              </div>
+              <PersonCard name={name} image={image}>
+                {title} av{" "}
+                <span class="text-primary font-medium">
+                  {leaderOf
+                    .map((ref) => getGroup(ref.group)?.data.name)
+                    .join(", ")}
+                </span>
+              </PersonCard>
             </a>
           ),
         )
@@ -97,30 +111,26 @@ function getGroup(groupRef: {
 
     <p class="max-w-prose mx-auto">
       Men {supremeLeaderPronoun} kan ikke få til alt alene! For å virkelig få revyen
-      i gang trenger vi også ledere for hver av revyens <a
-        href="/grupper"
-        class="text-primary underline hover:text-secondary">grupper</a
+      i gang trenger vi også ledere for hver av revyens <Link href="/grupper"
+        >grupper</Link
       >. De rollene fylles av disse fantastiske folka!
     </p>
 
     <Grid class="!gap-10 pt-6">
       {
         plebians.map(({ slug, data: { name, title, image, leaderOf } }) => (
-          <a href={`/ledere/${slug}`}>
-            <div
-              class="bg-cover bg-center aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end hover:scale-105 transition-transform"
-              style={`background-image: url(${image})`}
-            >
-              <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
-                <h6 class="font-bold">{name}</h6>
-                {title} av{" "}
-                <span class="font-medium text-primary">
-                  {leaderOf
-                    .map((groupRef) => getGroup(groupRef)?.data.name)
-                    .join(", ")}
-                </span>
-              </div>
-            </div>
+          <a
+            href={`/ledere/${slug}`}
+            class="transition-transform hover:scale-105"
+          >
+            <PersonCard name={name} image={image}>
+              {title} av{" "}
+              <span class="font-medium text-primary">
+                {leaderOf
+                  .map((ref) => getGroup(ref.group)?.data.name)
+                  .join(", ")}
+              </span>
+            </PersonCard>
           </a>
         ))
       }

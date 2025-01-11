@@ -35,9 +35,13 @@ const ledere = defineCollection({
       image: z.string().url(),
       gender: z.enum(["male", "female", "other"]),
       leaderOf: z
-        .array(reference("grupper"))
+        .array(
+          z.object({
+            group: reference("grupper"),
+            title: z.string().default("Leder"),
+          }),
+        )
         .min(1, "Not a leader of any group"),
-      title: z.string().default("Leder"),
     }),
 });
 

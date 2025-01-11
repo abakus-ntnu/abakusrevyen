@@ -4,7 +4,7 @@ email: revy-scene@abakus.no
 image: https://thumbor.abakus.no/jnGFkFaCtOHzGsah7HsaIeOlfhw=/200x200/1000004712.png
 gender: male
 leaderOf:
-  - scene
+  - group: scene
 ---
 
 # Kasper Mustad Juell
