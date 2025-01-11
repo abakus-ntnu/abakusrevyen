@@ -1,19 +1,20 @@
 ---
+import { getCollection } from "astro:content";
 import Card from "../Card/Card.astro";
 import CardDetail from "../Card/CardDetail.astro";
 import { Image } from "astro:assets";
 
-import { SUBGROUPS } from "@/lib/constants";
+const groups = await getCollection("grupper");
 ---
 
 <div
   class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
 >
   {
-    SUBGROUPS.map(({ name, brief, image }) => (
+    groups.map(({ data: { name, brief, logo } }) => (
       <Card>
         <div class="flex gap-3 font-medium">
-          <Image class="w-6 rounded-full" src={image} alt={`${name} logo`} />
+          <Image class="w-6 rounded-full" src={logo} alt={`${name} logo`} />
           {name}
         </div>
         <CardDetail>{brief}</CardDetail>

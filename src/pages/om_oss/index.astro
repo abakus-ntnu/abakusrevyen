@@ -1,8 +1,10 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
+import { Image } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 
-const entries = await getCollection("om_oss");
+const om_oss = await getCollection("om_oss");
+const groups = await getCollection("grupper");
 ---
 
 <PageLayout title="Om oss">
@@ -18,9 +20,20 @@ const entries = await getCollection("om_oss");
   >
   <ul>
     {
-      entries.map(({ slug, data: { title } }) => (
+      om_oss.map(({ slug, data: { title } }) => (
         <li>
           <a href={`/om_oss/${slug}`}>{title}</a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul>
+    {
+      groups.map(({ slug, data: { name, brief, logo } }) => (
+        <li>
+          <Image src={logo} alt={`${name} logo`} />
+          <a href={`/om_oss/${slug}`}>{name}</a>
         </li>
       ))
     }
