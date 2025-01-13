@@ -7,7 +7,7 @@ import Recruitment from "@/layouts/Home/Recruitment.astro";
 import { getCurrentPeriod, nextShow } from "@/lib/periods";
 import { SHOWS } from "@/lib/constants";
 
-const period = getCurrentPeriod();
+const period = getCurrentPeriod("showCurrent");
 const next = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
