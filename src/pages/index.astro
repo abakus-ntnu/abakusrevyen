@@ -5,10 +5,8 @@ import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
 import { getCurrentPeriod, nextShow } from "@/lib/periods";
-import { SHOWS } from "@/lib/constants";
 
-const period = getCurrentPeriod("showCurrent");
-const next = nextShow() ?? SHOWS.toReversed()[0];
+const period = getCurrentPeriod();
 ---
 
 {
@@ -19,6 +17,6 @@ const next = nextShow() ?? SHOWS.toReversed()[0];
   ) : period == "showCurrent" ? (
     <Live />
   ) : (
-    <Countdown date={next.when} />
+    <Countdown />
   )
 }

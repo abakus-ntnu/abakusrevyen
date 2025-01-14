@@ -13,16 +13,27 @@ import GrevensTidGruppebilde from "../images/gruppebilder/grevens_tid_gruppebild
 import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebilde.jpg";
 
 // Forestillinger. Husk å sortere basert på tid med premiæren først
+export type Show = {
+  name: string;
+  when: Date;
+  where: { name: string; mapLink: string };
+};
 export const SHOWS = [
   {
     name: "Premiere",
     when: new Date(2025, 2, 14, 20, 0, 0),
-    where: "Byscenen i Trondheim",
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+    },
   },
   {
     name: "Andre Forestilling",
     when: new Date(2025, 2, 15, 12, 0, 0),
-    where: "Byscenen i Trondheim",
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+    },
   },
 ];
 

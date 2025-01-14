@@ -5,13 +5,14 @@ import { Clock, MapPin, Ticket } from "lucide-astro";
 
 import { getCalenderURL } from "@/lib/calender";
 import LinkButton from "../LinkButton/LinkButton.astro";
+import type { Show } from "@/lib/constants";
 
 interface Props {
-  where?: string;
-  when: Date | string;
+  show: Show;
 }
 
-const { where = "Byscenen, Trondheim", when } = Astro.props;
+const { show } = Astro.props;
+const when = show.when;
 
 let whenText;
 
@@ -46,10 +47,11 @@ if (typeof when === "string") {
     <div class="flex flex-col gap-2">
       <span>Hvor</span>
       <LinkButton
-        href="https://maps.app.goo.gl/dyYedVyzZWbPpbVQ8"
+        href={show.where.mapLink}
+        external={true}
         class="flex gap-3 shadow-md"
       >
-        <MapPin />{where}
+        <MapPin />{show.where.name}
       </LinkButton>
     </div>
 
@@ -64,6 +66,7 @@ if (typeof when === "string") {
       <span>Kjøp bilett</span>
       <LinkButton
         href="https://vier.live/c/abakusrevyen"
+        external={true}
         class="flex gap-3 hover:shadow-md"
       >
         <Ticket />Ticketmaster</LinkButton

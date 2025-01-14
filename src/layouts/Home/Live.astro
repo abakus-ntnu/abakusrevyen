@@ -6,19 +6,12 @@ import { nextShow } from "@/lib/periods";
 import { SHOWS } from "@/lib/constants";
 
 const next = nextShow() ?? SHOWS.toReversed()[0];
-
-// Format date in Norwegian locale
-const formattedDate = next.when.toLocaleDateString("nb-NO", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 ---
 
 <HomePageLayout>
   <div class="w-full flex flex-col justify-center items-center gap-6">
     <h1 class="text-2xl font-medium">Vi er i gang!</h1>
     <ShowLogo />
-    <ShowDetailsCard when={formattedDate} />
+    <ShowDetailsCard show={next} />
   </div>
 </HomePageLayout>

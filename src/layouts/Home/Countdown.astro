@@ -4,18 +4,16 @@ import HomePageLayout from "./HomePageLayout.astro";
 import CountdownComp from "@/components/Countdown/Countdown.astro";
 import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
+import { SHOWS } from "@/lib/constants";
+import { nextShow } from "@/lib/periods";
 
-interface Props {
-  date: Date;
-}
-
-const { date } = Astro.props;
+const show = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
 <HomePageLayout>
   <div class="w-full flex flex-col justify-center items-center gap-6">
-    <CountdownComp date={date} />
+    <CountdownComp date={show.when} />
     <ShowLogo />
-    <ShowDetailsCard when={date} />
+    <ShowDetailsCard show={show} />
   </div>
 </HomePageLayout>
