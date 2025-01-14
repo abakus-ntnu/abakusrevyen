@@ -10,7 +10,10 @@ import { SHOWS } from "@/lib/constants";
 import Card from "@/components/Card/Card.astro";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
-import { undefined } from "astro:schema";
+
+import { Calendar, Pencil } from "lucide-astro";
+
+import TempDemoImage from "@/images/gruppebilder/best_foer_gruppebilde.png";
 
 const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
@@ -99,13 +102,15 @@ const spotlightLeader =
         <h2 class="font-bold text-lg">Spotlight</h2>
 
         <a href={`/grupper/${spotlight.slug}`}>
-          <div class="grow flex gap-3">
+          <div
+            class="grow flex gap-3 bg-bg-accent border-[1px] border-gray-200 dark:border-gray-500 rounded-lg"
+          >
             <div class="relative min-w-fit">
               <Image
                 src={spotlight.data.logo}
                 alt="Spotlight group logo"
                 loading="eager"
-                class="h-full w-auto aspect-square rounded-lg"
+                class="h-full w-auto aspect-square rounded-l-lg"
               />
               {
                 spotlightLeader ? (
@@ -120,9 +125,9 @@ const spotlightLeader =
                 ) : undefined
               }
             </div>
-            <div class="space-y-3">
+            <div class="space-y-3 py-3 pr-1.5">
               <h3 class="font-medium">{spotlight.data.name}</h3>
-              <p class="sm:text-base text-sm">
+              <p class="lg:text-base md:text-sm sm:text-base text-sm">
                 {spotlight.data.spotlight ?? spotlight.data.brief}
               </p>
             </div>
@@ -131,14 +136,47 @@ const spotlightLeader =
       </div>
     </div>
 
-    <div>
+    <div class="space-y-6">
       <h2 class="font-bold text-lg">Innlegg</h2>
 
-      <ul>
+      <ul class="space-y-3">
         {
-          om_oss.map(({ slug, data: { title } }) => (
+          om_oss.map(({ slug, data: { title, pubDate, updateDate } }) => (
             <li>
-              <a href={`/om_oss/${slug}`}>{title}</a>
+              <a href={`/om_oss/${slug}`}>
+                <div class="h-48 rounded-lg border-[1px] border-gray-200 dark:border-gray-500 flex gap-3">
+                  <Image
+                    src={TempDemoImage}
+                    alt="Post"
+                    class="h-full w-auto rounded-l-lg"
+                  />
+
+                  <div class="py-3 pr-1.5 flex flex-col justify-between">
+                    <h2 class="font-medium">{title}</h2>
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Consequatur, sint, cumque excepturi officia numquam minima
+                      minus aliquam reiciendis corrupti non distinctio
+                      repellendus, accusamus dicta? Odio dolore quibusdam unde
+                      cumque est.
+                    </p>
+                    <div class="flex text-sm items-center gap-3">
+                      <Calendar />{" "}
+                      {pubDate.toLocaleString("NO-nb", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })}
+                      <Pencil />
+                      {(updateDate ?? pubDate).toLocaleString("NO-nb", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </a>
             </li>
           ))
         }
