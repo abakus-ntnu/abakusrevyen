@@ -2,8 +2,50 @@
 import PageLayout from "@/layouts/PageLayout.astro";
 
 import Title from "@/components/Common/Title.astro";
+import PreviousRevuesBanner from "@/components/Branding/PreviousRevuesBanner.astro";
+import ProseArea from "@/components/Common/ProseArea.astro";
+import LinkButton from "@/components/LinkButton/LinkButton.astro";
+import Link from "@/components/LinkButton/Link.astro";
+import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
+import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 ---
 
 <PageLayout title="Opptak">
-  <Title>Opptak</Title>
+  <ProseArea class="container mx-auto text-center">
+    <Title><span class="text-primary">Bli med</span> i revyen!</Title>
+
+    <PreviousRevuesBanner />
+
+    <p>
+      Revyen er laget av studenter, for studenter. Hvert år har vi et opptak
+      hvor enhver student kan søke for å bli med å lage et utrolig show!
+    </p>
+
+    <p>
+      Som medlem i revyen vil du bli medlem av en av revyens undergrupper, som
+      alle har hvert sitt ansvar i revyen. Du kan bli <Link
+        href="/grupper/skuespill">skuespiller</Link
+      > eller <Link href="/grupper/band">bandmedlem</Link>
+      hvis du liker scenelyset, ellers så kan du jobbe bak scenen som
+      <Link href="/grupper/scene">scenearbeider</Link> eller
+      <Link href="/grupper/teknikk">teknisk ansvarlig</Link>.
+    </p>
+
+    <h2 class="mt-3">Du kan se alle mulighetene dine her</h2>
+  </ProseArea>
+
+  <div class="mx-auto max-w-screen-md my-6 space-y-6">
+    <FoldableFade>
+      <SubgroupGrid />
+    </FoldableFade>
+  </div>
+
+  <ProseArea class="container mx-auto text-center">
+    <LinkButton href="https://opptak.abakus.no/">Søk på revyen her</LinkButton>
+
+    <p>
+      Å være med i revyen er et <i>frivillig værv</i>. Det er ikke betalt, men
+      et veldig gøy og sosialt prosjekt over to semestere.
+    </p>
+  </ProseArea>
 </PageLayout>

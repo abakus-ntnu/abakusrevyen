@@ -1,12 +1,12 @@
 ---
-import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import HomePageLayout from "./HomePageLayout.astro";
-import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 
-import { PREVIOUS_REVUES } from "@/lib/constants";
-import { Image } from "astro:assets";
-import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import CardDetail from "@/components/Card/CardDetail.astro";
+import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
+import LinkButton from "@/components/LinkButton/LinkButton.astro";
+import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
+import PreviousRevuesBanner from "@/components/Branding/PreviousRevuesBanner.astro";
+
 import { getCollection } from "astro:content";
 
 const groups = await getCollection("grupper");
@@ -16,17 +16,7 @@ const groups = await getCollection("grupper");
   <div class="md:space-y-6 space-y-3">
     <h1 class="text-2xl font-medium text-center">Abakusrevyen har opptak!</h1>
 
-    <div class="grid grid-flow-col md:grid-rows-1 grid-rows-2 px-6 max-w-full">
-      {
-        PREVIOUS_REVUES.slice(0, 8).map(({ name, image, links }) => (
-          <div class="w-[1fr] even:rotate-12 odd:-rotate-12 hover:scale-110 transition-transform">
-            <a href={links[0].href}>
-              <Image src={image} alt={`${name} logo`} />
-            </a>
-          </div>
-        ))
-      }
-    </div>
+    <PreviousRevuesBanner />
   </div>
 
   <div class="md:space-y-6 space-y-3">
