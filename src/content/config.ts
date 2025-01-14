@@ -2,13 +2,15 @@ import { defineCollection, reference, z } from "astro:content";
 
 const om_oss = defineCollection({
   type: "content",
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updateDate: z.coerce.date().optional(),
-    language: z.enum(["no"]),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.coerce.date(),
+      updateDate: z.coerce.date().optional(),
+      language: z.enum(["no"]).default("no"),
+      image: image(),
+    }),
 });
 
 const grupper = defineCollection({

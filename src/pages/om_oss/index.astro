@@ -13,8 +13,6 @@ import { getEntry } from "astro:content";
 
 import { Calendar, Pencil } from "lucide-astro";
 
-import TempDemoImage from "@/images/gruppebilder/best_foer_gruppebilde.png";
-
 const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
 const leaders = await getCollection("ledere");
@@ -141,44 +139,47 @@ const spotlightLeader =
 
       <ul class="space-y-3">
         {
-          om_oss.map(({ slug, data: { title, pubDate, updateDate } }) => (
-            <li>
-              <a href={`/om_oss/${slug}`}>
-                <div class="h-48 rounded-lg border-[1px] border-gray-200 dark:border-gray-500 flex gap-3">
-                  <Image
-                    src={TempDemoImage}
-                    alt="Post"
-                    class="h-full w-auto rounded-l-lg"
-                  />
+          om_oss
+            .sort((a, b) => b.data.pubDate - a.data.pubDate)
+            .map(
+              ({
+                slug,
+                data: { title, pubDate, updateDate, description, image },
+              }) => (
+                <li>
+                  <a href={`/om_oss/${slug}`}>
+                    <div class="h-48 rounded-lg border-[1px] border-gray-200 dark:border-gray-500 flex gap-3">
+                      <div class="overflow-hidden">
+                        <Image
+                          src={image}
+                          alt={`${title} post`}
+                          class="h-full w-auto rounded-l-lg"
+                        />
+                      </div>
 
-                  <div class="py-3 pr-1.5 flex flex-col justify-between">
-                    <h2 class="font-medium">{title}</h2>
-                    <p>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Consequatur, sint, cumque excepturi officia numquam minima
-                      minus aliquam reiciendis corrupti non distinctio
-                      repellendus, accusamus dicta? Odio dolore quibusdam unde
-                      cumque est.
-                    </p>
-                    <div class="flex text-sm items-center gap-3">
-                      <Calendar />{" "}
-                      {pubDate.toLocaleString("NO-nb", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })}
-                      <Pencil />
-                      {(updateDate ?? pubDate).toLocaleString("NO-nb", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })}
+                      <div class="py-3 pr-1.5 flex flex-col justify-between">
+                        <h2 class="font-medium">{title}</h2>
+                        <p>{description}</p>
+                        <div class="flex text-sm items-center gap-3">
+                          <Calendar />{" "}
+                          {pubDate.toLocaleString("NO-nb", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}
+                          <Pencil />
+                          {(updateDate ?? pubDate).toLocaleString("NO-nb", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))
+                  </a>
+                </li>
+              ),
+            )
         }
       </ul>
     </div>

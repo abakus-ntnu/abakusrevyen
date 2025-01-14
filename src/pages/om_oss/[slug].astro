@@ -1,6 +1,8 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
+import { Image } from "astro:assets";
+
 import { getEntry, render, getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -11,9 +13,12 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const entry = await getEntry("om_oss", slug);
+const { title, image } = entry.data;
+
 const { Content } = await render(entry);
 ---
 
-<ArticleLayout title={slug}>
+<ArticleLayout title={title}>
+  <Image src={image} alt="Post" class="rounded-lg max-w-screen-md shadow-lg" />
   <Content />
 </ArticleLayout>
