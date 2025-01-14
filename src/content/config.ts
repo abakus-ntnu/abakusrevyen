@@ -17,6 +17,7 @@ const grupper = defineCollection({
     z.object({
       name: z.string(),
       brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
+      spotlight: z.string().max(300, "Spotlight is too long").optional(),
       logo: image(),
       leaders: z
         .array(reference("ledere"))
