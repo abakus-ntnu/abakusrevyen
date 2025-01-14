@@ -28,7 +28,7 @@ export const SHOWS = [
     },
   },
   {
-    name: "Andre Forestilling",
+    name: "Siste forestilling",
     when: new Date(2025, 2, 15, 12, 0, 0),
     where: {
       name: "Byscenen i Trondheim",

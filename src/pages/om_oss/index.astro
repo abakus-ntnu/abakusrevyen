@@ -26,7 +26,10 @@ const spotlightLeader =
 
 <PageLayout title="Om oss">
   <div class="container mx-auto space-y-6 px-6">
-    <Title>Om oss</Title>
+    <Title
+      >Om <span class="text-primary" id="about-branding">Abakusrevyen</span
+      ></Title
+    >
 
     <div
       class="grid grid-cols-2 mx-auto max-w-screen-sm lg:gap-24 md:gap-16 gap-10 py-6 md:px-6"
@@ -101,6 +104,7 @@ const spotlightLeader =
               <Image
                 src={spotlight.data.logo}
                 alt="Spotlight group logo"
+                loading="eager"
                 class="h-full w-auto aspect-square rounded-lg"
               />
               {
@@ -109,6 +113,7 @@ const spotlightLeader =
                     src={spotlightLeader.data.image}
                     width={500}
                     height={500}
+                    loading="eager"
                     alt="Spotlight leader"
                     class="absolute bottom-1.5 right-1.5 rounded-full h-1/2 w-auto aspect-square"
                   />

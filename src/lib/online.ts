@@ -19,6 +19,11 @@ export function enableOnlineTheme() {
     navbarLogo.src =
       "https://wiki.online.ntnu.no/attachments/680-Online_bla_o.png";
   }
+
+  const aboutBranding = window.document.getElementById("about-branding");
+  if (aboutBranding) {
+    aboutBranding.innerHTML = "Onlinerevyen";
+  }
 }
 
 export function disableOnlineTheme() {
