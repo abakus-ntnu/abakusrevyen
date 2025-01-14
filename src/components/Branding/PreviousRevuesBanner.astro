@@ -9,7 +9,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
     PREVIOUS_REVUES.slice(0, 8).map(({ name, image, links }) => (
       <div class="w-[1fr] even:rotate-12 odd:-rotate-12 hover:scale-110 transition-transform">
         <a href={links[0].href} target="_blank">
-          <Image src={image} alt={`${name} logo`} />
+          <Image src={image} alt={`${name} logo`} loading="eager" />
         </a>
       </div>
     ))
