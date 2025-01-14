@@ -16,14 +16,14 @@ import { GALLERY_IMAGES } from "../lib/constants";
     <Title class="pb-2">Galleri</Title>
 
     <div class="swiper">
-      <div class="swiper-wrapper pb-10 pt-0.5 bg-background-accent">
+      <div class="swiper-wrapper bg-background-accent pb-10 pt-0.5">
         {
           GALLERY_IMAGES.map((image) => (
             <div class="swiper-slide">
               <Image
                 src={image.src}
                 alt={image.alt}
-                class="w-full h-full object-cover"
+                class="h-full w-full object-cover"
               />
             </div>
           ))

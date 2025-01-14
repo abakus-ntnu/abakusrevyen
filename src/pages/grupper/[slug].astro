@@ -41,21 +41,21 @@ const { Content } = await render(entry);
 ---
 
 <ArticleLayout title={name}>
-  <Image src={logo} alt={`${name} logo`} class="rounded-lg w-56" />
+  <Image src={logo} alt={`${name} logo`} class="w-56 rounded-lg" />
 
   <Content />
 
-  <Card class="mt-12 max-w-screen-sm w-full">
-    <h2 class="text-lg leading-none mt-0 mb-3">Ledelse</h2>
+  <Card class="mt-12 w-full max-w-screen-sm">
+    <h2 class="mb-3 mt-0 text-lg leading-none">Ledelse</h2>
     {
       Object.entries(rankedLeaders).map(([title, leaders]) => (
-        <div class="font-medium flex sm:flex-row flex-col gap-1">
+        <div class="flex flex-col gap-1 font-medium sm:flex-row">
           {title}:
-          <div class="flex sm:flex-row flex-col">
+          <div class="flex flex-col sm:flex-row">
             {leaders.map((leader) => (
               <>
                 <Link href={`/ledere/${leader.slug}`}>{leader.data.name}</Link>
-                <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
+                <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
               </>
             ))}
           </div>

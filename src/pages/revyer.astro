@@ -13,7 +13,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
   <div class="container mx-auto mb-12 p-3">
     <Title class="pb-2">Tidligere Revyer</Title>
     <ul
-      class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+      class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       {
         PREVIOUS_REVUES.sort((a, b) => b.year.localeCompare(a.year)).map(
@@ -23,7 +23,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
                 <Image
                   src={revue.image}
                   alt={`Logo for ${revue.name}`}
-                  class="rounded-t-md aspect-square object-contain"
+                  class="aspect-square rounded-t-md object-contain"
                   loading="eager"
                 />
                 <h2 class={revue.dark ? "text-white" : "text-black"}>
@@ -41,7 +41,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
                         {link.name}
                       </LinkButton>
                     ) : (
-                      <i class="flex-grow text-black text-center p-1 rounded-md border-2 border-gray-300 bg-gray-300 cursor-not-allowed">
+                      <i class="flex-grow cursor-not-allowed rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
                         {link.name}
                       </i>
                     ),

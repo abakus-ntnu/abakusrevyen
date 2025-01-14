@@ -3,10 +3,10 @@ const { name, image } = Astro.props;
 ---
 
 <div
-  class="bg-cover bg-center w-full aspect-[5/6] rounded-lg p-1.5 flex flex-col justify-end"
+  class="flex aspect-[5/6] w-full flex-col justify-end rounded-lg bg-cover bg-center p-1.5"
   style={`background-image: url(${image})`}
 >
-  <div class="w-full bg-background px-3 py-1 rounded-md opacity-90 text-center">
+  <div class="w-full rounded-md bg-background px-3 py-1 text-center opacity-90">
     <slot name="name">
       <h6 class="font-bold">
         {name}

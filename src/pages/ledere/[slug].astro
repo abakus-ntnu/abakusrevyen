@@ -62,12 +62,12 @@ const { Content } = await render(entry);
     width={500}
     height={500}
     alt={alt}
-    class="rounded-lg w-56"
+    class="w-56 rounded-lg"
   />
 
   <Content />
 
-  <Card class="mt-12 max-w-screen-sm w-full">
+  <Card class="mt-12 w-full max-w-screen-sm">
     <h2 class="card-header">Kontakt</h2>
 
     <CardField title="Email">
@@ -81,7 +81,7 @@ const { Content } = await render(entry);
           {groups.map((group) => (
             <>
               <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
-              <span class="mr-1 sm:inline-block hidden last:hidden">,</span>
+              <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
             </>
           ))}
         </CardField>
@@ -92,6 +92,6 @@ const { Content } = await render(entry);
 
 <style>
   .card-header {
-    @apply text-lg leading-none my-0;
+    @apply my-0 text-lg leading-none;
   }
 </style>

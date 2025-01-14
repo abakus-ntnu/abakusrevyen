@@ -17,13 +17,13 @@ const ITEMS = {
 
 <header class="w-full">
   <div
-    class="container h-32 flex mx-auto px-6 py-3 justify-between items-center"
+    class="container mx-auto flex h-32 items-center justify-between px-6 py-3"
   >
     <a href="/" data-astro-prefetch="load">
       <Logo />
     </a>
 
-    <div class="flex gap-6 md:text-red">
+    <div class="md:text-red flex gap-6">
       <div class="hidden md:flex">
         <Navbar items={ITEMS} />
       </div>
@@ -32,7 +32,7 @@ const ITEMS = {
 
       <div class="flex md:hidden">
         <MobileNavbar client:load items={ITEMS}>
-          <span class="text-foreground hover:text-accent transition-colors">
+          <span class="text-foreground transition-colors hover:text-accent">
             <AlignJustify />
           </span>
         </MobileNavbar>

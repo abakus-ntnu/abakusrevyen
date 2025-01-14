@@ -1,5 +1,5 @@
 {
-  "plugins": ["prettier-plugin-astro"],
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
   "trailingComma": "all",
   "bracketSpacing": true,
   "tabWidth": 2,
@@ -19,5 +19,7 @@
         "parser": "json"
       }
     }
-  ]
+  ],
+  "tailwindStylesheet": "./src/styles/globals.css",
+  "tailwindConfig": "./tailwind.config.mjs"
 }

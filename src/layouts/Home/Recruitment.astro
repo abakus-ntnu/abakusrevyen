@@ -13,17 +13,17 @@ const groups = await getCollection("grupper");
 ---
 
 <HomePageLayout>
-  <div class="md:space-y-6 space-y-3">
-    <h1 class="text-2xl font-medium text-center">Abakusrevyen har opptak!</h1>
+  <div class="space-y-3 md:space-y-6">
+    <h1 class="text-center text-2xl font-medium">Abakusrevyen har opptak!</h1>
 
     <PreviousRevuesBanner />
   </div>
 
-  <div class="md:space-y-6 space-y-3">
+  <div class="space-y-3 md:space-y-6">
     <p class="text-center">Søk på verv i revyen og bli å lage årets revy!</p>
 
     <div
-      class="max-w-screen-sm mx-auto md:h-auto h-28 overflow-scroll grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3"
+      class="mx-auto grid h-28 max-w-screen-sm grid-cols-1 gap-3 overflow-scroll sm:grid-cols-2 md:h-auto md:grid-cols-3 lg:grid-cols-4"
     >
       {
         groups.map(({ data: { name } }) => (
@@ -40,7 +40,7 @@ const groups = await getCollection("grupper");
   </div>
 
   <div slot="recruitment" class="space-y-6">
-    <h2 class="font-medium text-xl text-center">
+    <h2 class="text-center text-xl font-medium">
       Opptaket er <span class="text-primary">nå</span>!
     </h2>
 

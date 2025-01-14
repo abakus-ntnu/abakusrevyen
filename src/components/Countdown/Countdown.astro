@@ -9,7 +9,7 @@ const { date } = Astro.props;
 const targetDate = typeof date === "string" ? new Date(date) : date;
 ---
 
-<div class="flex font-lcd space-x-[1.5rem]">
+<div class="flex space-x-[1.5rem] font-lcd">
   <div class="segment">
     <span class="digit" id="days">00</span><span>DD</span>
   </div>

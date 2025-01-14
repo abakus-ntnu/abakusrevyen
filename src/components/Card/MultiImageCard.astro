@@ -13,7 +13,7 @@ const { images } = Astro.props;
 
 <div>
   <div
-    class="group relative hover:scale-105 w-auto aspect-square transition-transform m-5 max-w-full"
+    class="group relative m-5 aspect-square w-auto max-w-full transition-transform hover:scale-105"
   >
     {
       images
@@ -21,9 +21,9 @@ const { images } = Astro.props;
         .map(({ src, alt }) => (
           <div
             class:list={[
-              "absolute top-0 left-0 w-full rounded-lg overflow-hidden aspect-square transition-transform",
-              "first:-rotate-12 last:rotate-12 first:-z-10 last:-z-10",
-              "group-hover:-translate-y-5 group-hover:first:-translate-x-5 group-hover:last:translate-x-5 group-hover:first:-rotate-[20deg] group-hover:last:rotate-[20deg]",
+              "absolute left-0 top-0 aspect-square w-full overflow-hidden rounded-lg transition-transform",
+              "first:-z-10 first:-rotate-12 last:-z-10 last:rotate-12",
+              "group-hover:-translate-y-5 group-hover:first:-translate-x-5 group-hover:first:-rotate-[20deg] group-hover:last:translate-x-5 group-hover:last:rotate-[20deg]",
             ]}
           >
             {typeof src === "string" ? (
@@ -42,7 +42,7 @@ const { images } = Astro.props;
         ))
     }
   </div>
-  <h2 class="text-lg text-center group-hover:scale-105 transition-transform">
+  <h2 class="text-center text-lg transition-transform group-hover:scale-105">
     <slot />
   </h2>
 </div>

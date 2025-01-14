@@ -4,10 +4,10 @@ import { Image } from "astro:assets";
 import { PREVIOUS_REVUES } from "@/lib/constants";
 ---
 
-<div class="grid grid-flow-col md:grid-rows-1 grid-rows-2 px-6 max-w-full">
+<div class="grid max-w-full grid-flow-col grid-rows-2 px-6 md:grid-rows-1">
   {
     PREVIOUS_REVUES.slice(0, 8).map(({ name, image, links }) => (
-      <div class="w-[1fr] even:rotate-12 odd:-rotate-12 hover:scale-110 transition-transform">
+      <div class="w-[1fr] transition-transform odd:-rotate-12 even:rotate-12 hover:scale-110">
         <a href={links[0].href} target="_blank">
           <Image src={image} alt={`${name} logo`} loading="eager" />
         </a>

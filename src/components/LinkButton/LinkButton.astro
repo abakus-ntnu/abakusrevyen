@@ -12,10 +12,10 @@ const { href, external, style = "primary", class: className } = Astro.props;
 <a
   href={href}
   class:list={[
-    "p-1 px-2 text-center rounded-md border-2 transition-colors",
+    "rounded-md border-2 p-1 px-2 text-center transition-colors",
     style === "primary" &&
-      "text-white bg-secondary border-secondary hover:bg-red-400 hover:border-primary",
-    style === "secondary" && "text-black bg-white hover:bg-gray-200",
+      "border-secondary bg-secondary text-white hover:border-primary hover:bg-red-400",
+    style === "secondary" && "bg-white text-black hover:bg-gray-200",
     className,
   ]}
   {...external && { target: "_blank", rel: "noopener noreferrer" }}><slot /></a

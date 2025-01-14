@@ -77,7 +77,7 @@ function getGroup(groupRef: {
 ---
 
 <PageLayout title="Ledere">
-  <div class="mx-auto container space-y-6 p-6 text-center">
+  <div class="container mx-auto space-y-6 p-6 text-center">
     <Title>
       Møt revyens <span class="text-primary">ledere</span>
     </Title>
@@ -87,17 +87,17 @@ function getGroup(groupRef: {
       For årets revy er det {supremeLeaderPronoun} her!
     </p>
 
-    <div class="flex sm:flex-row flex-col justify-center gap-10 w-full">
+    <div class="flex w-full flex-col justify-center gap-10 sm:flex-row">
       {
         supremeLeaders.map(
           ({ slug, data: { name, title, image, leaderOf } }) => (
             <a
               href={`/ledere/${slug}`}
-              class="lg:w-1/4 md:w-1/3 sm:w-1/2 w-full transition-transform hover:scale-105"
+              class="w-full transition-transform hover:scale-105 sm:w-1/2 md:w-1/3 lg:w-1/4"
             >
               <PersonCard name={name} image={image}>
                 {title} av{" "}
-                <span class="text-primary font-medium">
+                <span class="font-medium text-primary">
                   {leaderOf
                     .map((ref) => getGroup(ref.group)?.data.name)
                     .join(", ")}
@@ -109,7 +109,7 @@ function getGroup(groupRef: {
       }
     </div>
 
-    <p class="max-w-prose mx-auto">
+    <p class="mx-auto max-w-prose">
       Men {supremeLeaderPronoun} kan ikke få til alt alene! For å virkelig få revyen
       i gang trenger vi også ledere for hver av revyens <Link href="/grupper"
         >grupper</Link

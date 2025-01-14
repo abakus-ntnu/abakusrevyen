@@ -8,7 +8,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav class="flex justify-center items-center">
+<nav class="flex items-center justify-center">
   <ul class="flex gap-4 lg:gap-6">
     {
       Object.entries(items).map(([href, title]) => (

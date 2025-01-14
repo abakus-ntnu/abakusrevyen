@@ -35,7 +35,7 @@ const spotlightLeader =
     >
 
     <div
-      class="grid grid-cols-2 mx-auto max-w-screen-sm lg:gap-24 md:gap-16 gap-10 py-6 md:px-6"
+      class="mx-auto grid max-w-screen-sm grid-cols-2 gap-10 py-6 md:gap-16 md:px-6 lg:gap-24"
     >
       <a href="/grupper" class="group">
         <MultiImageCard
@@ -60,16 +60,16 @@ const spotlightLeader =
       </a>
     </div>
 
-    <div class="grid md:grid-cols-2 grid-cols-1 gap-6 max-h-fit">
-      <div class="space-y-3 md:order-1 order-3">
-        <h2 class="font-bold text-lg">Forestillinger</h2>
+    <div class="grid max-h-fit grid-cols-1 gap-6 md:grid-cols-2">
+      <div class="order-3 space-y-3 md:order-1">
+        <h2 class="text-lg font-bold">Forestillinger</h2>
 
         <Timeline>
           {
             SHOWS.map((show) => (
               <TimelineDate date={show.when}>
                 <Card>
-                  <div class="flex md:flex-row flex-col gap-1">
+                  <div class="flex flex-col gap-1 md:flex-row">
                     {show.name} på{" "}
                     <a href={show.where.mapLink} class="underline">
                       {show.where.name}
@@ -82,19 +82,19 @@ const spotlightLeader =
         </Timeline>
       </div>
 
-      <div class="flex flex-col gap-3 order-2">
-        <h2 class="font-bold text-lg">Spotlight</h2>
+      <div class="order-2 flex flex-col gap-3">
+        <h2 class="text-lg font-bold">Spotlight</h2>
 
         <a href={`/grupper/${spotlight.slug}`}>
           <div
-            class="grow flex gap-3 bg-bg-accent border-[1px] border-gray-200 dark:border-gray-500 rounded-lg"
+            class="flex grow gap-3 rounded-lg border-[1px] border-gray-200 bg-bg-accent dark:border-gray-500"
           >
             <div class="relative min-w-fit">
               <Image
                 src={spotlight.data.logo}
                 alt="Spotlight group logo"
                 loading="eager"
-                class="h-full w-auto aspect-square rounded-l-lg"
+                class="aspect-square h-full w-auto rounded-l-lg"
               />
               {
                 spotlightLeader ? (
@@ -104,14 +104,14 @@ const spotlightLeader =
                     height={500}
                     loading="eager"
                     alt="Spotlight leader"
-                    class="absolute bottom-1.5 right-1.5 rounded-full h-1/2 w-auto aspect-square"
+                    class="absolute bottom-1.5 right-1.5 aspect-square h-1/2 w-auto rounded-full"
                   />
                 ) : undefined
               }
             </div>
             <div class="space-y-3 py-3 pr-1.5">
               <h3 class="font-medium">{spotlight.data.name}</h3>
-              <p class="lg:text-base md:text-sm sm:text-base text-sm">
+              <p class="text-sm sm:text-base md:text-sm lg:text-base">
                 {spotlight.data.spotlight ?? spotlight.data.brief}
               </p>
             </div>
@@ -121,7 +121,7 @@ const spotlightLeader =
     </div>
 
     <div class="space-y-6">
-      <h2 class="font-bold text-lg">Innlegg</h2>
+      <h2 class="text-lg font-bold">Innlegg</h2>
 
       <ul class="space-y-3">
         {
@@ -134,7 +134,7 @@ const spotlightLeader =
               }) => (
                 <li>
                   <a href={`/om_oss/${slug}`}>
-                    <div class="h-48 rounded-lg border-[1px] border-gray-200 dark:border-gray-500 flex gap-3">
+                    <div class="flex h-48 gap-3 rounded-lg border-[1px] border-gray-200 dark:border-gray-500">
                       <div class="overflow-hidden">
                         <Image
                           src={image}
@@ -143,10 +143,10 @@ const spotlightLeader =
                         />
                       </div>
 
-                      <div class="py-3 pr-1.5 flex flex-col justify-between">
+                      <div class="flex flex-col justify-between py-3 pr-1.5">
                         <h2 class="font-medium">{title}</h2>
                         <p>{description}</p>
-                        <div class="flex text-sm items-center gap-3">
+                        <div class="flex items-center gap-3 text-sm">
                           <Calendar />{" "}
                           {pubDate.toLocaleString("NO-nb", {
                             day: "numeric",

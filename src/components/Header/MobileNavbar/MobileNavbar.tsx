@@ -22,7 +22,7 @@ export default function MobileNavbar({ items, children }: Readonly<Props>) {
       <div
         className={`absolute ${
           visible ? "" : "hidden"
-        } top-32 left-0 w-screen h-[calc(100vh-128px)] z-50 bg-background`}
+        } left-0 top-32 z-50 h-[calc(100vh-128px)] w-screen bg-background`}
       >
         <ul className="flex w-full flex-col items-center gap-6">{navItems}</ul>
       </div>
