@@ -1,0 +1,22 @@
+---
+import Card from "./Card.astro";
+
+interface Props {
+  href: string;
+  target: "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop";
+}
+
+const { href, target = "_self", class: className, ...rest } = Astro.props;
+---
+
+<a href={href} target={target}>
+  <Card
+    class:list={[
+      "group/linkcard transition-colors hover:bg-gray-100 hover:dark:bg-gray-800",
+      className,
+    ]}
+    {...rest}
+  >
+    <slot />
+  </Card>
+</a>

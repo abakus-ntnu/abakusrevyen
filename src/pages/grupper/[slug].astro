@@ -2,6 +2,7 @@
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
+import CardContent from "@/components/Card/CardContent.astro";
 import { Image } from "astro:assets";
 
 import {
@@ -46,21 +47,25 @@ const { Content } = await render(entry);
   <Content />
 
   <Card class="mt-12 w-full max-w-screen-sm">
-    <h2 class="mb-3 mt-0 text-lg leading-none">Ledelse</h2>
-    {
-      Object.entries(rankedLeaders).map(([title, leaders]) => (
-        <div class="flex flex-col gap-1 font-medium sm:flex-row">
-          {title}:
-          <div class="flex flex-col sm:flex-row">
-            {leaders.map((leader) => (
-              <>
-                <Link href={`/ledere/${leader.slug}`}>{leader.data.name}</Link>
-                <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
-              </>
-            ))}
+    <CardContent>
+      <h2 class="mb-3 mt-0 text-lg leading-none">Ledelse</h2>
+      {
+        Object.entries(rankedLeaders).map(([title, leaders]) => (
+          <div class="flex flex-col gap-1 font-medium sm:flex-row">
+            {title}:
+            <div class="flex flex-col sm:flex-row">
+              {leaders.map((leader) => (
+                <>
+                  <Link href={`/ledere/${leader.slug}`}>
+                    {leader.data.name}
+                  </Link>
+                  <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
+                </>
+              ))}
+            </div>
           </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </CardContent>
   </Card>
 </ArticleLayout>

@@ -2,6 +2,7 @@
 import PageLayout from "@/layouts/PageLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
+import CardContent from "@/components/Card/CardContent.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import Title from "@/components/Common/Title.astro";
 import { Image } from "astro:assets";
@@ -20,33 +21,35 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
           (revue) => (
             <li>
               <Card class={revue.color + " !border-0"}>
-                <Image
-                  src={revue.image}
-                  alt={`Logo for ${revue.name}`}
-                  class="aspect-square rounded-t-md object-contain"
-                  loading="eager"
-                />
-                <h2 class={revue.dark ? "text-white" : "text-black"}>
-                  {revue.year}: {revue.name}
-                </h2>
-                <div class="flex gap-2">
-                  {revue.links.map((link) =>
-                    link.href ? (
-                      <LinkButton
-                        href={link.href}
-                        class="flex-grow"
-                        style={"secondary"}
-                        external
-                      >
-                        {link.name}
-                      </LinkButton>
-                    ) : (
-                      <i class="flex-grow cursor-not-allowed rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
-                        {link.name}
-                      </i>
-                    ),
-                  )}
-                </div>
+                <CardContent>
+                  <Image
+                    src={revue.image}
+                    alt={`Logo for ${revue.name}`}
+                    class="aspect-square rounded-t-md object-contain"
+                    loading="eager"
+                  />
+                  <h2 class={revue.dark ? "text-white" : "text-black"}>
+                    {revue.year}: {revue.name}
+                  </h2>
+                  <div class="flex gap-2">
+                    {revue.links.map((link) =>
+                      link.href ? (
+                        <LinkButton
+                          href={link.href}
+                          class="flex-grow"
+                          style={"secondary"}
+                          external
+                        >
+                          {link.name}
+                        </LinkButton>
+                      ) : (
+                        <i class="flex-grow cursor-not-allowed rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
+                          {link.name}
+                        </i>
+                      ),
+                    )}
+                  </div>
+                </CardContent>
               </Card>
             </li>
           ),

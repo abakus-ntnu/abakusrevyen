@@ -1,0 +1,10 @@
+---
+import { Image } from "astro:assets";
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Image
+  class:list={["aspect-square w-auto rounded-full", className]}
+  {...rest}
+/>

@@ -1,7 +1,8 @@
 ---
 import PageLayout from "../PageLayout.astro";
 
-import Card from "@/components/Card/Card.astro";
+import LinkCard from "@/components/Card/LinkCard.astro";
+import CardContent from "@/components/Card/CardContent.astro";
 import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import LinkButton from "../../components/LinkButton/LinkButton.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
@@ -37,14 +38,14 @@ import { SOCIALS } from "@/lib/constants";
       >
         {
           SOCIALS.map(({ name, href, Icon, profile }) => (
-            <a href={href} aria-label={name}>
-              <Card class="transition-colors hover:bg-gray-100 hover:dark:bg-gray-800">
+            <LinkCard href={href} target="_target">
+              <CardContent>
                 <div class="flex flex-col items-center gap-3">
-                  {<Icon />}
+                  <Icon />
                   {profile}
                 </div>
-              </Card>
-            </a>
+              </CardContent>
+            </LinkCard>
           ))
         }
       </div>

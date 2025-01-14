@@ -2,6 +2,7 @@
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
+import CardContent from "@/components/Card/CardContent.astro";
 import Link from "@/components/LinkButton/Link.astro";
 import { Image } from "astro:assets";
 
@@ -68,25 +69,27 @@ const { Content } = await render(entry);
   <Content />
 
   <Card class="mt-12 w-full max-w-screen-sm">
-    <h2 class="card-header">Kontakt</h2>
+    <CardContent>
+      <h2 class="card-header">Kontakt</h2>
 
-    <CardField title="Email">
-      <Link href={`mailto:${email}`}>{email}</Link>
-    </CardField>
+      <CardField title="Email">
+        <Link href={`mailto:${email}`}>{email}</Link>
+      </CardField>
 
-    <h2 class="card-header">Grupper</h2>
-    {
-      Object.entries(leaderOfGroups).map(([title, groups]) => (
-        <CardField title={title}>
-          {groups.map((group) => (
-            <>
-              <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
-              <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
-            </>
-          ))}
-        </CardField>
-      ))
-    }
+      <h2 class="card-header">Grupper</h2>
+      {
+        Object.entries(leaderOfGroups).map(([title, groups]) => (
+          <CardField title={title}>
+            {groups.map((group) => (
+              <>
+                <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
+                <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
+              </>
+            ))}
+          </CardField>
+        ))
+      }
+    </CardContent>
   </Card>
 </ArticleLayout>
 

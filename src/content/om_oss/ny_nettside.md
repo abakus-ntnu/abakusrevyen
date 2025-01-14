@@ -5,3 +5,7 @@ pubDate: 2025-01-14
 updateDate: 2025-01-14
 image: "@/images/gruppebilder/forsidebilde.png"
 ---
+
+# Revyen har en ny nettside!
+
+PR og Teknikk har sammarbeidet om å lage en ny nettside for revyen!

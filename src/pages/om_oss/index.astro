@@ -2,16 +2,20 @@
 import PageLayout from "@/layouts/PageLayout.astro";
 
 import MultiImageCard from "@/components/Card/MultiImageCard.astro";
-import Title from "@/components/Common/Title.astro";
-
-import { getCollection } from "astro:content";
-
-import { SHOWS } from "@/lib/constants";
 import Card from "@/components/Card/Card.astro";
+import LinkCard from "@/components/Card/LinkCard.astro";
+import CardContent from "@/components/Card/CardContent.astro";
+import CardDetail from "@/components/Card/CardDetail.astro";
+import CardImage from "@/components/Card/CardImage.astro";
+import Title from "@/components/Common/Title.astro";
 import Timeline from "@/components/Timeline/Timeline.astro";
 import TimelineDate from "@/components/Timeline/TimelineDate.astro";
+import ProfilePicture from "@/components/Images/ProfilePicture.astro";
 import { Image } from "astro:assets";
+
+import { SHOWS } from "@/lib/constants";
 import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 import { Calendar, Pencil } from "lucide-astro";
 
@@ -69,12 +73,14 @@ const spotlightLeader =
             SHOWS.map((show) => (
               <TimelineDate date={show.when}>
                 <Card>
-                  <div class="flex flex-col gap-1 md:flex-row">
-                    {show.name} på{" "}
-                    <a href={show.where.mapLink} class="underline">
-                      {show.where.name}
-                    </a>
-                  </div>
+                  <CardContent class="px-3">
+                    <div class="flex flex-col gap-1 md:flex-row">
+                      {show.name} på
+                      <a href={show.where.mapLink} class="underline">
+                        {show.where.name}
+                      </a>
+                    </div>
+                  </CardContent>
                 </Card>
               </TimelineDate>
             ))
@@ -85,38 +91,34 @@ const spotlightLeader =
       <div class="order-2 flex flex-col gap-3">
         <h2 class="text-lg font-bold">Spotlight</h2>
 
-        <a href={`/grupper/${spotlight.slug}`}>
-          <div
-            class="flex grow gap-3 rounded-lg border-[1px] border-gray-200 bg-bg-accent dark:border-gray-500"
-          >
-            <div class="relative min-w-fit">
-              <Image
-                src={spotlight.data.logo}
-                alt="Spotlight group logo"
-                loading="eager"
-                class="aspect-square h-full w-auto rounded-l-lg"
-              />
-              {
-                spotlightLeader ? (
-                  <Image
-                    src={spotlightLeader.data.image}
-                    width={500}
-                    height={500}
-                    loading="eager"
-                    alt="Spotlight leader"
-                    class="absolute bottom-1.5 right-1.5 aspect-square h-1/2 w-auto rounded-full"
-                  />
-                ) : undefined
-              }
-            </div>
-            <div class="space-y-3 py-3 pr-1.5">
-              <h3 class="font-medium">{spotlight.data.name}</h3>
-              <p class="text-sm sm:text-base md:text-sm lg:text-base">
-                {spotlight.data.spotlight ?? spotlight.data.brief}
-              </p>
-            </div>
+        <LinkCard href={`/grupper/${spotlight.slug}`} class="flex">
+          <div class="relative min-w-fit">
+            <Image
+              src={spotlight.data.logo}
+              alt="Spotlight group logo"
+              loading="eager"
+              class="aspect-square h-full w-auto rounded-l-lg"
+            />
+            {
+              spotlightLeader ? (
+                <ProfilePicture
+                  src={spotlightLeader.data.image}
+                  width={500}
+                  height={500}
+                  loading="eager"
+                  alt="Spotlight leader"
+                  class="absolute bottom-1.5 right-1.5 h-1/2"
+                />
+              ) : undefined
+            }
           </div>
-        </a>
+          <CardContent class="py-3 pl-3 pr-1.5">
+            <h3 class="font-medium">{spotlight.data.name}</h3>
+            <p class="text-sm sm:text-base md:text-sm lg:text-base">
+              {spotlight.data.spotlight ?? spotlight.data.brief}
+            </p>
+          </CardContent>
+        </LinkCard>
       </div>
     </div>
 
@@ -133,36 +135,39 @@ const spotlightLeader =
                 data: { title, pubDate, updateDate, description, image },
               }) => (
                 <li>
-                  <a href={`/om_oss/${slug}`}>
+                  <LinkCard href={`/om_oss/${slug}`}>
                     <div class="flex h-48 gap-3 rounded-lg border-[1px] border-gray-200 dark:border-gray-500">
-                      <div class="overflow-hidden">
-                        <Image
-                          src={image}
-                          alt={`${title} post`}
-                          class="h-full w-auto rounded-l-lg"
-                        />
-                      </div>
+                      <CardImage
+                        src={image}
+                        alt={`${title} post`}
+                        class="max-w-[25%]"
+                      />
 
-                      <div class="flex flex-col justify-between py-3 pr-1.5">
+                      <CardContent class="flex flex-col justify-between px-1.5 py-3">
                         <h2 class="font-medium">{title}</h2>
                         <p>{description}</p>
+
                         <div class="flex items-center gap-3 text-sm">
-                          <Calendar />{" "}
-                          {pubDate.toLocaleString("NO-nb", {
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })}
-                          <Pencil />
-                          {(updateDate ?? pubDate).toLocaleString("NO-nb", {
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })}
+                          <CardDetail>
+                            <Calendar />
+                            {pubDate.toLocaleString("NO-nb", {
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            })}
+                          </CardDetail>
+                          <CardDetail>
+                            <Pencil />
+                            {(updateDate ?? pubDate).toLocaleString("NO-nb", {
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            })}
+                          </CardDetail>
                         </div>
-                      </div>
+                      </CardContent>
                     </div>
-                  </a>
+                  </LinkCard>
                 </li>
               ),
             )

@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
+  alt: string;
+}
+
+const { src, alt, class: className, style, ...rest } = Astro.props;
+---
+
+<div
+  class:list={[
+    "aspect-square h-full rounded-lg bg-cover bg-center first:rounded-r-none last:rounded-l-none",
+    className,
+  ]}
+  style={`background-image: url(${src.src}); ${style}`}
+  {...rest}
+>
+  <slot />
+</div>
