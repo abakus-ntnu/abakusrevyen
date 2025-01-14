@@ -19,7 +19,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
         PREVIOUS_REVUES.sort((a, b) => b.year.localeCompare(a.year)).map(
           (revue) => (
             <li>
-              <Card class={revue.color}>
+              <Card class={revue.color + " !border-0"}>
                 <Image
                   src={revue.image}
                   alt={`Logo for ${revue.name}`}
