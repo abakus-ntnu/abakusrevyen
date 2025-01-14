@@ -1,0 +1,7 @@
+---
+const { class: className } = Astro.props;
+---
+
+<ul class:list={["group/timeline max-w-fit", className]}>
+  <slot />
+</ul>
