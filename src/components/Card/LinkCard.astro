@@ -13,7 +13,7 @@ const { href, target = "_self", class: className, ...rest } = Astro.props;
 <a href={href} target={target}>
   <Card
     class:list={[
-      "group/linkcard transition-colors hover:bg-gray-100 hover:dark:bg-gray-800",
+      "group/linkcard transition-all hover:bg-gray-100 hover:shadow-md hover:dark:bg-gray-800",
       className,
     ]}
     {...rest}
