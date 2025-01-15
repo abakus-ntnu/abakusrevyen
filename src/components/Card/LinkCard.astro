@@ -3,7 +3,8 @@ import Card from "./Card.astro";
 
 interface Props {
   href: string;
-  target: "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop";
+  target?: "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop";
+  class?: string;
 }
 
 const { href, target = "_self", class: className, ...rest } = Astro.props;

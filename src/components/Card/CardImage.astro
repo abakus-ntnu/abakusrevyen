@@ -2,11 +2,14 @@
 import { Image } from "astro:assets";
 
 interface Props {
-  src: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
+  src: string | ImageMetadata;
   alt: string;
+  class?: string;
+  style?: string;
 }
 
 const { src, alt, class: className, style, ...rest } = Astro.props;
+const image = typeof src === "string" ? src : src.src;
 ---
 
 <div
@@ -14,7 +17,7 @@ const { src, alt, class: className, style, ...rest } = Astro.props;
     "aspect-square h-full rounded-lg bg-cover bg-center first:rounded-r-none last:rounded-l-none",
     className,
   ]}
-  style={`background-image: url(${src.src}); ${style}`}
+  style={`background-image: url(${image}); ${style}`}
   {...rest}
 >
   <slot />

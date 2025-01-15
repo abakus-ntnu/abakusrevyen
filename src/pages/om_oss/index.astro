@@ -128,7 +128,7 @@ const spotlightLeader =
       <ul class="space-y-3">
         {
           om_oss
-            .sort((a, b) => b.data.pubDate - a.data.pubDate)
+            .sort((a, b) => (b.data.pubDate < a.data.pubDate ? 1 : -1))
             .map(
               ({
                 slug,

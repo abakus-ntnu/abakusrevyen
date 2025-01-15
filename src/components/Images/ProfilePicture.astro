@@ -1,5 +1,11 @@
 ---
-import { Image } from "astro:assets";
+import {
+  Image,
+  type LocalImageProps,
+  type RemoteImageProps,
+} from "astro:assets";
+
+type Props = LocalImageProps | RemoteImageProps;
 
 const { class: className, ...rest } = Astro.props;
 ---
