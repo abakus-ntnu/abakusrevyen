@@ -75,7 +75,16 @@ export const SOCIALS = [
   },
 ];
 
-export const PREVIOUS_REVUES = [
+export type Revuy = {
+  year: string;
+  name: string;
+  image: ImageMetadata;
+  color: string;
+  dark: boolean;
+  links: { name: string; href: string; embed: string }[];
+};
+
+export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2017",
     name: "Push Pop Baluba!",
@@ -86,10 +95,12 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se akt 1",
         href: "https://www.youtube.com/watch?v=8lyOg-lV1pg",
+        embed: "https://www.youtube.com/embed/8lyOg-lV1pg",
       },
       {
         name: "Se akt 2",
         href: "https://www.youtube.com/watch?v=gYTWXmaQfZk",
+        embed: "https://www.youtube.com/embed/gYTWXmaQfZk",
       },
     ],
   },
@@ -103,10 +114,12 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se akt 1",
         href: "https://www.youtube.com/watch?v=yfLDWofs0-8",
+        embed: "https://www.youtube.com/embed/yfLDWofs0-8",
       },
       {
         name: "Se akt 2",
         href: "https://www.youtube.com/watch?v=8b91ozp3i6Y",
+        embed: "https://www.youtube.com/embed/8b91ozp3i6Y",
       },
     ],
   },
@@ -120,6 +133,7 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=3XtropmKsrg",
+        embed: "https://www.youtube.com/embed/3XtropmKsrg",
       },
     ],
   },
@@ -133,6 +147,7 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=dB0fC4VJsGI",
+        embed: "https://www.youtube.com/embed/dB0fC4VJsGI",
       },
     ],
   },
@@ -146,6 +161,7 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=TvA-oNItlwA",
+        embed: "https://www.youtube.com/embed/TvA-oNItlwA",
       },
     ],
   },
@@ -159,6 +175,7 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=EiuAtR7zPI4",
+        embed: "https://www.youtube.com/embed/EiuAtR7zPI4",
       },
     ],
   },
@@ -172,6 +189,7 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=GzcgzNqLaRc",
+        embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
       },
     ],
   },
@@ -185,6 +203,8 @@ export const PREVIOUS_REVUES = [
       {
         name: "Se opptak av stream",
         href: "https://vier.live/act/abakusrevyen-2024---best-f-r-2024",
+        // Cannot embed vier.live videos, so just use last years video
+        embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
       },
     ],
   },
