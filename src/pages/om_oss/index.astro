@@ -68,7 +68,7 @@ const spotlightLeader =
       <div class="order-3 space-y-3 md:order-1">
         <h2 class="text-lg font-bold">Forestillinger</h2>
 
-        <Timeline>
+        <Timeline class="w-full max-w-none md:w-auto md:max-w-fit">
           {
             SHOWS.map((show) => (
               <TimelineDate date={show.when}>
