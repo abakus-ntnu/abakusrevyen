@@ -2,6 +2,7 @@
 name: "Skuespill"
 brief: "De fra dramaklubben"
 logo: "@/images/undergrupper_logoer/skuespill-logo.jpg"
+email: revy-skuespill@abakus.no
 leaders:
   - hansen
   - schjonsby

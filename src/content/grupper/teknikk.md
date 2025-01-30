@@ -3,6 +3,7 @@ name: "Teknikk"
 brief: "Jobber så sakte som mulig"
 spotlight: "Teknikk er den gruppen i revyen som jobber med lys, lyd og video. Vi har mye kult utstyr, som 200 meter med ledstrips!"
 logo: "@/images/undergrupper_logoer/teknikk-logo.jpg"
+email: revy-teknikk@abakus.no
 leaders:
   - nyvoll
 ---

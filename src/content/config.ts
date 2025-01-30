@@ -21,6 +21,7 @@ const grupper = defineCollection({
       brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
       spotlight: z.string().max(300, "Spotlight is too long").optional(),
       logo: image(),
+      email: z.string().email("Not a valid email"),
       leaders: z
         .array(reference("ledere"))
         .min(1, "At least one leader must be provided")
@@ -32,7 +33,7 @@ const ledere = defineCollection({
   type: "content",
   schema: z.object({
     name: z.string(),
-    email: z.string().email("Not a valid email"),
+    email: z.string().email("Not a valid email").optional(),
     image: z.string().url(),
     gender: z.enum(["male", "female", "other"]),
     leaderOf: z

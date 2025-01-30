@@ -2,6 +2,7 @@
 name: "Kostyme"
 brief: "Vi lager kostymene"
 logo: "@/images/undergrupper_logoer/kostyme-logo.jpg"
+email: revy-kostyme@abakus.no
 leaders:
   - ahlgren
 ---

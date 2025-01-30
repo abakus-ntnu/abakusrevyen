@@ -1,6 +1,6 @@
 ---
 name: Rikke Schjønsby
-email: revy-skuespill@abakus.no
+email: rikke.schjoensby@abakus.no
 image: https://thumbor.abakus.no/k1JzmXzrsrxlLrLYXovATlIGavQ=/200x200/IMG_1627.jpeg
 gender: female
 leaderOf:

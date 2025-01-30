@@ -1,6 +1,6 @@
 ---
 name: Kasper Mustad Juell
-email: revy-scene@abakus.no
+email: kasper.juell@abakus.no
 image: https://thumbor.abakus.no/jnGFkFaCtOHzGsah7HsaIeOlfhw=/200x200/1000004712.png
 gender: male
 leaderOf:

@@ -2,6 +2,7 @@
 name: "Sosialgruppen"
 brief: "Passer på at du har det gøy!"
 logo: "@/images/undergrupper_logoer/sosial-logo.jpg"
+email: revy-sosial@abakus.no
 leaders:
   - steinskog
 ---

@@ -73,7 +73,13 @@ const { Content } = await render(entry);
       <h2 class="card-header">Kontakt</h2>
 
       <CardField title="Email">
-        <Link href={`mailto:${email}`}>{email}</Link>
+        {
+          email ? (
+            <Link href={`mailto:${email}`}>{email}</Link>
+          ) : (
+            "Ingen emailaddresse"
+          )
+        }
       </CardField>
 
       <h2 class="card-header">Grupper</h2>

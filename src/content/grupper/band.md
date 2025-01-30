@@ -2,6 +2,7 @@
 name: "Band"
 brief: "Vi rocker og roller"
 logo: "@/images/undergrupper_logoer/band-logo.jpg"
+email: revy-band@abakus.no
 leaders:
   - haakenstad
 ---

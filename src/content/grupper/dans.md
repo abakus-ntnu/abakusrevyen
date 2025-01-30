@@ -2,6 +2,7 @@
 name: "Dans"
 brief: "💃💃💃"
 logo: "@/images/undergrupper_logoer/dans-logo.jpg"
+email: revy-dans@abakus.no
 leaders:
   - frohaug
 ---
