@@ -46,9 +46,13 @@ import { SOCIALS } from "@/lib/constants";
 
     <ul class="mx-auto flex w-min gap-3 md:mr-0">
       {
-        SOCIALS.map(({ name, profile, href, Icon }) => (
+        SOCIALS.map(({ name, external, href, Icon }) => (
           <li id={name}>
-            <a target="_blank" href={href} aria-label={name + " " + profile}>
+            <a
+              target={external ? "_blank" : "_self"}
+              href={href}
+              aria-label={name}
+            >
               {<Icon />}
             </a>
           </li>

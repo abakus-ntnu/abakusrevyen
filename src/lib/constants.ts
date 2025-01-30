@@ -65,20 +65,20 @@ export const PERIODS: { from: Date; period: Period }[] = [
 export const SOCIALS = [
   {
     name: "Facebook",
-    profile: "Abakusrevyen",
     href: "https://facebook.com/Abakusrevyen",
+    external: true,
     Icon: Facebook,
   },
   {
     name: "Instagram",
-    profile: "abakusrevyen",
     href: "https://instagram.com/abakusrevyen",
+    external: true,
     Icon: Instagram,
   },
   {
-    name: "Mail",
-    profile: "revy@abakus.no",
-    href: "mailto:revy@abakus.no",
+    name: "Email",
+    href: "/kontakt",
+    external: false,
     Icon: Mail,
   },
 ];
