@@ -6,6 +6,53 @@
 - **Jeg har en idée til nettsiden:** Lag et funksjonsønske [her](https://github.com/abakus-ntnu/abakusrevyen/issues/new)! Husk å markere rapporten som `✨ enhancement`!
 - **Jeg har et spørsmål:** [Kontakt oss](https://abakus.no/pages/grupper/104-revyen)! Vi vil gjerne hjelpe. For å sende meldingen din til revyen må du velge `RevyStyret` som mottaker!
 
+## 📋 Oppdater innhold
+
+Må du oppdatere nettsidens innhold? Her er en sjekkliste!
+
+### Ny revy!
+
+- [ ] Sjekk at [fjorårets revyslutt](#Revyslutt) har blitt utført.
+- [ ] `src/lib/constants.ts`
+  - [ ] Oppdater datoene for forestillingene (`SHOWS`).
+  - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
+- [ ] `src/content/ledere`
+  - [ ] Fjern fjorårets ledere som ikke er med/ikke er ledere i år.
+  - [ ] Lag/Oppdater lederne for denne revyen.
+  - [ ] Legg til/Oppdater bildene av lederene, ved å legge til lenken til Abakus-profilbildet deres.
+- [ ] `src/content/grupper`
+  - [ ] Legg til nye grupper/Fjern gamle grupper (hvis noen).
+  - [ ] Oppdater ledelsen i gruppene.
+  - [ ] Oppdater gruppelogoene i `src/images`.
+- [ ] Oppdater produksjons-nettsiden med endringene.
+
+### Slipp av revyen
+
+- [ ] Gjør GitHub-repoet privat. Dette er for å forhindre leaks før slippet.
+- [ ] `src/images/revy_logoer`
+  - [ ] Legg til logoen til den nye revyen.
+- [ ] `src/components/branding/ShowLogo.astro`
+  - [ ] Oppdater logoen på nettsiden.
+- [ ] Oppdater produksjons-nettsiden med endringene.
+- [ ] Gjør GitHub-repoet offentlig etter slippet.
+
+### Revyslutt
+
+- [ ] `src/lib/constants.ts`
+  - [ ] Oppdater `PREVIOUS_REVUES` med revyen. Husk rekkefølgen!
+  - [ ] Legg til nye bilder i bildegaleriet! (`GALLERY_IMAGES`)
+- [ ] `src/images/gruppebilder`
+  - [ ] Legg til årets gruppebilde
+- [ ] `src/layouts/Home/Break.astro`
+  - [ ] Oppdater gruppebilde
+- [ ] Oppdater produksjons-nettsiden med endringene.
+
+### Innlegg på nettsiden
+
+- [ ] `src/content/om_oss`
+  - [ ] Lag eller oppdater et innlegg.
+- [ ] Oppdater produksjons-nettsiden med endringene.
+
 ## 👩‍💻 Delta som utvikler
 
 Nettsiden utvikles av Abakusrevyens [Teknikkgruppe](https://abakus.no/pages/grupper/104-revyen). Vi er ansvarlige for alt det tekniske ved revyen, som lys, lyd og video under selve revyen, og som denne nettsiden utenom revyen. Ser arbeidet vårt interessant ut? [Søk på Teknikk](https://abakusrevyen.no/opptak) ved neste revyopptak!
