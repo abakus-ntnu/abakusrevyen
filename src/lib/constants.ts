@@ -28,8 +28,16 @@ export const SHOWS = [
     },
   },
   {
-    name: "Siste forestilling",
+    name: "Forestilling 2",
     when: new Date(2025, 2, 15, 12, 0, 0),
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+    },
+  },
+  {
+    name: "Siste forestilling",
+    when: new Date(2025, 2, 15, 20, 0, 0),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -40,7 +48,7 @@ export const SHOWS = [
 // Perioder
 export const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
 export const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
-export const COUNTDOWN_START = new Date(2025, 1, 15, 12); // SLIPP
+export const COUNTDOWN_START = new Date(2025, 1, 7, 20, 30, 0); // SLIPP
 
 export const SHOW_START = new Date(SHOWS[0].when); // Premiære
 export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
