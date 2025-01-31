@@ -35,34 +35,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install pnpm
-        id: install-pnpm
-        uses: pnpm/action-setup@v4
-      - name: Setup pnpm
-        id: setup-pnpm
-        run: |
-          echo "manager=pnpm" >> $GITHUB_OUTPUT
-          echo "command=i" >> $GITHUB_OUTPUT
-          echo "runner=pnpx --no-install" >> $GITHUB_OUTPUT
-          echo "lockfile=pnpm-lock.json" >> $GITHUB_OUTPUT
-      - name: Setup Node
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: ${{ steps.setup-pnpm.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.setup-pnpm.outputs.lockfile }}
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Install dependencies
-        run: ${{ steps.setup-pnpm.outputs.manager }} ${{ steps.setup-pnpm.outputs.command }}
-        working-directory: ${{ env.BUILD_PATH }}
+
       - name: Build with Astro
         run: |
-          ${{ steps.setup-pnpm.outputs.runner }} astro build \
+          pnpx astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
