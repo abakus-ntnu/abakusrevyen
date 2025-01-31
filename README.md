@@ -1,6 +1,7 @@
 # <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](https://abakusrevyen.no/)
 
-[![Deploy Astro site to Pages](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/astro.yml/badge.svg?branch=prod)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/astro.yml)
+[![Deploy to Pages](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/deploy.yml/badge.svg?branch=prod)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/deploy.yml)
+[![Build status](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/build.yml)
 
 ⚠️ **Har du et problem, eller vil du delta med utviklingen til nettsiden? Se [CONTRIBUTING.md](CONTRIBUTING.md) først!** ⚠️
 
