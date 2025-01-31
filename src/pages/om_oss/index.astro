@@ -136,18 +136,18 @@ const spotlightLeader =
               }) => (
                 <li>
                   <LinkCard href={`/om_oss/${slug}`}>
-                    <div class="flex h-48 gap-3 rounded-lg border-[1px] border-gray-200 dark:border-gray-500">
+                    <div class="flex flex-col gap-3 rounded-lg border-[1px] border-gray-200 sm:flex-row dark:border-gray-500">
                       <CardImage
                         src={image}
                         alt={`${title} post`}
-                        class="max-w-[25%]"
+                        class="h-40 w-full overflow-hidden !rounded-t-md sm:h-48 sm:max-w-[25%] sm:!rounded-tr-none"
                       />
 
                       <CardContent class="flex flex-col justify-between px-1.5 py-3">
                         <h2 class="font-medium">{title}</h2>
                         <p>{description}</p>
 
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
                           <CardDetail>
                             <Calendar />
                             {pubDate.toLocaleString("NO-nb", {
