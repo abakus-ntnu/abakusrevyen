@@ -11,7 +11,7 @@ const {
 <div id="fold" class="relative pb-8">
   <div class:list={["overflow-hidden transition-transform", className]}>
     <!-- Gradient overlay for mobile -->
-    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none md:hidden gradient-overlay"></div>
+    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-background to-transparent pointer-events-none md:hidden gradient-overlay"></div>
     <slot />
   </div>
       <button
@@ -50,12 +50,13 @@ const {
   }
   
   /* Show gradient only when collapsed */
-  #fold.collapsed .gradient-overlay {
-    @apply block;
+  #fold .gradient-overlay {
+    @apply opacity-100 transition-opacity duration-300 ease-in;
   }
 
+  /* When NOT collapsed (hidden state) */
   #fold:not(.collapsed) .gradient-overlay {
-    @apply hidden;
+    @apply opacity-0 pointer-events-none;
   }
 
 </style>
