@@ -35,6 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
       - name: Build with Astro
         run: pnpm build
         working-directory: ${{ env.BUILD_PATH }}
