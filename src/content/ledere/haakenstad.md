@@ -5,6 +5,7 @@ image: https://thumbor.abakus.no/F54-loG_fBA5MAMw7M8T38X6uNU=/200x200/received_2
 gender: female
 leaderOf:
   - group: band
+  - group: kor
 ---
 
 # Nora Haakenstad

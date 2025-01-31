@@ -1,6 +1,6 @@
 ---
-name: "Skuespill"
-brief: "De fra dramaklubben"
+name: Skuespill
+brief: Vi synger, danser, spiller og spreller!
 logo: "@/images/undergrupper_logoer/skuespill-logo.jpg"
 email: revy-skuespill@abakus.no
 leaders:

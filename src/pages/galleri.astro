@@ -64,11 +64,34 @@ import { GALLERY_IMAGES } from "../lib/constants";
     width: 2rem;
     border-radius: 50%;
     border: var(--border);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:after {
       font-size: 1rem;
       font-weight: 800;
     }
+  }
+
+  /* Position buttons closer to the center dots */
+  .swiper-button-prev {
+    left: 45%;
+    margin-left: -6rem; /* ØK DENNE DESTO FLER BILDER */
+  }
+
+  .swiper-button-next {
+    right: 45%;
+    margin-right: -6rem; /* ØK DENNE DESTO FLER BILDER */
+  }
+
+  /* Hover effect for active buttons */
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
   }
 
   .autoplay-progress {

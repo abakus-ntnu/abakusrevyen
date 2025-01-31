@@ -1,6 +1,6 @@
 ---
-name: "Scene"
-brief: "Vi bygger og driver scenen"
+name: Scene
+brief: Vi designer og lager rekvisitter og scenen!
 logo: "@/images/undergrupper_logoer/scene-logo.jpg"
 email: revy-scene@abakus.no
 leaders:

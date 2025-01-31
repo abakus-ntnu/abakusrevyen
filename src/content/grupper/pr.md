@@ -1,6 +1,6 @@
 ---
-name: "PR"
-brief: "..."
+name: PR
+brief: Vi er ansvarlige for markedsføring og grafikk!
 spotlight: "Uten oss i PR blir det kanskje revy i år, men ikke neste år! Vi reklamerer for revyen og får billeter solgt! Har du sett noe fra revyen før? Det var oss!"
 logo: "@/images/undergrupper_logoer/pr-logo.jpg"
 email: revy-pr@abakus.no
