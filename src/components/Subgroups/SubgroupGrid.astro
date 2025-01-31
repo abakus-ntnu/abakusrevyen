@@ -13,7 +13,7 @@ const groups = await getCollection("grupper");
 <Grid>
   {
     groups.map(({ slug, data: { name, brief, logo } }) => (
-      <LinkCard class="md:min-h-[170px]" href={`/grupper/${slug}`}>
+      <LinkCard class="md:h-full" href={`/grupper/${slug}`}>
         <CardContent>
           <div class="flex gap-3 font-medium">
             <ProfilePicture class="h-6" src={logo} alt={`${name} logo`} />

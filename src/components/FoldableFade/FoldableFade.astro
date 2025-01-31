@@ -16,7 +16,7 @@ const {
   </div>
       <button
         id="foldableFadeToggle"
-        class="absolute bottom-1 left-1/2 -translate-x-1/2 md:hidden"
+        class="absolute bottom-1 left-1/2 -translate-x-1/2 px-10 p-2 translate-y-1/2 md:hidden"
       >
         <!-- Chevron icons -->
         <span id="chevronUp">
@@ -96,30 +96,16 @@ const {
   }
 
   // Ensure it's collapsed on mobile when the page loads
-  window.addEventListener("DOMContentLoaded", () => {
-    if (window.innerWidth <= 768) {
-      fold.classList.add("collapsed");
-      fold.classList.add("px-6")
-      content.style.maxHeight = "450px";
-    }
-  });
+  if (window.innerWidth <= 768) {
+    fold.classList.add("collapsed");
+    fold.classList.add("px-6")
+    content.style.maxHeight = "450px";
+  }
 
   // Add event listener for the toggle button
   document
     .getElementById("foldableFadeToggle")
     ?.addEventListener("click", toggleFold);
 
-  // Optional: Update fold state on window resize
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 768) {
-      content.style.maxHeight = "none";
-      fold.classList.remove("px-6")
-      fold.classList.remove("collapsed");
-    } else {
-      fold.classList.add("collapsed");
-      fold.classList.add("px-6")
-      content.style.maxHeight = "450px";
-   
-    }
-  });
+ 
 </script>
