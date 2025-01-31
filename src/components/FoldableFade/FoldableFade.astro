@@ -11,7 +11,7 @@ const {
 <div id="fold" class="relative pb-8">
   <div class:list={["overflow-hidden transition-transform", className]}>
     <!-- Gradient overlay for mobile -->
-    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none md:hidden gradient-overlay"></div>
+    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-background to-transparent pointer-events-none md:hidden gradient-overlay"></div>
     <slot />
   </div>
       <button
@@ -30,12 +30,15 @@ const {
 
 <style>
   /* Apply foldable behavior only on mobile devices */
-  #fold.collapsed > div {
-    @apply h-96;
+  #fold > div {
+    transition: max-height 0.2s ease-in-out;
+    max-height: 2000px; /* Adjust to a reasonable max value */
   }
 
-  #fold:not(.collapsed) > div {
-    @apply h-full;
+  /* Collapsed state */
+  #fold.collapsed > div {
+    max-height: 450px;
+    overflow: hidden;
   }
 
   #fold.collapsed > button > #chevronUp {
@@ -47,13 +50,15 @@ const {
   }
   
   /* Show gradient only when collapsed */
-  #fold.collapsed .gradient-overlay {
-    @apply block;
+  #fold .gradient-overlay {
+    @apply opacity-100 transition-opacity duration-300 ease-in;
   }
 
+  /* When NOT collapsed (hidden state) */
   #fold:not(.collapsed) .gradient-overlay {
-    @apply hidden;
+    @apply opacity-0 pointer-events-none;
   }
+
 </style>
 
 <script
@@ -64,33 +69,40 @@ const {
   }}
 >
   const fold = document.getElementById("fold");
+  const content = fold.querySelector("div"); // Target content wrapper
   let collapsed = startCollapsed;
+
+  // Ensure collapse on first load
+  if (window.innerWidth <= 768) {
+    if (collapsed) {
+      content.style.maxHeight = "450px";
+    }
+  }
 
   function toggleFold() {
     if (window.innerWidth <= 768) { // Tailwind's `md` breakpoint is 768px
       collapsed = !collapsed;
-      updateFold();
-    }
-  }
 
-  function updateFold() {
-    if (window.innerWidth <= 768) {
+      requestAnimationFrame(() => {
+        if (collapsed) {
+          content.style.maxHeight = "450px";
+        } else {
+          content.style.maxHeight = "2000px"; // Match CSS
+        }
+      });
+
       fold.classList.toggle("collapsed", collapsed);
-
-      if (collapsed) {
-        fold.classList.add(collapsedHeight);
-      } else {
-        fold.classList.remove(collapsedHeight);
-      }
-    } else {
-      // Ensure the foldable section is always fully visible on desktop
-      fold.classList.remove("collapsed");
-      fold.classList.remove(collapsedHeight);
     }
   }
 
-  // Initial check on page load
-  updateFold();
+  // Ensure it's collapsed on mobile when the page loads
+  window.addEventListener("DOMContentLoaded", () => {
+    if (window.innerWidth <= 768) {
+      fold.classList.add("collapsed");
+      fold.classList.add("px-6")
+      content.style.maxHeight = "450px";
+    }
+  });
 
   // Add event listener for the toggle button
   document
@@ -98,5 +110,16 @@ const {
     ?.addEventListener("click", toggleFold);
 
   // Optional: Update fold state on window resize
-  window.addEventListener("resize", updateFold);
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      content.style.maxHeight = "none";
+      fold.classList.remove("px-6")
+      fold.classList.remove("collapsed");
+    } else {
+      fold.classList.add("collapsed");
+      fold.classList.add("px-6")
+      content.style.maxHeight = "450px";
+   
+    }
+  });
 </script>
