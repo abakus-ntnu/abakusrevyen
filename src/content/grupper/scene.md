@@ -1,7 +1,7 @@
 ---
 name: Scene
 brief: Vi designer og lager rekvisitter og scenen!
-logo: "@/images/undergrupper_logoer/scene-logo.jpg"
+logo: "@/images/undergrupper_logoer/scene-logo.webp"
 email: revy-scene@abakus.no
 leaders:
   - juell

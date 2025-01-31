@@ -1,7 +1,7 @@
 ---
 name: Skuespill
 brief: Vi synger, danser, spiller og spreller!
-logo: "@/images/undergrupper_logoer/skuespill-logo.jpg"
+logo: "@/images/undergrupper_logoer/skuespill-logo.webp"
 email: revy-skuespill@abakus.no
 leaders:
   - hansen

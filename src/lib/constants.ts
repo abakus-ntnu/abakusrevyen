@@ -1,16 +1,12 @@
 import { Facebook, Instagram, Mail } from "lucide-astro";
-import PushPopBalubaImage from "../images/revy_logoer/pushpop_small.png";
-import SolidariskImage from "../images/revy_logoer/solidarisk_web.png";
-import KultImage from "../images/revy_logoer/kult.png";
-import SatteSporImage from "../images/revy_logoer/satte_spor.png";
-import MarionettImage from "../images/revy_logoer/marionett.png";
-import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.png";
-import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.png";
-import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.png";
-import BestFoerGruppebilde from "../images/gruppebilder/best_foer_gruppebilde2.png";
-import Forsidebilde from "../images/gruppebilder/forsidebilde.png";
-import GrevensTidGruppebilde from "../images/gruppebilder/grevens_tid_gruppebilde.png";
-import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebilde.jpg";
+import PushPopBalubaImage from "../images/revy_logoer/pushpop_small.webp";
+import SolidariskImage from "../images/revy_logoer/solidarisk_web.webp";
+import KultImage from "../images/revy_logoer/kult.webp";
+import SatteSporImage from "../images/revy_logoer/satte_spor.webp";
+import MarionettImage from "../images/revy_logoer/marionett.webp";
+import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.webp";
+import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.webp";
+import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.webp";
 
 // Forestillinger. Husk å sortere basert på tid med premiæren først
 export type Show = {
@@ -215,24 +211,5 @@ export const PREVIOUS_REVUES: Revuy[] = [
         embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
       },
     ],
-  },
-];
-
-export const GALLERY_IMAGES = [
-  {
-    src: BestFoerGruppebilde,
-    alt: "Gruppebilde fra Best før 2024",
-  },
-  {
-    src: Forsidebilde,
-    alt: "Forsidebilde fra Grevens Tid 2023",
-  },
-  {
-    src: GrevensTidGruppebilde,
-    alt: "Gruppebilde fra Grevens Tid 2023",
-  },
-  {
-    src: SvinPaaSkogenGruppebilde,
-    alt: "Gruppebilde fra Svin På Skogen 2022",
   },
 ];

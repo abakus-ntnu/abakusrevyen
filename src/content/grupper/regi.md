@@ -1,7 +1,7 @@
 ---
 name: Regi
 brief: Vi skriver og dirigerer revyen!
-logo: "@/images/undergrupper_logoer/regi-logo.jpg"
+logo: "@/images/undergrupper_logoer/regi-logo.webp"
 email: revy-regi@abakus.no
 leaders:
   - schjonsby

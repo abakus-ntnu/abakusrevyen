@@ -1,7 +1,7 @@
 ---
 name: Revystyret
 brief: Vi ordner det administrative!
-logo: "@/images/undergrupper_logoer/revystyret-logo.jpg"
+logo: "@/images/undergrupper_logoer/revystyret-logo.webp"
 email: revystyret@abakus.no
 leaders:
   - hamre
