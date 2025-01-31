@@ -39,11 +39,7 @@ $ pnpm run build
 $ pnpm run preview
 ```
 
-Hvis alt funker, kan du oppdatere den offentlige nettsiden med
-
-```sh
-$ ops! har ikke kommet så langt
-```
+Hvis alt funker, kan du deploye nettsiden ved å åpne en pull request til `prod` branchen. Når den merges vil nettsiden automatisk oppdateres.
 
 ## 🔋 STACK
 
