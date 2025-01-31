@@ -57,6 +57,7 @@ jobs:
       - name: Build with Astro
         run: |
           pnpx astro build \
+            --outDir dist\
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
