@@ -32,7 +32,7 @@ const spotlightLeader =
 ---
 
 <PageLayout title="Om oss">
-  <div class="container mx-auto space-y-6 px-6">
+  <div class="container mx-auto space-y-6 px-3">
     <Title
       >Om <span class="text-primary" id="about-branding">Abakusrevyen</span
       ></Title
@@ -76,7 +76,11 @@ const spotlightLeader =
                   <CardContent class="px-3">
                     <div class="flex flex-col gap-1 md:flex-row">
                       {show.name} på
-                      <a href={show.where.mapLink} class="underline">
+                      <a
+                        href={show.where.mapLink}
+                        target="_blank"
+                        class="underline"
+                      >
                         {show.where.name}
                       </a>
                     </div>
@@ -136,18 +140,18 @@ const spotlightLeader =
               }) => (
                 <li>
                   <LinkCard href={`/om_oss/${slug}`}>
-                    <div class="flex h-48 gap-3 rounded-lg border-[1px] border-gray-200 dark:border-gray-500">
+                    <div class="flex flex-col gap-3 rounded-lg border-[1px] border-gray-200 sm:flex-row dark:border-gray-500">
                       <CardImage
                         src={image}
                         alt={`${title} post`}
-                        class="max-w-[25%]"
+                        class="h-40 w-full overflow-hidden !rounded-t-md sm:h-48 sm:max-w-[25%] sm:!rounded-tr-none"
                       />
 
                       <CardContent class="flex flex-col justify-between px-1.5 py-3">
                         <h2 class="font-medium">{title}</h2>
                         <p>{description}</p>
 
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
                           <CardDetail>
                             <Calendar />
                             {pubDate.toLocaleString("NO-nb", {

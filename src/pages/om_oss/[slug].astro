@@ -19,6 +19,10 @@ const { Content } = await render(entry);
 ---
 
 <ArticleLayout title={title}>
-  <Image src={image} alt="Post" class="max-w-screen-md rounded-lg shadow-lg" />
+  <Image
+    src={image}
+    alt="Post"
+    class="w-full max-w-screen-md rounded-lg shadow-lg"
+  />
   <Content />
 </ArticleLayout>
