@@ -61,7 +61,15 @@ const galleryImages: { src: ImageMetadata; alt: string }[] = (
     <h2 class="text-center text-xl font-medium">Bla gjennom</h2>
 
     <Grid>
-      {galleryImages.map((image) => <Image src={image.src} alt={image.alt} />)}
+      {
+        galleryImages.map((image) => (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            class="rounded-md transition-transform hover:scale-105"
+          />
+        ))
+      }
     </Grid>
   </div>
 </PageLayout>
