@@ -10,22 +10,26 @@ const {
 
 <div id="fold" class="relative pb-8">
   <div class:list={["overflow-hidden transition-transform", className]}>
+    <!-- Gradient overlay for mobile -->
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none md:hidden gradient-overlay"></div>
     <slot />
   </div>
-  <button
-    id="foldableFadeToggle"
-    class="absolute bottom-0 left-1/2 -translate-x-1/2"
-  >
-    <span id="chevronUp">
-      <ChevronUp />
-    </span>
-    <span id="chevronDown">
-      <ChevronDown />
-    </span>
-  </button>
+      <button
+        id="foldableFadeToggle"
+        class="absolute bottom-1 left-1/2 -translate-x-1/2 md:hidden"
+      >
+        <!-- Chevron icons -->
+        <span id="chevronUp">
+          <ChevronUp />
+        </span>
+        <span id="chevronDown">
+          <ChevronDown />
+        </span>
+      </button>
 </div>
 
 <style>
+  /* Apply foldable behavior only on mobile devices */
   #fold.collapsed > div {
     @apply h-96;
   }
@@ -41,6 +45,15 @@ const {
   #fold:not(.collapsed) > button > #chevronDown {
     @apply hidden;
   }
+  
+  /* Show gradient only when collapsed */
+  #fold.collapsed .gradient-overlay {
+    @apply block;
+  }
+
+  #fold:not(.collapsed) .gradient-overlay {
+    @apply hidden;
+  }
 </style>
 
 <script
@@ -52,24 +65,38 @@ const {
 >
   const fold = document.getElementById("fold");
   let collapsed = startCollapsed;
-  updateFold();
 
   function toggleFold() {
-    collapsed = !collapsed;
-    updateFold();
+    if (window.innerWidth <= 768) { // Tailwind's `md` breakpoint is 768px
+      collapsed = !collapsed;
+      updateFold();
+    }
   }
 
   function updateFold() {
-    fold.classList.toggle("collapsed", collapsed);
+    if (window.innerWidth <= 768) {
+      fold.classList.toggle("collapsed", collapsed);
 
-    if (collapsed) {
-      fold.classList.add(collapsedHeight);
+      if (collapsed) {
+        fold.classList.add(collapsedHeight);
+      } else {
+        fold.classList.remove(collapsedHeight);
+      }
     } else {
+      // Ensure the foldable section is always fully visible on desktop
+      fold.classList.remove("collapsed");
       fold.classList.remove(collapsedHeight);
     }
   }
 
+  // Initial check on page load
+  updateFold();
+
+  // Add event listener for the toggle button
   document
     .getElementById("foldableFadeToggle")
     ?.addEventListener("click", toggleFold);
+
+  // Optional: Update fold state on window resize
+  window.addEventListener("resize", updateFold);
 </script>
