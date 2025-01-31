@@ -1,5 +1,7 @@
 # <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](https://abakusrevyen.no/)
 
+[![Deploy Astro site to Pages](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/astro.yml/badge.svg?branch=prod)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/astro.yml)
+
 ⚠️ **Har du et problem, eller vil du delta med utviklingen til nettsiden? Se [CONTRIBUTING.md](CONTRIBUTING.md) først!** ⚠️
 
 Dette er koden til Abakusrevyen sin nettside. Utviklet med 🌯 av Teknikk.
