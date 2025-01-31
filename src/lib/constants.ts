@@ -7,10 +7,6 @@ import MarionettImage from "../images/revy_logoer/marionett.webp";
 import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.webp";
 import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.webp";
 import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.webp";
-import BestFoerGruppebilde from "../images/gruppebilder/best_foer_gruppebilde2.webp";
-import Forsidebilde from "../images/gruppebilder/forsidebilde.webp";
-import GrevensTidGruppebilde from "../images/gruppebilder/grevens_tid_gruppebilde.webp";
-import SvinPaaSkogenGruppebilde from "../images/gruppebilder/svin_paa_gruppebilde.webp";
 
 // Forestillinger. Husk å sortere basert på tid med premiæren først
 export type Show = {
@@ -215,24 +211,5 @@ export const PREVIOUS_REVUES: Revuy[] = [
         embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
       },
     ],
-  },
-];
-
-export const GALLERY_IMAGES = [
-  {
-    src: BestFoerGruppebilde,
-    alt: "Gruppebilde fra Best før 2024",
-  },
-  {
-    src: Forsidebilde,
-    alt: "Forsidebilde fra Grevens Tid 2023",
-  },
-  {
-    src: GrevensTidGruppebilde,
-    alt: "Gruppebilde fra Grevens Tid 2023",
-  },
-  {
-    src: SvinPaaSkogenGruppebilde,
-    alt: "Gruppebilde fra Svin På Skogen 2022",
   },
 ];

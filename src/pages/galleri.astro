@@ -2,23 +2,40 @@
 import PageLayout from "@/layouts/PageLayout.astro";
 
 import Title from "@/components/Common/Title.astro";
+import Grid from "@/components/Common/Grid.astro";
 import { Image } from "astro:assets";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { GALLERY_IMAGES } from "../lib/constants";
+const groupImages: { src: ImageMetadata; alt: string }[] = (
+  Object.entries(
+    import.meta.glob("@/images/gruppebilder/*.webp", {
+      import: "default",
+      eager: true,
+    }),
+  ) as [string, ImageMetadata][]
+).map(([alt, src]) => ({ src: src, alt: alt }));
+
+const galleryImages: { src: ImageMetadata; alt: string }[] = (
+  Object.entries(
+    import.meta.glob("@/images/gallery/*.webp", {
+      import: "default",
+      eager: true,
+    }),
+  ) as [string, ImageMetadata][]
+).map(([alt, src]) => ({ src: src, alt: alt }));
 ---
 
 <PageLayout title="Bildegalleri">
-  <div class="container mx-auto mb-12 p-3">
+  <div class="container mx-auto mb-12 space-y-6 p-3">
     <Title class="pb-2">Galleri</Title>
 
     <div class="swiper">
       <div class="swiper-wrapper bg-background-accent pb-10 pt-0.5">
         {
-          GALLERY_IMAGES.map((image) => (
+          groupImages.map((image) => (
             <div class="swiper-slide">
               <Image
                 src={image.src}
@@ -40,6 +57,12 @@ import { GALLERY_IMAGES } from "../lib/constants";
         <div></div>
       </div>
     </div>
+
+    <h2 class="text-center text-xl font-medium">Bla gjennom</h2>
+
+    <Grid>
+      {galleryImages.map((image) => <Image src={image.src} alt={image.alt} />)}
+    </Grid>
   </div>
 </PageLayout>
 
