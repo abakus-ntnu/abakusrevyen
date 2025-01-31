@@ -17,7 +17,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
       class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       {
-        PREVIOUS_REVUES.sort((a, b) => b.year.localeCompare(a.year)).map(
+        PREVIOUS_REVUES.toSorted((a, b) => b.year.localeCompare(a.year)).map(
           (revue) => (
             <li>
               <Card class={revue.color + " !border-0"}>
