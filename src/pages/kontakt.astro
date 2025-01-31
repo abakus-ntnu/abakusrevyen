@@ -16,9 +16,6 @@ const leaders = await getCollection("ledere");
     <Title>Kontakt <span class="text-primary">oss</span></Title>
 
     <p class="max-w-prose leading-loose">
-      Har du en melding til alle i revyen? Send den til
-      <Link href="mailto:revy@abakus.no">revy@abakus.no</Link>!
-      <br />
       En melding til styret til revyen?
       <Link href="mailto:revystyret@abakus.no">revystyret@abakus.no</Link>!
       <br />
@@ -37,7 +34,7 @@ const leaders = await getCollection("ledere");
         groups.map(({ data: group }) => (
           <tr>
             <td>
-              <div class="flex items-center gap-1.5 overflow-x-scroll">
+              <div>
                 <ProfilePicture
                   class="max-h-8"
                   src={group.logo}
@@ -47,7 +44,7 @@ const leaders = await getCollection("ledere");
               </div>
             </td>
             <td>
-              <div class="overflow-x-scroll">
+              <div>
                 <Link href={`mailto:${group.email}`}>{group.email}</Link>
               </div>
             </td>
@@ -67,7 +64,7 @@ const leaders = await getCollection("ledere");
         leaders.map(({ data: leader }) => (
           <tr>
             <td>
-              <div class="flex items-center gap-1.5 overflow-x-scroll">
+              <div>
                 <ProfilePicture
                   class="max-h-8"
                   src={leader.image}
@@ -79,7 +76,7 @@ const leaders = await getCollection("ledere");
               </div>
             </td>
             <td>
-              <div class="overflow-x-scroll">
+              <div>
                 <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
               </div>
             </td>
@@ -87,6 +84,11 @@ const leaders = await getCollection("ledere");
         ))
       }
     </table>
+
+    <p class="max-w-prose leading-loose">
+      Og hvis du har en melding til absolutt alle i revyen?
+      <Link href="mailto:revy-alle@abakus.no">revy-alle@abakus.no</Link>!
+    </p>
   </div>
 </PageLayout>
 
@@ -107,5 +109,9 @@ const leaders = await getCollection("ledere");
   td {
     @apply border p-1.5 dark:border-bg-accent;
     white-space: nowrap;
+  }
+
+  td > div {
+    @apply flex items-center gap-1.5 overflow-x-scroll;
   }
 </style>
