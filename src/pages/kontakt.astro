@@ -31,17 +31,17 @@ const leaders = await getCollection("ledere");
         <th>Email</th>
       </tr>
       {
-        groups.map(({ data: group }) => (
+        groups.map(({ slug, data: group }) => (
           <tr>
             <td>
-              <div>
+              <a href={`/grupper/${slug}`}>
                 <ProfilePicture
                   class="max-h-8"
                   src={group.logo}
                   alt={`${group.name} logo`}
                 />{" "}
                 <span>{group.name}</span>
-              </div>
+              </a>
             </td>
             <td>
               <div>
@@ -61,10 +61,10 @@ const leaders = await getCollection("ledere");
         <th>Email</th>
       </tr>
       {
-        leaders.map(({ data: leader }) => (
+        leaders.map(({ slug, data: leader }) => (
           <tr>
             <td>
-              <div>
+              <a href={`/ledere/${slug}`}>
                 <ProfilePicture
                   class="max-h-8"
                   src={leader.image}
@@ -73,7 +73,7 @@ const leaders = await getCollection("ledere");
                   alt={`${leader.name}`}
                 />{" "}
                 <span>{leader.name}</span>
-              </div>
+              </a>
             </td>
             <td>
               <div>
@@ -111,7 +111,8 @@ const leaders = await getCollection("ledere");
     white-space: nowrap;
   }
 
-  td > div {
+  td > div,
+  a {
     @apply flex items-center gap-1.5 overflow-x-scroll;
   }
 </style>
