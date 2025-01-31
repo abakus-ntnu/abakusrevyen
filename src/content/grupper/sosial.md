@@ -1,7 +1,7 @@
 ---
 name: Sosialgruppen
 brief: Vi arrangerer alt av festligheter!
-logo: "@/images/undergrupper_logoer/sosial-logo.jpg"
+logo: "@/images/undergrupper_logoer/sosial-logo.webp"
 email: revy-sosial@abakus.no
 leaders:
   - steinskog

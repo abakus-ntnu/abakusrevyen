@@ -3,7 +3,7 @@ title: Hva er revyen?
 description: Hva er Abakusrevyen? Hvem er den av, og hvem er den for?
 pubDate: 2025-01-14
 updateDate: 2025-01-14
-image: "@/images/gruppebilder/best_foer_gruppebilde.png"
+image: "@/images/gruppebilder/best_foer_gruppebilde.webp"
 ---
 
 # Hva er revyen?

@@ -1,7 +1,7 @@
 ---
 name: Band
 brief: Vi utvikler og fremfører musikken!
-logo: "@/images/undergrupper_logoer/band-logo.jpg"
+logo: "@/images/undergrupper_logoer/band-logo.webp"
 email: revy-band@abakus.no
 leaders:
   - haakenstad

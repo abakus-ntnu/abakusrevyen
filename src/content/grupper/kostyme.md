@@ -1,7 +1,7 @@
 ---
 name: Kostyme
 brief: Stoff, tråd, masse morro!
-logo: "@/images/undergrupper_logoer/kostyme-logo.jpg"
+logo: "@/images/undergrupper_logoer/kostyme-logo.webp"
 email: revy-kostyme@abakus.no
 leaders:
   - ahlgren

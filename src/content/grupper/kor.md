@@ -1,7 +1,7 @@
 ---
 name: Kor
 brief: Vi er sangerne i bandet!
-logo: "@/images/undergrupper_logoer/kor-logo.jpg"
+logo: "@/images/undergrupper_logoer/kor-logo.webp"
 email: revy-band@abakus.no
 leaders:
   - haakenstad
