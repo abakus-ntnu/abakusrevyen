@@ -6,6 +6,7 @@ email: revystyret@abakus.no
 leaders:
   - supreme_leader
   - hoveid
+  - strand
 ---
 
 # Revystyret

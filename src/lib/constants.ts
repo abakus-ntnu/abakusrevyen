@@ -21,7 +21,7 @@ export type Show = {
 export const SHOWS = [
   {
     name: "Premiere",
-    when: new Date(2025, 2, 14, 20, 0, 0),
+    when: new Date(2025, 2, 13, 19, 0, 0),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -29,7 +29,7 @@ export const SHOWS = [
   },
   {
     name: "Forestilling 2",
-    when: new Date(2025, 2, 15, 12, 0, 0),
+    when: new Date(2025, 2, 14, 16, 0, 0),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -37,7 +37,7 @@ export const SHOWS = [
   },
   {
     name: "Siste forestilling",
-    when: new Date(2025, 2, 15, 20, 0, 0),
+    when: new Date(2025, 2, 14, 20, 0, 0),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",

@@ -37,7 +37,7 @@ const leaders = await getCollection("ledere");
         groups.map(({ data: group }) => (
           <tr>
             <td>
-              <div class="flex items-center gap-1.5">
+              <div class="flex items-center gap-1.5 overflow-x-scroll">
                 <ProfilePicture
                   class="max-h-8"
                   src={group.logo}
@@ -47,7 +47,9 @@ const leaders = await getCollection("ledere");
               </div>
             </td>
             <td>
-              <Link href={`mailto:${group.email}`}>{group.email}</Link>
+              <div class="overflow-x-scroll">
+                <Link href={`mailto:${group.email}`}>{group.email}</Link>
+              </div>
             </td>
           </tr>
         ))
@@ -65,7 +67,7 @@ const leaders = await getCollection("ledere");
         leaders.map(({ data: leader }) => (
           <tr>
             <td>
-              <div class="flex items-center gap-1.5">
+              <div class="flex items-center gap-1.5 overflow-x-scroll">
                 <ProfilePicture
                   class="max-h-8"
                   src={leader.image}
@@ -77,7 +79,9 @@ const leaders = await getCollection("ledere");
               </div>
             </td>
             <td>
-              <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
+              <div class="overflow-x-scroll">
+                <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
+              </div>
             </td>
           </tr>
         ))
@@ -92,7 +96,7 @@ const leaders = await getCollection("ledere");
   }
 
   table {
-    @apply w-full border-collapse border-2 shadow dark:border-bg-accent;
+    @apply w-full table-fixed border-collapse border-2 shadow md:table-auto dark:border-bg-accent;
   }
 
   th {
@@ -102,5 +106,6 @@ const leaders = await getCollection("ledere");
   th,
   td {
     @apply border p-1.5 dark:border-bg-accent;
+    white-space: nowrap;
   }
 </style>
