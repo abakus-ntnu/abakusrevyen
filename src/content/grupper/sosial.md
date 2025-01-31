@@ -1,6 +1,6 @@
 ---
-name: "Sosialgruppen"
-brief: "Passer på at du har det gøy!"
+name: Sosialgruppen
+brief: Vi arrangerer alt av festligheter!
 logo: "@/images/undergrupper_logoer/sosial-logo.jpg"
 email: revy-sosial@abakus.no
 leaders:

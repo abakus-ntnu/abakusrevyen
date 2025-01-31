@@ -1,14 +1,14 @@
 ---
-name: "Revystyret"
-brief: "Supreme leader"
+name: Revystyret
+brief: Vi ordner det administrative!
 logo: "@/images/undergrupper_logoer/revystyret-logo.jpg"
 email: revystyret@abakus.no
 leaders:
-  - supreme_leader
+  - hamre
   - hoveid
   - strand
 ---
 
 # Revystyret
 
-Alle må følge den supreme lederen.
+Revystyret er ledergruppen for Abakusrevyen, og sørger for den daglige driften og gjennomføring av revyen. Dersom du har spørsmål rundt Abakusrevyen er styret der for å hjelpe deg, så ikke nøl med å ta kontakt!

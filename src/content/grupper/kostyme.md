@@ -1,6 +1,6 @@
 ---
-name: "Kostyme"
-brief: "Vi lager kostymene"
+name: Kostyme
+brief: Stoff, tråd, masse morro!
 logo: "@/images/undergrupper_logoer/kostyme-logo.jpg"
 email: revy-kostyme@abakus.no
 leaders:

@@ -1,6 +1,6 @@
 ---
-name: "Dans"
-brief: "💃💃💃"
+name: Dans
+brief: Vi danser og lager koreografi!
 logo: "@/images/undergrupper_logoer/dans-logo.jpg"
 email: revy-dans@abakus.no
 leaders:

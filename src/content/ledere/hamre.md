@@ -9,4 +9,4 @@ leaderOf:
 
 # Mathias Hamre
 
-Vår supreme leder.
+Sjef for hele revyen.

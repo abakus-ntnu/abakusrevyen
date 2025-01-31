@@ -5,9 +5,8 @@ image: https://thumbor.abakus.no/JhJXIkBD4jm6dkcPU0qD0Hw08DE=/200x200/80D843F234
 gender: male
 leaderOf:
   - group: skuespill
-    title: Koleder
 ---
 
 # Daniel Yang Hansen
 
-Koleder av skuespill.
+Instruktør for skuespill.
