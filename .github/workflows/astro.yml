@@ -29,14 +29,24 @@ env:
   # BUILD_PATH: subfolder
 
 jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install pnpm
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
+      - name: Setup pnpm
+        id: setup-pnpm
         run: |
           echo "manager=pnpm" >> $GITHUB_OUTPUT
           echo "command=i" >> $GITHUB_OUTPUT
@@ -46,17 +56,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
+          cache: ${{ steps.setup-pnpm.outputs.manager }}
+          cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.setup-pnpm.outputs.lockfile }}
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: ${{ steps.setup-pnpm.outputs.manager }} ${{ steps.setup-pnpm.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
-          ${{ steps.detect-package-manager.outputs.runner }} astro build \
+          ${{ steps.setup-pnpm.outputs.runner }} astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
