@@ -18,7 +18,7 @@ const grupper = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      brief: z.string().min(1, "Missing brief").max(60, "Brief is too long"),
+      brief: z.string().min(1, "Missing brief").max(70, "Brief is too long"),
       spotlight: z.string().max(300, "Spotlight is too long").optional(),
       logo: image(),
       email: z.string().email("Not a valid email"),
