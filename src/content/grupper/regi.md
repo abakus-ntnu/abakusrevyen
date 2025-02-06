@@ -1,6 +1,6 @@
 ---
 name: Regi
-brief: Vi skriver og dirigerer revyen!
+brief: Bad Poets Society
 logo: "@/images/undergrupper_logoer/regi-logo.webp"
 email: revy-regi@abakus.no
 leaders:

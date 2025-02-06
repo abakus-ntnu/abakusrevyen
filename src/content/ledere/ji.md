@@ -4,7 +4,7 @@ image: https://thumbor.abakus.no/t7vb8MiIDeAx0QeQViWrWIAT_2A=/200x200/default_fe
 gender: female
 leaderOf:
   - group: regi
-    title: Nestleder
+    title: Assisterende Regissør
 ---
 
 # Emily Ji
