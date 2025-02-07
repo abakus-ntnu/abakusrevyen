@@ -1,6 +1,6 @@
 ---
 name: Scene
-brief: Vi designer og lager rekvisitter og scenen!
+brief: Kan d fikses, klart d kan, men vi må sje litt ann.
 logo: "@/images/undergrupper_logoer/scene-logo.webp"
 email: revy-scene@abakus.no
 leaders:

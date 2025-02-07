@@ -5,7 +5,7 @@ image: https://thumbor.abakus.no/QB7hj6TqLURPmaGvXaPg0zaOpOQ=/200x200/profil_kA0
 gender: male
 leaderOf:
   - group: regi
-    title: Nestleder
+    title: Skriveansvarlig
 ---
 
 # Asgeir Mehl Santi
