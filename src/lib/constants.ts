@@ -44,7 +44,7 @@ export const SHOWS = [
 // Perioder
 export const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
 export const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
-export const COUNTDOWN_START = new Date(2025, 1, 7, 20, 30, 0); // SLIPP
+export const COUNTDOWN_START = new Date(2025, 1, 8, 0, 0, 0); // SLIPP
 
 export const SHOW_START = new Date(SHOWS[0].when); // Premiære
 export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
