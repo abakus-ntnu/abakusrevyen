@@ -1,11 +1,23 @@
 ---
 import { Image } from "astro:assets";
 
-import IGrevensTid from "@/images/revy_logoer/grevens_tid_logo.webp";
+import ShowLogoLight from "@/images/revy_logoer/objektivt_sett_light_logo.webp";
+import ShowLogoDark from "@/images/revy_logoer/objektivt_sett_dark_logo.webp";
 
 const { class: className } = Astro.props;
 ---
 
 <div class={className}>
-  <Image loading="eager" src={IGrevensTid} alt="Revy logo" class="w-[50vh]" />
+  <Image
+    loading="eager"
+    src={ShowLogoLight}
+    alt="Revy logo"
+    class="w-[50vh] dark:hidden"
+  />
+  <Image
+    loading="eager"
+    src={ShowLogoDark}
+    alt="Revy logo"
+    class="hidden w-[50vh] dark:block"
+  />
 </div>
