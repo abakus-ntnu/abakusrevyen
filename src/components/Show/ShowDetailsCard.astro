@@ -62,11 +62,12 @@ if (typeof when === "string") {
       >
     </div>
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 opacity-50">
       <span>Kjøp bilett</span>
       <LinkButton
         href="https://vier.live/c/abakusrevyen"
         external={true}
+        disabled={true}
         class="flex gap-3 hover:shadow-md"
       >
         <Ticket />Ticketmaster</LinkButton
