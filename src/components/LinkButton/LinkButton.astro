@@ -4,18 +4,26 @@ interface Props {
   external?: boolean;
   style?: "primary" | "secondary";
   class?: string;
+  disabled?: boolean;
 }
 
-const { href, external, style = "primary", class: className } = Astro.props;
+const {
+  href,
+  external,
+  disabled,
+  style = "primary",
+  class: className,
+} = Astro.props;
 ---
 
 <a
-  href={href}
+  href={(!disabled && href) || undefined}
   class:list={[
     "rounded-md border-2 p-1 px-2 text-center transition-colors",
     style === "primary" &&
       "border-secondary bg-secondary text-white hover:border-primary hover:bg-red-400",
     style === "secondary" && "bg-white text-black hover:bg-gray-200",
+    disabled && "cursor-not-allowed !shadow-inner",
     className,
   ]}
   {...external && { target: "_blank", rel: "noopener noreferrer" }}><slot /></a
