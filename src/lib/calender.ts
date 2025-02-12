@@ -23,9 +23,9 @@ DTSTART:${formatDate(show.when)}
 DTEND:${formatDate(endtime)}
 DTSTAMP:${formatDate(new Date())}
 UID:${v4()}-${show.name.replaceAll(" ", "")}
-DESCRIPTION:
-LOCATION:${show.where}
-ORGANIZER:Abakus
+DESCRIPTION:${show.name}. Link til lokasjon: ${show.where.mapLink}
+LOCATION:${show.where.name}
+ORGANIZER:Abakusrevyen
 STATUS:CONFIRMED
 PRIORITY:1
 END:VEVENT
