@@ -17,7 +17,7 @@ export type Show = {
 export const SHOWS = [
   {
     name: "Premiere",
-    when: new Date(2025, 2, 13, 19, 0, 0),
+    when: new Date("2025-03-13T18:00:00.000Z"),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -25,7 +25,7 @@ export const SHOWS = [
   },
   {
     name: "Forestilling 2",
-    when: new Date(2025, 2, 14, 16, 0, 0),
+    when: new Date("2025-03-14T15:00:00.000Z"),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -33,7 +33,7 @@ export const SHOWS = [
   },
   {
     name: "Siste forestilling",
-    when: new Date(2025, 2, 14, 20, 0, 0),
+    when: new Date("2025-03-14T19:00:00.000Z"),
     where: {
       name: "Byscenen i Trondheim",
       mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
@@ -44,7 +44,7 @@ export const SHOWS = [
 // Perioder
 export const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
 export const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
-export const COUNTDOWN_START = new Date(2025, 1, 7, 22, 0, 0); // SLIPP
+export const COUNTDOWN_START = new Date("2025-02-07T21:00:00.000Z"); // SLIPP
 
 export const SHOW_START = new Date(SHOWS[0].when); // Premiære
 export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
