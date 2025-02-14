@@ -1,7 +1,7 @@
 ---
 name: Kasper Mustad Juell
 email: kasper.juell@abakus.no
-image: https://thumbor.abakus.no/jnGFkFaCtOHzGsah7HsaIeOlfhw=/200x200/1000004712.png
+image: "@/images/ledere/Kasper.png"
 gender: male
 leaderOf:
   - group: scene

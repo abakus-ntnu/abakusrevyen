@@ -7,6 +7,11 @@ export function enableOnlineTheme() {
     navbarTitle.innerHTML = "Onlinerevyen";
   }
 
+  const navbarSheetTitle = window.document.getElementById("navbar-sheet-title");
+  if (navbarSheetTitle) {
+    navbarSheetTitle.innerHTML = "Onlinerevyen";
+  }
+
   const footerTitle = window.document.getElementById("footer-title");
   if (footerTitle) {
     footerTitle.innerHTML = "Onlinerevyen";
