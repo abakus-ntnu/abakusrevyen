@@ -25,7 +25,7 @@ function NavbarSlider({
   ));
 
   return (
-    <div className="h-full w-full rounded-l-xl border-l border-bg-accent bg-background px-6">
+    <div className="h-full w-full rounded-l-xl border-y-2 border-l-2 border-primary bg-background px-6">
       <div className="flex h-32 items-center justify-between">
         <span
           id="navbar-title"
