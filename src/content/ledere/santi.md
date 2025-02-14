@@ -1,8 +1,9 @@
 ---
 name: Asgeir Mehl Santi
 email: asgeir.santi@abakus.no
-image: https://thumbor.abakus.no/QB7hj6TqLURPmaGvXaPg0zaOpOQ=/200x200/profil_kA08Ek9.jpg
+image: "@/images/ledere/default_male_avatar.png"
 gender: male
+hidden: true
 leaderOf:
   - group: regi
     title: Skriveansvarlig

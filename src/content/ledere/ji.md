@@ -1,7 +1,8 @@
 ---
 name: Emily Ji
-image: https://thumbor.abakus.no/t7vb8MiIDeAx0QeQViWrWIAT_2A=/200x200/default_female_avatar.png
+image: "@/images/ledere/default_female_avatar.png"
 gender: female
+hidden: true
 leaderOf:
   - group: regi
     title: Assisterende Regissør
