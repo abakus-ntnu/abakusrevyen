@@ -61,27 +61,27 @@ const leaders = await getCollection("ledere");
         <th>Email</th>
       </tr>
       {
-        leaders.map(({ slug, data: leader }) => (
-          <tr>
-            <td>
-              <a href={`/ledere/${slug}`}>
-                <ProfilePicture
-                  class="max-h-8"
-                  src={leader.image}
-                  width={50}
-                  height={50}
-                  alt={`${leader.name}`}
-                />{" "}
-                <span>{leader.name}</span>
-              </a>
-            </td>
-            <td>
-              <div>
-                <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
-              </div>
-            </td>
-          </tr>
-        ))
+        leaders
+          .filter((leader) => !leader.data.hidden)
+          .map(({ slug, data: leader }) => (
+            <tr>
+              <td>
+                <a href={`/ledere/${slug}`}>
+                  <ProfilePicture
+                    class="h-max max-h-8"
+                    src={leader.image}
+                    alt={`${leader.name}`}
+                  />{" "}
+                  <span>{leader.name}</span>
+                </a>
+              </td>
+              <td>
+                <div>
+                  <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
+                </div>
+              </td>
+            </tr>
+          ))
       }
     </table>
 

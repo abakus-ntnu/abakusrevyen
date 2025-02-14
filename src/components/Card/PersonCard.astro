@@ -1,10 +1,16 @@
 ---
+interface Props {
+  name: string;
+  image: string | ImageMetadata;
+}
+
 const { name, image } = Astro.props;
+const imageSource = typeof image === "string" ? image : image.src;
 ---
 
 <div
   class="flex aspect-[5/6] w-full flex-col justify-end rounded-lg bg-cover bg-center p-1.5"
-  style={`background-image: url(${image})`}
+  style={`background-image: url(${imageSource})`}
 >
   <div class="w-full rounded-md bg-background px-3 py-1 text-center opacity-90">
     <slot name="name">
