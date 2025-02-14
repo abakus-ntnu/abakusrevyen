@@ -5,7 +5,7 @@ import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
 
-import { AlignJustify } from "lucide-astro";
+import { AlignJustify as Hamburger } from "lucide-astro";
 
 const ITEMS = {
   "/opptak": "Opptak",
@@ -33,7 +33,7 @@ const ITEMS = {
       <div class="flex md:hidden">
         <MobileNavbar client:load items={ITEMS}>
           <span class="text-foreground transition-colors hover:text-accent">
-            <AlignJustify />
+            <Hamburger />
           </span>
         </MobileNavbar>
       </div>
