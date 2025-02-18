@@ -4,7 +4,7 @@ import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import CountdownComp from "@/components/Countdown/Countdown.astro";
 import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
-import { SHOWS } from "@/lib/constants";
+import { SHOWS } from "@/lib/shows";
 import { nextShow } from "@/lib/periods";
 
 const show = nextShow() ?? SHOWS.toReversed()[0];

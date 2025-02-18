@@ -1,4 +1,5 @@
-import { PERIODS, SHOWS, type Period } from "./constants";
+import { PERIODS, type Period } from "./constants";
+import { SHOWS } from "./shows";
 
 export function getCurrentPeriod(
   override: Period | undefined = undefined,
