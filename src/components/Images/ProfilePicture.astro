@@ -5,12 +5,17 @@ import {
   type RemoteImageProps,
 } from "astro:assets";
 
-type Props = LocalImageProps | RemoteImageProps;
+interface Props {
+  class: string;
+  src: ImageMetadata;
+  alt: string;
+}
 
-const { class: className, ...rest } = Astro.props;
+const { class: className, src, alt } = Astro.props;
 ---
 
 <Image
   class:list={["aspect-square w-auto rounded-full", className]}
-  {...rest}
+  src={src}
+  alt={alt}
 />

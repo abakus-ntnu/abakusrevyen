@@ -20,6 +20,7 @@
     "@types/react-dom": "^19.0.2",
     "astro": "^4.16.13",
     "lucide-astro": "^0.460.0",
+    "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "swiper": "^11.2.0",

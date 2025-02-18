@@ -18,6 +18,8 @@ const supremeLeaders = leaders
       leader.data.leaderOf.find(({ group }) => group.slug === "revystyret") !==
       undefined,
   )
+  // And only show the leaders who should be visible
+  .filter((leader) => !leader.data.hidden)
   // Sort the leaders above other titles
   .map((leader) => ({
     ...leader,
@@ -50,6 +52,8 @@ const plebians = leaders
       leader.data.leaderOf.find(({ group }) => group.slug !== "revystyret") !==
       undefined,
   )
+  // And only show the leaders who should be visible
+  .filter((leader) => !leader.data.hidden)
   // And again sort the leaders above other titles
   .map((leader) => ({
     ...leader,
@@ -64,6 +68,8 @@ const plebians = leaders
     (a, b) =>
       (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
   );
+
+console.log(leaders);
 
 // Get the groups of the leaders
 const groups = await getCollection("grupper");
