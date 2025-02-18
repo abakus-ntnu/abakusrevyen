@@ -14,17 +14,22 @@ const {
   style = "primary",
   class: className,
 } = Astro.props;
+
+const STYLES: { [style: string]: (string | boolean | undefined)[] } = {
+  default: [
+    "rounded-md border-2 p-1 px-2 text-center transition-colors",
+    disabled && "cursor-not-allowed !shadow-inner opacity-50",
+  ],
+  primary: [
+    "border-secondary bg-secondary text-white",
+    !disabled && "hover:bg-red-400 hover:border-primary",
+  ],
+  secondary: ["bg-white text-black", !disabled && "hover:bg-gray-200"],
+};
 ---
 
 <a
   href={(!disabled && href) || undefined}
-  class:list={[
-    "rounded-md border-2 p-1 px-2 text-center transition-colors",
-    style === "primary" &&
-      "border-secondary bg-secondary text-white hover:border-primary hover:bg-red-400",
-    style === "secondary" && "bg-white text-black hover:bg-gray-200",
-    disabled && "cursor-not-allowed !shadow-inner",
-    className,
-  ]}
+  class:list={[...STYLES.default, ...STYLES[style], className]}
   {...external && { target: "_blank", rel: "noopener noreferrer" }}><slot /></a
 >

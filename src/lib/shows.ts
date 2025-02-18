@@ -36,3 +36,4 @@ export const SHOW_REVEAL = new Date("2025-02-07T22:00:00+0100");
 export const TICKET_RELEASE: Date | "TBA" = new Date(
   "2025-02-19T16:00:00+0100",
 );
+export const TICKET_LINK: string | undefined = undefined;
