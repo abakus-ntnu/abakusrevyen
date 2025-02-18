@@ -1,0 +1,21 @@
+---
+import { SECRETS } from "@/lib/secrets";
+
+export async function getStaticPaths() {
+  const list = SECRETS.map((secret) => ({ params: { secret: secret.id } }));
+  return list;
+}
+
+const { secret } = Astro.params;
+---
+
+<!doctype html>
+<html>
+  <head>
+    <script define:vars={{ secret }}>
+      localStorage.setItem(secret, "enabled");
+      window.location.href = "/";
+    </script>
+  </head>
+  <body> </body>
+</html>

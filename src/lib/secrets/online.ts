@@ -39,33 +39,3 @@ export function disableOnlineTheme() {
   // just refresh the page instead. Same thing.
   window.location.reload();
 }
-
-export function onlineThemeIsEnabled() {
-  return window.localStorage.getItem("onlineThemeEnabled") === "true";
-}
-
-function onLoad() {
-  if (onlineThemeIsEnabled()) {
-    enableOnlineTheme();
-  }
-}
-
-const PHRASE = "jegeroffline";
-let currentString = "";
-
-function onKeyDown(e: KeyboardEvent) {
-  currentString += e.key;
-  if (currentString.length > PHRASE.length) {
-    currentString = currentString.slice(currentString.length - PHRASE.length);
-  }
-  console.log(currentString);
-  if (currentString === PHRASE) {
-    enableOnlineTheme();
-    alert("La oss få deg online! :)");
-  } else if (onlineThemeIsEnabled()) {
-    disableOnlineTheme();
-  }
-}
-
-onLoad();
-window.addEventListener("keydown", onKeyDown);
