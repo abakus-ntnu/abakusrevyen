@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { SHOWS } from "./constants";
+import { SHOWS } from "./shows";
 
 export function getCalenderURL() {
   const formatDate = (date: Date) => {

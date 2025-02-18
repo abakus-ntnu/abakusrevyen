@@ -3,9 +3,9 @@ import Card from "../Card/Card.astro";
 
 import { Clock, MapPin, Ticket } from "lucide-astro";
 
-import { getCalenderURL } from "@/lib/calender";
+import { getCalenderURL } from "@/lib/calendar";
 import LinkButton from "../LinkButton/LinkButton.astro";
-import type { Show } from "@/lib/constants";
+import type { Show } from "@/lib/shows";
 
 interface Props {
   show: Show;
@@ -31,12 +31,14 @@ if (typeof when === "string") {
       when.toLocaleString("no-NB", {
         hour: "numeric",
         minute: "2-digit",
+        timeZone: "Europe/Oslo",
       });
   } else {
     whenText = when.toLocaleString("no-NB", {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "Europe/Oslo",
     });
   }
 }

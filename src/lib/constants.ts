@@ -7,53 +7,29 @@ import MarionettImage from "../images/revy_logoer/marionett.webp";
 import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.webp";
 import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.webp";
 import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.webp";
-
-// Forestillinger. Husk å sortere basert på tid med premiæren først
-export type Show = {
-  name: string;
-  when: Date;
-  where: { name: string; mapLink: string };
-};
-export const SHOWS = [
-  {
-    name: "Premiere",
-    when: new Date("2025-03-13T18:00:00.000Z"),
-    where: {
-      name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
-    },
-  },
-  {
-    name: "Forestilling 2",
-    when: new Date("2025-03-14T15:00:00.000Z"),
-    where: {
-      name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
-    },
-  },
-  {
-    name: "Siste forestilling",
-    when: new Date("2025-03-14T19:00:00.000Z"),
-    where: {
-      name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
-    },
-  },
-];
+import { SHOWS, SHOW_REVEAL } from "./shows";
 
 // Perioder
-export const RECRUITMENT_START = new Date(2024, 7, 15); // Start av opptak
-export const RECRUITMENT_END = new Date(2024, 8, 15); // Opptak slutt
-export const COUNTDOWN_START = new Date("2025-02-07T21:00:00.000Z"); // SLIPP
+export const RECRUITMENT_START = new Date("2024-7-15T00:00:00+0100"); // Start av opptak
+export const RECRUITMENT_END = new Date("2024-8-15T00:00:00+0100"); // Opptak slutt
+export const COUNTDOWN_START = SHOW_REVEAL;
 
+export const TICKET_RELEASE = new Date("2025-02-19T16:00:00+0100");
 export const SHOW_START = new Date(SHOWS[0].when); // Premiære
 export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
 
-export type Period = "recruitment" | "showStarting" | "showCurrent" | "break";
+export type Period =
+  | "recruitment"
+  | "ticketsCountdown"
+  | "showCountdown"
+  | "showCurrent"
+  | "break";
+
 export const PERIODS: { from: Date; period: Period }[] = [
   { from: RECRUITMENT_START, period: "recruitment" },
   { from: RECRUITMENT_END, period: "break" },
-  { from: COUNTDOWN_START, period: "showStarting" },
+  { from: COUNTDOWN_START, period: "ticketsCountdown" },
+  { from: TICKET_RELEASE, period: "showCountdown" },
   { from: SHOW_START, period: "showCurrent" },
   { from: SHOW_END, period: "break" },
 ];
