@@ -1,6 +1,6 @@
 ---
 name: Emily Ji
-image: "@/images/ledere/default_female_avatar.png"
+image: "@/images/ledere/default_female_avatar.webp"
 gender: female
 hidden: true
 leaderOf:

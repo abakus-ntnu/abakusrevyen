@@ -1,7 +1,7 @@
 ---
 name: Rikke Schjønsby
 email: rikke.schjoensby@abakus.no
-image: "@/images/ledere/Rikke.png"
+image: "@/images/ledere/Rikke.webp"
 gender: female
 leaderOf:
   - group: regi
