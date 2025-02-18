@@ -13,7 +13,6 @@ interface Props {
 
 const { show } = Astro.props;
 const when = show.when;
-const now = new Date();
 
 let whenText;
 
@@ -41,6 +40,27 @@ if (typeof when === "string") {
       day: "numeric",
       timeZone: "Europe/Oslo",
     });
+  }
+}
+
+function ticketButtonText() {
+  const now = new Date();
+
+  if (TICKET_RELEASE === "TBA") {
+    return "TBA";
+  } else if (TICKET_RELEASE > now) {
+    return TICKET_RELEASE.toLocaleString("no-NB", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Europe/Oslo",
+    });
+  } else if (TICKET_LINK === undefined) {
+    return "Snart";
+  } else {
+    return "Kjøp billett";
   }
 }
 ---
@@ -74,22 +94,7 @@ if (typeof when === "string") {
         class="flex gap-3 hover:shadow-md"
       >
         <Ticket />
-        {
-          TICKET_LINK === undefined &&
-          TICKET_RELEASE !== "TBA" &&
-          TICKET_RELEASE > now
-            ? TICKET_RELEASE.toLocaleString("no-NB", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                timeZone: "Europe/Oslo",
-              })
-            : TICKET_RELEASE === "TBA" || TICKET_LINK === undefined
-              ? "TBA"
-              : "Kjøp billett"
-        }
+        {ticketButtonText()}
       </LinkButton>
     </div>
   </div>
