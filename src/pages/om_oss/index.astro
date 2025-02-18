@@ -23,12 +23,12 @@ const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
 const leaders = await getCollection("ledere");
 
-const now = new Date();
-const spotlight = groups[Math.floor(Math.random() * groups.length)];
+const spotlightGroupIdx = Math.floor(Math.random() * groups.length);
+const spotlight = groups[spotlightGroupIdx];
 const spotlightLeader =
   spotlight.data.leaders && spotlight.data.leaders.length >= 1
     ? await getEntry(spotlight.data.leaders[0])
-    : undefined;
+    : await getEntry("ledere", "hamre");
 ---
 
 <PageLayout title="Om oss">
@@ -43,7 +43,11 @@ const spotlightLeader =
     >
       <a href="/grupper" class="group">
         <MultiImageCard
-          images={groups.map((group) => ({
+          images={[
+            groups[(spotlightGroupIdx + 1) % groups.length],
+            spotlight,
+            groups[(spotlightGroupIdx + 2) % groups.length],
+          ].map((group) => ({
             src: group.data.logo,
             alt: `${group.data.name} logo`,
           }))}
@@ -54,7 +58,7 @@ const spotlightLeader =
 
       <a href="/ledere" class="group">
         <MultiImageCard
-          images={leaders.map((leader) => ({
+          images={[leaders[0], spotlightLeader, leaders[1]].map((leader) => ({
             src: leader.data.image,
             alt: `${leader.data.name}`,
           }))}
