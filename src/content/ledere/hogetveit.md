@@ -1,7 +1,7 @@
 ---
 name: Julie Høgetveit
 email: julie.hogetveit@abakus.no
-image: "@/images/ledere/Julie.png"
+image: "@/images/ledere/Julie.webp"
 gender: female
 leaderOf:
   - group: pr

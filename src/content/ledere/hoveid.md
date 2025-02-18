@@ -1,7 +1,7 @@
 ---
 name: Petra Hoveid
 email: petra.hoveid@abakus.no
-image: "@/images/ledere/Petra.png"
+image: "@/images/ledere/Petra.webp"
 gender: female
 leaderOf:
   - group: revystyret

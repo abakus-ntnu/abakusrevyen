@@ -4,7 +4,7 @@ import Live from "@/layouts/Home/Live.astro";
 import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
-import { getCurrentPeriod, nextShow } from "@/lib/periods";
+import { getCurrentPeriod } from "@/lib/periods";
 
 const period = getCurrentPeriod();
 ---
@@ -17,6 +17,7 @@ const period = getCurrentPeriod();
   ) : period == "showCurrent" ? (
     <Live />
   ) : (
+    // showCountdown or ticketCountdown
     <Countdown />
   )
 }

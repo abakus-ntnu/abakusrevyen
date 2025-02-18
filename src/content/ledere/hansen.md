@@ -1,7 +1,7 @@
 ---
 name: Daniel Yang Hansen
 email: daniel.hansen@abakus.no
-image: "@/images/ledere/Daniel.png"
+image: "@/images/ledere/Daniel.webp"
 gender: male
 leaderOf:
   - group: skuespill
