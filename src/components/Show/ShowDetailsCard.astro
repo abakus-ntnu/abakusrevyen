@@ -1,10 +1,11 @@
 ---
 import Card from "../Card/Card.astro";
+import CardContent from "../Card/CardContent.astro";
+import LinkButton from "../LinkButton/LinkButton.astro";
 
-import { Clock, MapPin, Ticket } from "lucide-astro";
+import { Clock, MapPin, Ticket, ArrowRight } from "lucide-astro";
 
 import { getCalenderURL } from "@/lib/calendar";
-import LinkButton from "../LinkButton/LinkButton.astro";
 import { type Show, TICKET_RELEASE, TICKET_LINK } from "@/lib/shows";
 
 interface Props {
@@ -66,36 +67,43 @@ function ticketButtonText() {
 ---
 
 <Card class="!border-0 bg-primary text-white">
-  <div class="grid grid-cols-1 gap-10 px-8 pb-6 pt-4 md:grid-cols-3">
-    <div class="flex flex-col gap-2">
-      <span>Hvor</span>
-      <LinkButton
-        href={show.where.mapLink}
-        external={true}
-        class="flex gap-3 shadow-md"
-      >
-        <MapPin />{show.where.name}
-      </LinkButton>
-    </div>
+  <CardContent>
+    <h2 class="text-center font-medium">{show.name}</h2>
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+      <div class="flex flex-col gap-2">
+        <span class="font-medium">Hvor</span>
+        <LinkButton
+          href={show.where.mapLink}
+          external={true}
+          class="flex gap-3 shadow-md"
+        >
+          <MapPin />{show.where.name}
+        </LinkButton>
+      </div>
 
-    <div class="flex flex-col gap-2">
-      <span>Når</span>
-      <LinkButton href={getCalenderURL()} class="flex gap-3 hover:shadow-md">
-        <Clock />{whenText}</LinkButton
-      >
-    </div>
+      <div class="flex flex-col gap-2">
+        <span class="font-medium">Når</span>
+        <LinkButton href={getCalenderURL()} class="flex gap-3 hover:shadow-md">
+          <Clock />{whenText}</LinkButton
+        >
+      </div>
 
-    <div class="flex flex-col gap-2">
-      <span>Billett</span>
-      <LinkButton
-        href={TICKET_LINK || ""}
-        external={true}
-        disabled={TICKET_LINK === undefined}
-        class="flex gap-3 hover:shadow-md"
-      >
-        <Ticket />
-        {ticketButtonText()}
-      </LinkButton>
+      <div class="flex flex-col gap-2">
+        <span class="font-medium">Billett</span>
+        <LinkButton
+          href={TICKET_LINK || ""}
+          external={true}
+          disabled={TICKET_LINK === undefined}
+          class="flex gap-3 hover:shadow-md"
+        >
+          <Ticket />
+          {ticketButtonText()}
+        </LinkButton>
+      </div>
     </div>
-  </div>
+    <div class="flex w-full items-center justify-end gap-1">
+      <a href="/om_oss" class="font-medium">Alle forestillinger</a>
+      <ArrowRight />
+    </div>
+  </CardContent>
 </Card>
