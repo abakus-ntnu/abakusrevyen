@@ -10,7 +10,7 @@ export const SHOWS = [
     when: new Date("2025-03-13T19:00:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+      mapLink: "https://byscn.no/abakus_25",
     },
   },
   {
@@ -18,7 +18,7 @@ export const SHOWS = [
     when: new Date("2025-03-14T17:00:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+      mapLink: "https://byscn.no/abakus_25",
     },
   },
   {
@@ -26,7 +26,7 @@ export const SHOWS = [
     when: new Date("2025-03-14T20:30:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://maps.app.goo.gl/gMbEfdPB1PjJ5LMw6",
+      mapLink: "https://byscn.no/abakus_25",
     },
   },
 ];
