@@ -46,7 +46,9 @@ if (typeof when === "string") {
 function ticketButtonText() {
   const now = new Date();
 
-  if (TICKET_RELEASE === "TBA") {
+  if (TICKET_LINK !== undefined) {
+    return "Kjøp billett";
+  } else if (TICKET_RELEASE === "TBA") {
     return "TBA";
   } else if (TICKET_RELEASE > now) {
     return TICKET_RELEASE.toLocaleString("no-NB", {
@@ -57,10 +59,8 @@ function ticketButtonText() {
       minute: "2-digit",
       timeZone: "Europe/Oslo",
     });
-  } else if (TICKET_LINK === undefined) {
-    return "Snart";
   } else {
-    return "Kjøp billett";
+    return "Snart";
   }
 }
 ---
@@ -90,7 +90,7 @@ function ticketButtonText() {
       <LinkButton
         href={TICKET_LINK || ""}
         external={true}
-        disabled={true}
+        disabled={TICKET_LINK === undefined}
         class="flex gap-3 hover:shadow-md"
       >
         <Ticket />
