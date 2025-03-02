@@ -1,4 +1,5 @@
 import { enableOnlineTheme, disableOnlineTheme } from "./online";
+import { enableStarWarsTheme, disableStarWarsTheme } from "./starwars";
 
 export const SECRETS = [
   {
@@ -6,6 +7,12 @@ export const SECRETS = [
     phrase: "jegeroffline",
     activate: enableOnlineTheme,
     deactivate: disableOnlineTheme,
+  },
+  {
+    id: "starwars",
+    phrase: "usetheforce",
+    activate: enableStarWarsTheme,
+    deactivate: disableStarWarsTheme,
   },
 ];
 
