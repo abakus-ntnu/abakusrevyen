@@ -19,22 +19,19 @@ function TabButton({
   );
 }
 
-function Segment({
-  children,
-  className,
-}: Readonly<{ children: ReactNode; className?: string }>) {
-  return <div className={`p-2 ${className}`}>{children}</div>;
-}
-
 function InfoField({
   icon,
+  name,
   children,
-}: Readonly<{ icon: ReactNode; children: ReactNode }>) {
+}: Readonly<{ icon: ReactNode; name: string; children: ReactNode }>) {
   return (
-    <Segment className="flex gap-1 rounded-md bg-secondary">
-      {icon}
-      {children}
-    </Segment>
+    <div className="flex grow flex-col gap-2 p-2">
+      <span>{name}</span>
+      <div className="flex gap-1 rounded-md">
+        {icon}
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -56,6 +53,7 @@ function Button({
 export default function ShowsCard({}: Readonly<Props>) {
   const [tab, setTab] = useState(0);
   const [show, setShow] = useState(SHOWS[tab]);
+  const [ticketTab, setTicketTab] = useState(false);
 
   useEffect(() => {
     setShow(SHOWS[tab]);
@@ -70,19 +68,8 @@ export default function ShowsCard({}: Readonly<Props>) {
           </TabButton>
         ))}
       </div>
-      <div className="grid grid-cols-4 items-center gap-3 px-6 py-3">
-        <span className="px-2">Hvor</span>
-        <span className="px-2">Når</span>
-        <span className="px-2">Billett</span>
-        <a
-          className="flex items-center justify-end px-2"
-          target="_blank"
-          href={show.href}
-        >
-          <span>Mer info</span>
-          <ArrowRight />
-        </a>
-        <InfoField icon={<Clock />}>
+      <div className="flex w-screen max-w-screen-sm items-center gap-3 px-6 py-3">
+        <InfoField name="Når" icon={<Clock />}>
           {show.when.toLocaleString("no-NB", {
             month: "long",
             day: "numeric",
@@ -91,9 +78,15 @@ export default function ShowsCard({}: Readonly<Props>) {
             timeZone: "Europe/Oslo",
           })}
         </InfoField>
-        <InfoField icon={<MapPin />}>{show.where}</InfoField>
-        <Button href={show.tickets.live}>Live billett</Button>
-        <Button href={show.tickets.stream}>Stream billett</Button>
+        <InfoField name="Hvor" icon={<MapPin />}>
+          {show.where}
+        </InfoField>
+        <div className="flex flex-col gap-1">
+          <button className="flex gap-1.5 rounded-full bg-red-700 p-3 transition-colors">
+            <Ticket />
+            Kjøp billett
+          </button>
+        </div>
       </div>
     </div>
   );
