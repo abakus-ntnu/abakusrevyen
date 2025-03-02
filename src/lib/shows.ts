@@ -9,19 +9,17 @@ export const SHOWS = [
     name: "Premiere",
     when: new Date("2025-03-13T19:00:00+0100"),
     where: "Byscenen i Trondheim",
-    href: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-1",
     tickets: {
-      live: "https://byscenen.eventim-billetter.no/webshop/webticket/bestseatselect?eventId=551&el=true",
+      live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-1",
       stream: "#",
     },
   },
   {
-    name: "Forestilling 2",
+    name: "Andre forestilling",
     when: new Date("2025-03-14T17:00:00+0100"),
     where: "Byscenen i Trondheim",
-    href: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-2",
     tickets: {
-      live: "https://byscenen.eventim-billetter.no/webshop/webticket/bestseatselect?eventId=552&el=true",
+      live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-2",
       stream: "#",
     },
   },
@@ -29,9 +27,8 @@ export const SHOWS = [
     name: "Siste forestilling",
     when: new Date("2025-03-14T20:30:00+0100"),
     where: "Byscenen i Trondheim",
-    href: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-3",
     tickets: {
-      live: "https://byscenen.eventim-billetter.no/webshop/webticket/bestseatselect?eventId=553&el=true",
+      live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-3",
       stream: "#",
     },
   },
