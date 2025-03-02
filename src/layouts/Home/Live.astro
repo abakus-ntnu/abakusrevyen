@@ -1,6 +1,6 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
-import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
+import ShowsCard from "@/components/Show/ShowsCard.tsx";
 import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import { nextShow } from "@/lib/periods";
@@ -13,7 +13,7 @@ const next = nextShow() ?? SHOWS.toReversed()[0];
   <div class="flex w-full flex-col items-center justify-center gap-6">
     <h1 class="text-2xl font-medium">Vi er i gang!</h1>
     <ShowLogo />
-    <ShowDetailsCard show={next} />
+    <ShowsCard client:load />
   </div>
   <div slot="prev-revy" class="space-y-12">
     <h2 class="text-center text-xl font-medium">
