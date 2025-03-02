@@ -28,6 +28,11 @@ const fullTitle = title ? `${title} | ${DOMAIN_NAME}` : DOMAIN_NAME;
       import { activate } from "@/lib/secrets/index.ts";
       activate();
     </script>
+
+    <script
+      defer
+      data-domain="abakusrevyen.no"
+      src="https://ls.webkom.dev/js/plausible.js"></script>
   </head>
   <body class="bg-background text-foreground transition-colors">
     <slot />
