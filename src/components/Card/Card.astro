@@ -1,12 +1,17 @@
 ---
-const { class: className } = Astro.props;
+interface Props {
+  variant?: "default" | "primary";
+  class?: string;
+}
+
+const { variant = "default", class: className } = Astro.props;
+
+const VARIANTS = {
+  default: ["border-gray-200 border-[1px] bg-bg-accent dark:border-gray-500"],
+  primary: ["bg-primary"],
+};
 ---
 
-<div
-  class:list={[
-    "rounded-lg border-[1px] border-gray-200 bg-bg-accent shadow-sm dark:border-gray-500",
-    className,
-  ]}
->
+<div class:list={["rounded-lg shadow-sm", ...VARIANTS[variant], className]}>
   <slot />
 </div>

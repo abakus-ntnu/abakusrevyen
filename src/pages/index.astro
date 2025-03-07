@@ -1,6 +1,5 @@
 ---
-import Countdown from "@/layouts/Home/Countdown.astro";
-import Live from "@/layouts/Home/Live.astro";
+import Show from "@/layouts/Home/Show.astro";
 import Break from "@/layouts/Home/Break.astro";
 import Recruitment from "@/layouts/Home/Recruitment.astro";
 
@@ -12,12 +11,14 @@ const period = getCurrentPeriod();
 {
   period == "break" ? (
     <Break />
-  ) : period == "recruitment" ? (
+  ) : period === "recruitment" ? (
     <Recruitment />
-  ) : period == "showCurrent" ? (
-    <Live />
+  ) : period === "showCurrent" ||
+    period === "showCountdown" ||
+    period === "ticketsCountdown" ? (
+    <Show />
   ) : (
     // showCountdown or ticketCountdown
-    <Countdown />
+    <h1>Ukjent periode</h1>
   )
 }
