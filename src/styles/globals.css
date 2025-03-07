@@ -47,4 +47,9 @@
     --primary: #127dbd;
     --secondary: #0d5474;
   }
+
+  .star-wars {
+    --primary: #ffd700;
+    --secondary: #ffe81f;
+  }
 }

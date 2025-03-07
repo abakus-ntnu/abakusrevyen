@@ -1,18 +1,19 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
-import CountdownComp from "@/components/Countdown/Countdown.astro";
+import CountdownComp from "@/components/Countdown/Countdown.tsx";
 import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import ShowsCard from "@/components/Show/ShowsCard.tsx";
 import { SHOWS } from "@/lib/shows";
 import { nextShow } from "@/lib/periods";
+import { SHOW_START } from "@/lib/constants";
 
 const show = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
 <HomePageLayout>
   <div class="flex w-full flex-col items-center justify-center gap-6">
-    <CountdownComp date={show.when} />
+    <CountdownComp date={SHOW_START} client:load />
     <ShowLogo />
     <ShowsCard client:load />
   </div>
