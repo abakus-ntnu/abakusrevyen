@@ -2,14 +2,17 @@
 export type Show = {
   name: string;
   when: Date;
-  where: string;
+  where: { name: string; mapLink: string };
   tickets: { live: string; stream?: string };
 };
 export const SHOWS: Show[] = [
   {
     name: "Premiere",
     when: new Date("2025-03-13T19:00:00+0100"),
-    where: "Byscenen i Trondheim",
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+    },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-1",
       stream: "https://vier.live/act/abakusrevyen-2025---premiere",
@@ -18,7 +21,10 @@ export const SHOWS: Show[] = [
   {
     name: "Andre forestilling",
     when: new Date("2025-03-14T17:00:00+0100"),
-    where: "Byscenen i Trondheim",
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+    },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-2",
       stream: undefined,
@@ -27,7 +33,10 @@ export const SHOWS: Show[] = [
   {
     name: "Siste forestilling",
     when: new Date("2025-03-14T20:30:00+0100"),
-    where: "Byscenen i Trondheim",
+    where: {
+      name: "Byscenen i Trondheim",
+      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+    },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-3",
       stream: "https://vier.live/act/abakusrevyen-2025---siste-forestilling",
