@@ -1,19 +1,21 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
-import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
-import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
-import { nextShow } from "@/lib/periods";
+import CountdownComp from "@/components/Countdown/Countdown.tsx";
+import ShowLogo from "@/components/Branding/ShowLogo.astro";
+import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
 import { SHOWS } from "@/lib/shows";
+import { nextShow } from "@/lib/periods";
+import { SHOW_START } from "@/lib/constants";
 
-const next = nextShow() ?? SHOWS.toReversed()[0];
+const show = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
 <HomePageLayout>
   <div class="flex w-full flex-col items-center justify-center gap-6">
-    <h1 class="text-2xl font-medium">Vi er i gang!</h1>
+    <CountdownComp date={SHOW_START} client:load />
     <ShowLogo />
-    <ShowDetailsCard show={next} />
+    <ShowDetailsCard show={show} />
   </div>
   <div slot="prev-revy" class="space-y-12">
     <h2 class="text-center text-xl font-medium">
