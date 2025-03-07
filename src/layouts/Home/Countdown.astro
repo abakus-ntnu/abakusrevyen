@@ -1,7 +1,7 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
-import CountdownComp from "@/components/Countdown/Countdown.astro";
+import CountdownComp from "@/components/Countdown/Countdown.tsx";
 import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
 import { SHOWS } from "@/lib/shows";
@@ -12,7 +12,7 @@ const show = nextShow() ?? SHOWS.toReversed()[0];
 
 <HomePageLayout>
   <div class="flex w-full flex-col items-center justify-center gap-6">
-    <CountdownComp date={show.when} />
+    <CountdownComp date={show.when} client:load />
     <ShowLogo />
     <ShowDetailsCard show={show} />
   </div>
