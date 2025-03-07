@@ -79,13 +79,20 @@ const spotlightLeader =
                 <Card>
                   <CardContent class="px-3">
                     <div class="flex flex-col gap-1 md:flex-row">
-                      {show.name} på
                       <a
                         href={show.tickets.live}
                         target="_blank"
                         class="underline"
                       >
-                        {show.where}
+                        {show.name}
+                      </a>
+                      på
+                      <a
+                        href={show.where.mapLink}
+                        target="_blank"
+                        class="underline"
+                      >
+                        {show.where.name}
                       </a>
                     </div>
                   </CardContent>
