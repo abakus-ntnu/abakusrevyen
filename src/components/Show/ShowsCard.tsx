@@ -18,7 +18,7 @@ function TabButton({
 }>) {
   return (
     <button
-      className={`rounded-t-lg px-6 py-3 transition-colors ${active && "bg-primary"}`}
+      className={`rounded-t-lg p-3 transition-colors sm:px-6 sm:py-3 ${active && "bg-primary"}`}
       onClick={onClick}
     >
       <span className={past ? "line-through opacity-50" : ""}>{children}</span>
