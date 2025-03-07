@@ -13,32 +13,27 @@ function Segment({ unit, count }: Readonly<{ unit: string; count: number }>) {
   );
 }
 
-function Counter({ date }: Readonly<{ date: Date }>) {
+function Counter({ timeRemaining }: Readonly<{ timeRemaining: number }>) {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  function updateCount() {
-    const now = new Date().getTime();
-    const distance = date.getTime() - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  useEffect(() => {
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const minutes = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60),
+    );
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
     setDays(days);
     setHours(hours);
     setMinutes(minutes);
     setSeconds(seconds);
-  }
-
-  useEffect(() => {
-    const interval = setInterval(updateCount, 100);
-    return () => clearInterval(interval);
-  }, [days, hours, minutes, seconds]);
+  }, [timeRemaining]);
 
   return (
     <div className="flex space-x-[1.5rem] font-lcd">
@@ -51,5 +46,23 @@ function Counter({ date }: Readonly<{ date: Date }>) {
 }
 
 export default function Countdown({ date }: Readonly<Props>) {
-  return <Counter date={date} />;
+  function getTimeRemaining() {
+    return date.getTime() - new Date().getTime();
+  }
+
+  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemaining(getTimeRemaining());
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [timeRemaining]);
+
+  return timeRemaining > 0 ? (
+    <Counter timeRemaining={timeRemaining} />
+  ) : (
+    <h1 className="text-2xl font-medium">Vi er live!</h1>
+  );
 }

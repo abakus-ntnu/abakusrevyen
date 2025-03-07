@@ -6,13 +6,14 @@ import ShowLogo from "@/components/Branding/ShowLogo.astro";
 import ShowDetailsCard from "@/components/Show/ShowDetailsCard.astro";
 import { SHOWS } from "@/lib/shows";
 import { nextShow } from "@/lib/periods";
+import { SHOW_START } from "@/lib/constants";
 
 const show = nextShow() ?? SHOWS.toReversed()[0];
 ---
 
 <HomePageLayout>
   <div class="flex w-full flex-col items-center justify-center gap-6">
-    <CountdownComp date={show.when} client:load />
+    <CountdownComp date={SHOW_START} client:load />
     <ShowLogo />
     <ShowDetailsCard show={show} />
   </div>
