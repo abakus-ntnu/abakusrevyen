@@ -38,12 +38,13 @@ function InfoField({
 function Button({
   href,
   children,
-}: Readonly<{ href: string; children: ReactNode }>) {
+  disabled = false,
+}: Readonly<{ href: string; children: ReactNode; disabled?: boolean }>) {
   return (
     <a
       target="_blank"
-      href={href}
-      className="flex gap-1.5 rounded-md bg-white p-2 text-black shadow-sm shadow-red-800 transition-all hover:bg-gray-300 hover:shadow-md"
+      href={!disabled ? href : undefined}
+      className={`${disabled && "cursor-not-allowed text-gray-500"} flex gap-1.5 rounded-md bg-white p-2 text-black shadow-sm shadow-red-800 transition-all hover:bg-gray-300 hover:shadow-md`}
     >
       {children}
     </a>
@@ -87,7 +88,10 @@ export default function ShowsCard({}: Readonly<Props>) {
           <Ticket />
           Kjøp billetter
         </Button>
-        <Button href={show.tickets.stream}>
+        <Button
+          href={show.tickets.stream || ""}
+          disabled={show.tickets.stream === undefined}
+        >
           <TvMinimalPlay />
           Kjøp live-stream billetter
         </Button>
