@@ -11,7 +11,7 @@ export const SHOWS: Show[] = [
     when: new Date("2025-03-13T19:00:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+      mapLink: "https://maps.app.goo.gl/n7bMGGkzLCdF1oUc9",
     },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-1",
@@ -23,7 +23,7 @@ export const SHOWS: Show[] = [
     when: new Date("2025-03-14T17:00:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+      mapLink: "https://maps.app.goo.gl/n7bMGGkzLCdF1oUc9",
     },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-2",
@@ -35,7 +35,7 @@ export const SHOWS: Show[] = [
     when: new Date("2025-03-14T20:30:00+0100"),
     where: {
       name: "Byscenen i Trondheim",
-      mapLink: "https://goo.gl/maps/1XyQ7X9z7TJ8o5Gz5",
+      mapLink: "https://maps.app.goo.gl/n7bMGGkzLCdF1oUc9",
     },
     tickets: {
       live: "https://www.byscenen.no/event/abakusrevyen-2025-objektivt-sett-3",
