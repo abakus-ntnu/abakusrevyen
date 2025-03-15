@@ -2,14 +2,22 @@
 import HomePageLayout from "./HomePageLayout.astro";
 import { Image } from "astro:assets";
 
-import groupPhoto from "@/images/gruppebilder/grevens_tid.webp";
+import { PREVIOUS_REVUES } from "@/lib/constants";
+
+const lastShow = PREVIOUS_REVUES.toReversed().find(
+  (show) => show.groupImage !== undefined,
+)!;
 ---
 
 <HomePageLayout>
   <div class="flex w-full flex-col items-center justify-center gap-6">
     <h1 class="text-2xl font-medium">Takk for i år!</h1>
     <div class="max-w-screen-lg overflow-hidden rounded-lg">
-      <Image src={groupPhoto} alt="Bilde av revymedlemmene" loading="eager" />
+      <Image
+        src={lastShow.groupImage!}
+        alt="Bilde av revymedlemmene"
+        loading="eager"
+      />
     </div>
     <p class="mx-auto max-w-prose text-center">
       Revyen er over for i år, men vi kommer tilbake enda sterkere neste år! Vi

@@ -1,13 +1,21 @@
 import { Facebook, Instagram, Mail } from "lucide-astro";
-import PushPopBalubaImage from "../images/revy_logoer/pushpop_small.webp";
-import SolidariskImage from "../images/revy_logoer/solidarisk_web.webp";
-import KultImage from "../images/revy_logoer/kult.webp";
-import SatteSporImage from "../images/revy_logoer/satte_spor.webp";
-import MarionettImage from "../images/revy_logoer/marionett.webp";
-import SvinPaaSkogenImage from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.webp";
-import GrevensTidImage from "../images/revy_logoer/grevens_tid_logo.webp";
-import BestFoerImage from "../images/revy_logoer/best_foer_sentrert.webp";
+import PushPopBalubaLogo from "../images/revy_logoer/pushpop_small.webp";
+import SolidariskLogo from "../images/revy_logoer/solidarisk_web.webp";
+import SolidariskGroupImage from "../images/gruppebilder/solidarisk.webp";
+import KultLogo from "../images/revy_logoer/kult.webp";
+import KultImage from "../images/gruppebilder/kult.webp";
+import SatteSporLogo from "../images/revy_logoer/satte_spor.webp";
+import MarionettLogo from "../images/revy_logoer/marionett.webp";
+import SvinPaaSkogenLogo from "../images/revy_logoer/Svin_paa_skogen_logo_hvit_skrift.webp";
+import SvinPaaSkogenGroupImage from "../images/gruppebilder/svin_paa_skogen.webp";
+import GrevensTidLogo from "../images/revy_logoer/grevens_tid_logo.webp";
+import GrevensTidGroupImage from "../images/gruppebilder/grevens_tid.webp";
+import BestFoerLogo from "../images/revy_logoer/best_foer_sentrert.webp";
+import BestFoerGroupImage from "../images/gruppebilder/best_foer.webp";
+import ObjektivtSettLogo from "../images/revy_logoer/objektivt_sett_light_logo.webp";
+import ObjektivtSettGroupImage from "../images/gruppebilder/objektivt_sett.webp";
 import { SHOWS, SHOW_REVEAL } from "./shows";
+import { Scroll } from "lucide-react";
 
 // Perioder
 export const RECRUITMENT_START = new Date("2024-7-15T00:00:00+0100"); // Start av opptak
@@ -58,17 +66,18 @@ export const SOCIALS = [
 export type Revuy = {
   year: string;
   name: string;
-  image: ImageMetadata;
+  logo: ImageMetadata;
+  groupImage?: ImageMetadata;
   color: string;
   dark: boolean;
-  links: { name: string; href: string; embed: string }[];
+  links: { name: string; href: string; embed?: string }[];
 };
 
 export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2017",
     name: "Push Pop Baluba!",
-    image: PushPopBalubaImage,
+    logo: PushPopBalubaLogo,
     color: "!bg-[#2d222a]",
     dark: true,
     links: [
@@ -87,7 +96,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2018",
     name: "Solidarisk",
-    image: SolidariskImage,
+    logo: SolidariskLogo,
+    groupImage: SolidariskGroupImage,
     color: "!bg-[#000000]",
     dark: true,
     links: [
@@ -106,7 +116,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2019",
     name: "Kult!",
-    image: KultImage,
+    logo: KultLogo,
+    groupImage: KultImage,
     color: "!bg-[#e8dbb7]",
     dark: false,
     links: [
@@ -120,7 +131,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2020",
     name: "Satte Spor",
-    image: SatteSporImage,
+    logo: SatteSporLogo,
     color: "!bg-[#ef8b72]",
     dark: false,
     links: [
@@ -134,7 +145,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2021",
     name: "Marionett",
-    image: MarionettImage,
+    logo: MarionettLogo,
     color: "!bg-[#1d3060]",
     dark: true,
     links: [
@@ -148,7 +159,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2022",
     name: "Svin På Skogen",
-    image: SvinPaaSkogenImage,
+    logo: SvinPaaSkogenLogo,
+    groupImage: SvinPaaSkogenGroupImage,
     color: "!bg-[#790420]",
     dark: true,
     links: [
@@ -162,7 +174,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2023",
     name: "Grevens Tid – 23:59",
-    image: GrevensTidImage,
+    logo: GrevensTidLogo,
+    groupImage: GrevensTidGroupImage,
     color: "!bg-[#410507]",
     dark: true,
     links: [
@@ -176,16 +189,24 @@ export const PREVIOUS_REVUES: Revuy[] = [
   {
     year: "2024",
     name: "Best før",
-    image: BestFoerImage,
+    logo: BestFoerLogo,
+    groupImage: BestFoerGroupImage,
     color: "!bg-[#f7cee5]",
     dark: false,
     links: [
       {
         name: "Se opptak av stream",
         href: "https://vier.live/act/abakusrevyen-2024---best-f-r-2024",
-        // Cannot embed vier.live videos, so just use last years video
-        embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
       },
     ],
+  },
+  {
+    year: "2025",
+    name: "Objektivt Sett",
+    logo: ObjektivtSettLogo,
+    groupImage: ObjektivtSettGroupImage,
+    color: "!bg-[#ffeeb3]",
+    dark: false,
+    links: [],
   },
 ];
