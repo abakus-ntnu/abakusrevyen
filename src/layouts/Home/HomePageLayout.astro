@@ -9,7 +9,9 @@ import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 
 import { PREVIOUS_REVUES, SOCIALS } from "@/lib/constants";
 
-const lastShow = PREVIOUS_REVUES.toReversed()[0];
+const lastWellFormedShow = PREVIOUS_REVUES.toReversed().find(
+  (show) => show.links.length >= 1 && show.links[0].embed !== undefined,
+)!;
 ---
 
 <PageLayout {...Astro.props}>
@@ -17,14 +19,14 @@ const lastShow = PREVIOUS_REVUES.toReversed()[0];
     <slot />
     <slot name="prev-revy">
       <h2 class="text-center text-xl font-medium">
-        Revyen <span class="text-primary">{lastShow.year}</span>
+        Revyen <span class="text-primary">{lastWellFormedShow.year}</span>
       </h2>
       <iframe
         width="auto"
         height="auto"
         class="mx-auto aspect-video w-full max-w-screen-md rounded-lg"
         loading="lazy"
-        src={lastShow.links[0].embed}
+        src={lastWellFormedShow.links[0].embed}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
