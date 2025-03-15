@@ -10,7 +10,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
       .slice(0, 8)
       .map(({ name, logo, links }) => (
         <div class="w-[1fr] transition-transform odd:-rotate-12 even:rotate-12 hover:scale-110">
-          <a href={links[0].href} target="_blank">
+          <a href={links[0]?.href || "#"} target="_blank">
             <Image
               src={logo}
               alt={`${name} logo`}
