@@ -207,6 +207,11 @@ export const PREVIOUS_REVUES: Revuy[] = [
     groupImage: ObjektivtSettGroupImage,
     color: "!bg-[#ffeeb3]",
     dark: false,
-    links: [],
+    links: [
+      {
+        name: "Se forestillingen",
+        href: "https://www.youtube.com/watch?v=w6pnAzlhoaM",
+      },
+    ],
   },
 ];
