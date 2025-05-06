@@ -195,8 +195,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
     dark: false,
     links: [
       {
-        name: "Se opptak av stream",
-        href: "https://vier.live/act/abakusrevyen-2024---best-f-r-2024",
+        name: "Se forestillingen",
+        href: "https://youtu.be/gYgAegpTmyI?si=bQCWXyh6bpk9C6wg",
       },
     ],
   },
