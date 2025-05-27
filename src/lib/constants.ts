@@ -196,7 +196,8 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://youtu.be/gYgAegpTmyI?si=bQCWXyh6bpk9C6wg",
+        href: "https://youtu.be/gYgAegpTmyI",
+        embed: "https://www.youtube.com/embed/gYgAegpTmyI",
       },
     ],
   },
@@ -211,6 +212,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
       {
         name: "Se forestillingen",
         href: "https://www.youtube.com/watch?v=w6pnAzlhoaM",
+        embed: "https://www.youtube.com/embed/w6pnAzlhoaM",
       },
     ],
   },
