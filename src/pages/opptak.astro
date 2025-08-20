@@ -8,6 +8,7 @@ import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import Link from "@/components/LinkButton/Link.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
+import { getCurrentPeriod } from "@/lib/periods";
 ---
 
 <PageLayout title="Opptak">
@@ -51,8 +52,11 @@ import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
   <ProseArea class="container mx-auto text-center">
     <LinkButton
       href="https://opptak.abakus.no/"
-      class="!text-white !no-underline">Søk på revyen her</LinkButton
+      class="!text-white !no-underline"
+      disabled={getCurrentPeriod() !== "recruitment"}
     >
+      Søk på revyen her
+    </LinkButton>
 
     <p>
       Å være med i revyen er et <i>frivillig verv</i>. Det er ikke betalt, men
