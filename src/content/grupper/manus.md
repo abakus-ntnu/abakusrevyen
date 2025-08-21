@@ -2,7 +2,7 @@
 name: Manus
 brief: Bad Poets Society
 logo: "@/images/undergrupper_logoer/regi-logo.webp"
-email: revy-regi@abakus.no
+email: revy-manus@abakus.no
 leaders:
   - schjonsby
   - ji
