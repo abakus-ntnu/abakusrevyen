@@ -4,10 +4,10 @@ image: "@/images/ledere/default_female_avatar.webp"
 gender: female
 hidden: true
 leaderOf:
-  - group: regi
+  - group: manus
     title: Assisterende Regissør
 ---
 
 # Emily Ji
 
-Nestleder i regi.
+Nestleder i manus.

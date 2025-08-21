@@ -5,6 +5,7 @@ image: "@/images/ledere/Nora.webp"
 gender: female
 leaderOf:
   - group: band
+  - group: arring
 ---
 
 # Nora Haakenstad
