@@ -4,11 +4,11 @@ email: rikke.schjoensby@abakus.no
 image: "@/images/ledere/Rikke.webp"
 gender: female
 leaderOf:
-  - group: regi
+  - group: manus
   - group: skuespill
     title: Regissør
 ---
 
 # Rikke Schjønsby
 
-Leder av regi og regissør.
+Leder av manus og regissør.
