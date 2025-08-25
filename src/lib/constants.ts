@@ -18,8 +18,8 @@ import { SHOWS, SHOW_REVEAL } from "./shows";
 import { Scroll } from "lucide-react";
 
 // Perioder
-export const RECRUITMENT_START = new Date("2025-08-25T08:00:00+0100"); // Start av opptak
-export const RECRUITMENT_END = new Date("2025-09-01T12:00:00+0100"); // Opptak slutt
+export const RECRUITMENT_START = new Date("2025-08-25T07:00:00+0100"); // Start av opptak
+export const RECRUITMENT_END = new Date("2025-09-01T11:00:00+0100"); // Opptak slutt
 export const COUNTDOWN_START = SHOW_REVEAL;
 
 export const TICKET_RELEASE = new Date("2026-02-19T16:00:00+0100");
