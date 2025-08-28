@@ -5,9 +5,9 @@ image: "@/images/ledere/Anne.webp"
 gender: female
 leaderOf:
   - group: manus
-    title: Assisterende Regissør
+    title: Nestleder
 ---
 
 # Anne Olderheim
 
-Assisterende regissør i revyen.
+Nestleder i skuespill.
