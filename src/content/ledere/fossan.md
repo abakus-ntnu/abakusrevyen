@@ -1,5 +1,5 @@
 ---
-name: David Fossan
+name: Daniel Fossan
 email: daniel.fossan@abakus.no
 image: "@/images/ledere/Daniel.webp"
 gender: male
@@ -8,6 +8,6 @@ leaderOf:
     title: Økonomiansvarlig
 ---
 
-# David Fossan
+# Daniel Fossan
 
 Økonomiansvarlig for revyen!
