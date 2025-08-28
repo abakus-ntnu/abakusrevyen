@@ -1,7 +1,7 @@
 ---
 name: Emili Ahlgren
 email: emili.ahlgren@abakus.no
-image: "@/images/ledere/Emili.webp"
+image: "@/images/ledere/2025/Emili.webp"
 gender: female
 leaderOf:
   - group: kostyme

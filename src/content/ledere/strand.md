@@ -1,7 +1,7 @@
 ---
 name: Axel Strand
 email: axel.strand@abakus.no
-image: "@/images/ledere/Axel.webp"
+image: "@/images/ledere/2025/Axel.webp"
 gender: male
 leaderOf:
   - group: revystyret

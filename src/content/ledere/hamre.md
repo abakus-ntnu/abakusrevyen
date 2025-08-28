@@ -1,7 +1,7 @@
 ---
 name: Mathias Hamre
 email: revysjef@abakus.no
-image: "@/images/ledere/Mathias.webp"
+image: "@/images/ledere/2025/Mathias.webp"
 gender: male
 leaderOf:
   - group: revystyret

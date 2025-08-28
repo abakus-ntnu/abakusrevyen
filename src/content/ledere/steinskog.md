@@ -1,7 +1,7 @@
 ---
 name: Dina Hagen Steinskog
 email: dina.steinskog@abakus.no
-image: "@/images/ledere/Dina.webp"
+image: "@/images/ledere/2025/Dina.webp"
 gender: female
 leaderOf:
   - group: sosial
