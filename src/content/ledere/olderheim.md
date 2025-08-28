@@ -4,7 +4,7 @@ email: anne.olderheim@abakus.no
 image: "@/images/ledere/Anne.webp"
 gender: female
 leaderOf:
-  - group: manus
+  - group: skuespill
     title: Nestleder
 ---
 
