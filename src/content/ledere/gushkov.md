@@ -1,6 +1,6 @@
 ---
-name: Ivan G
-email: ivan4oto2@gmail.com
+name: Ivan Gushkov
+email: ivan.gushkov@abakus.no
 image: "@/images/ledere/Ivan.webp"
 gender: male
 leaderOf:
@@ -8,6 +8,6 @@ leaderOf:
   - group: arring
 ---
 
-# Ivan G
+# Ivan Gushkov
 
 Leder av bandet, koret og arring.
