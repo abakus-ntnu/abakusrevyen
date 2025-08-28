@@ -5,4 +5,8 @@ pkgs.mkShell {
     nodejs
     pnpm
   ];
+
+  shellHook = ''
+    pnpm install
+  '';
 }
