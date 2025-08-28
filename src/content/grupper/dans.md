@@ -4,7 +4,7 @@ brief: Vi danser og lager koreografi!
 logo: "@/images/undergrupper_logoer/dans-logo.webp"
 email: revy-dans@abakus.no
 leaders:
-  - frohaug
+  - ringheim
 ---
 
 # Dans

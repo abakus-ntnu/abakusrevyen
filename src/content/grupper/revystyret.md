@@ -4,9 +4,9 @@ brief: Uten oss? Ingen revy. Med oss? Kaos, men revy!
 logo: "@/images/undergrupper_logoer/revystyret-logo.webp"
 email: revy-styret@abakus.no
 leaders:
-  - hamre
-  - hoveid
-  - strand
+  - gripenberg
+  - revillard
+  - fossan
 ---
 
 # Revystyret

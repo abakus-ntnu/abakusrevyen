@@ -1,13 +1,13 @@
 ---
-name: Axel Strand
-email: axel.strand@abakus.no
-image: "@/images/ledere/2025/Axel.webp"
+name: David Fossan
+email: daniel.fossan@abakus.no
+image: "@/images/ledere/Daniel.webp"
 gender: male
 leaderOf:
   - group: revystyret
     title: Økonomiansvarlig
 ---
 
-# Axel Strand
+# David Fossan
 
 Økonomiansvarlig for revyen!
