@@ -4,7 +4,7 @@ brief: Vi forhindrer klein stillhet og ufrivillig cappella!
 logo: "@/images/undergrupper_logoer/band-logo.webp"
 email: revy-band@abakus.no
 leaders:
-  - g
+  - gushkov
 ---
 
 # Band
