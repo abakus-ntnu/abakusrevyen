@@ -4,7 +4,7 @@ brief: SoMe, design og revyhype – vi fikser!
 logo: "@/images/undergrupper_logoer/pr-logo.webp"
 email: revy-pr@abakus.no
 leaders:
-  - hogetveit
+  - ludvigsen
 ---
 
 # PR

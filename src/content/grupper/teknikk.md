@@ -5,7 +5,7 @@ spotlight: "Teknikk er den gruppen i revyen som jobber med lys, lyd og video. Vi
 logo: "@/images/undergrupper_logoer/teknikk-logo.webp"
 email: revy-teknikk@abakus.no
 leaders:
-  - nyvoll
+  - frigaard
 ---
 
 # Teknikk

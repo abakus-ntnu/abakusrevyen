@@ -4,7 +4,7 @@ brief: Føler du deg sliten og litt lei, dette er gruppen som hjelper deg!
 logo: "@/images/undergrupper_logoer/sosial-logo.webp"
 email: revy-sosial@abakus.no
 leaders:
-  - steinskog
+  - ackerman
 ---
 
 # Sosialgruppa

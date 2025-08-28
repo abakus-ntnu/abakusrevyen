@@ -59,8 +59,8 @@ const spotlightLeader =
       <a href="/ledere" class="group">
         <MultiImageCard
           images={[leaders[0], spotlightLeader, leaders[1]].map((leader) => ({
-            src: leader.data.image,
-            alt: `${leader.data.name}`,
+            src: leader!.data.image,
+            alt: `${leader!.data.name}`,
           }))}
         >
           Lederne
