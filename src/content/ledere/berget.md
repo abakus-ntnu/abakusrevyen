@@ -4,7 +4,7 @@ email: kristian.berget@abakus.no
 image: "@/images/ledere/Kristian.webp"
 gender: male
 leaderOf:
-  - group: manus
+  - group: skuespill
 ---
 
 # Kristian Berget
