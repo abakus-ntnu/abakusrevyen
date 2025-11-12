@@ -14,7 +14,6 @@ import ProfilePicture from "@/components/Images/ProfilePicture.astro";
 import { Image } from "astro:assets";
 
 import { SHOWS } from "@/lib/shows";
-import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 import { Calendar, Pencil } from "lucide-astro";
@@ -254,7 +253,8 @@ const spotlightLeader = leaders[0];
           spotlight.data.name;
         spotlightCard.querySelector("[data-spotlight='desc']").textContent =
           spotlight.data.spotlight ?? spotlight.data.brief;
-        spotlightCard.href = `/grupper/${spotlight.slug}`;
+        spotlightCard.querySelector("[data-spotlight='href']").href =
+          `/grupper/${spotlight.slug}`;
       }
     });
   </script>

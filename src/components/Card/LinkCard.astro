@@ -10,7 +10,7 @@ interface Props {
 const { href, target = "_self", class: className, ...rest } = Astro.props;
 ---
 
-<a href={href} target={target}>
+<a href={href} target={target} data-spotlight="href">
   <Card
     class:list={[
       "group/linkcard transition-all hover:bg-gray-100 hover:shadow-md hover:dark:bg-gray-800",
