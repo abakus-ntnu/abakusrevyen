@@ -11,11 +11,12 @@ interface Props {
   alt: string;
 }
 
-const { class: className, src, alt } = Astro.props;
+const { class: className, src, alt, ...rest } = Astro.props;
 ---
 
 <Image
   class:list={["aspect-square w-auto rounded-full", className]}
   src={src}
   alt={alt}
+  {...rest}
 />

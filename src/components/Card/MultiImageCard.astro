@@ -18,7 +18,7 @@ const { images } = Astro.props;
     {
       images
         .slice(0, 3)
-        .map(({ src, alt }) => (
+        .map(({ src, alt }, i) => (
           <div
             class:list={[
               "absolute left-0 top-0 aspect-square w-full overflow-hidden rounded-lg transition-transform",
@@ -34,9 +34,16 @@ const { images } = Astro.props;
                 height={500}
                 class="w-full"
                 loading="eager"
+                data-card-image={i}
               />
             ) : (
-              <Image src={src} alt={alt} class="w-full" loading="eager" />
+              <Image
+                src={src}
+                alt={alt}
+                class="w-full"
+                loading="eager"
+                data-card-image={i}
+              />
             )}
           </div>
         ))
