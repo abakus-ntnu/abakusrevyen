@@ -12,7 +12,7 @@ const PAGES = [
 ];
 ---
 
-<header id="header" class="z-50 w-full">
+<header id="header" class="container z-50 mx-auto">
   <div class="mx-auto flex h-32 items-center justify-between px-6 py-3">
     <a href="/" data-astro-prefetch="load">
       <Logo />
@@ -92,8 +92,8 @@ const PAGES = [
 
     let menuOpen = false;
 
-    menuButton.addEventListener("click", () => {
-      menuOpen = !menuOpen;
+    function toggleMenu(forceClose = false) {
+      menuOpen = forceClose ? false : !menuOpen;
 
       menuIcon.classList.toggle("rotate-90", menuOpen);
       menuIcon.classList.toggle("opacity-0", menuOpen);
@@ -111,6 +111,11 @@ const PAGES = [
         mobileMenu.classList.add("pointer-events-none");
         document.body.style.overflow = "";
       }
+    }
+
+    menuButton.addEventListener("click", () => toggleMenu());
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768 && menuOpen) toggleMenu(true);
     });
   </script>
 </header>
