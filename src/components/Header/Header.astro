@@ -1,42 +1,117 @@
 ---
 import Logo from "../Branding/Logo.astro";
-import Navbar from "./Navbar/Navbar.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
-
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
+import { Menu, X, Scroll, Users, Image, Drama } from "lucide-astro";
+import { SOCIALS } from "@/lib/constants";
 
-import { AlignJustify as Hamburger } from "lucide-astro";
-
-const ITEMS = {
-  "/opptak": "Opptak",
-  "/om_oss": "Om oss",
-  "/galleri": "Bildegalleri",
-  "/revyer": "Tidligere revyer",
-};
+const PAGES = [
+  { href: "/opptak", title: "Opptak", Icon: Scroll },
+  { href: "/om_oss", title: "Om oss", Icon: Users },
+  { href: "/galleri", title: "Bildegalleri", Icon: Image },
+  { href: "/revyer", title: "Tidligere revyer", Icon: Drama },
+];
 ---
 
-<header class="w-full">
-  <div
-    class="container mx-auto flex h-32 items-center justify-between px-6 py-3"
-  >
+<header id="header" class="z-50 w-full">
+  <div class="mx-auto flex h-32 items-center justify-between px-6 py-3">
     <a href="/" data-astro-prefetch="load">
       <Logo />
     </a>
 
-    <div class="md:text-red flex gap-6">
-      <div class="hidden md:flex">
-        <Navbar items={ITEMS} />
-      </div>
+    <nav class="hidden items-center justify-center gap-4 md:flex lg:gap-6">
+      {
+        PAGES.map(({ href, title }) => (
+          <a
+            class="text-lg text-foreground transition-colors hover:text-accent"
+            href={href}
+            data-astro-prefetch="load"
+          >
+            {title}
+          </a>
+        ))
+      }
+      <ThemeSwitcher mobile="false" />
+    </nav>
 
-      <ThemeSwitcher />
-
-      <div class="flex md:hidden">
-        <MobileNavbar client:load items={ITEMS}>
-          <span class="text-foreground transition-colors hover:text-accent">
-            <Hamburger />
-          </span>
-        </MobileNavbar>
-      </div>
+    <div class="flex items-center gap-1 md:hidden">
+      <ThemeSwitcher mobile="true" />
+      <button
+        id="menuButton"
+        class="relative h-8 w-8 p-1"
+        aria-label="Toggle Menu"
+      >
+        <Menu class="icon-menu transition-all" />
+        <X
+          class="icon-close absolute inset-1 rotate-90 opacity-0 transition-all"
+        />
+      </button>
     </div>
   </div>
+
+  <div
+    id="mobileMenu"
+    class="pointer-events-none absolute inset-x-0 top-full flex h-[calc(100vh-4rem)] flex-col gap-6 bg-background px-6 text-foreground opacity-0 md:hidden"
+  >
+    <div class="flex flex-col gap-4">
+      <span class="text-[1.5rem] font-semibold">Sider</span>
+      {
+        PAGES.map(({ href, title, Icon }) => (
+          <a
+            class="flex gap-3 text-lg text-foreground transition-colors hover:text-accent"
+            href={href}
+            data-astro-prefetch="load"
+          >
+            <Icon />
+            {title}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-col gap-4">
+      <span class="text-[1.5rem] font-semibold">Kontakt oss</span>
+      {
+        SOCIALS.map(({ name, href, external, Icon }) => (
+          <a
+            class="flex gap-3 text-lg text-foreground transition-colors hover:text-accent"
+            href={href}
+            target={external ? "_blank" : "_self"}
+            data-astro-prefetch="load"
+          >
+            <Icon />
+            {name}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  <script is:inline>
+    const header = document.getElementById("header");
+    const menuButton = document.getElementById("menuButton");
+    const menuIcon = menuButton.querySelector(".icon-menu");
+    const closeIcon = menuButton.querySelector(".icon-close");
+
+    let menuOpen = false;
+
+    menuButton.addEventListener("click", () => {
+      menuOpen = !menuOpen;
+
+      menuIcon.classList.toggle("rotate-90", menuOpen);
+      menuIcon.classList.toggle("opacity-0", menuOpen);
+      closeIcon.classList.toggle("rotate-0", menuOpen);
+      closeIcon.classList.toggle("opacity-100", menuOpen);
+
+      if (menuOpen) {
+        header.classList.add("fixed", "top-0", "left-0", "bg-background");
+        mobileMenu.classList.add("opacity-100");
+        mobileMenu.classList.remove("pointer-events-none");
+        document.body.style.overflow = "hidden";
+      } else {
+        header.classList.remove("fixed", "top-0", "left-0", "bg-background");
+        mobileMenu.classList.remove("opacity-100");
+        mobileMenu.classList.add("pointer-events-none");
+        document.body.style.overflow = "";
+      }
+    });
+  </script>
 </header>

@@ -2,10 +2,7 @@
 import { Sun, MoonStar } from "lucide-astro";
 ---
 
-<button
-  id="themeSwitcher"
-  class="text-foreground transition-colors hover:text-accent"
->
+<button class="text-foreground transition-colors hover:text-accent">
   <span class="hidden hover:text-yellow-500 dark:block">
     <Sun />
   </span>
@@ -15,12 +12,15 @@ import { Sun, MoonStar } from "lucide-astro";
 </button>
 
 <script is:inline>
-  function switchTheme() {
-    let nowPresent = window.document.documentElement.classList.toggle("dark");
-    localStorage.setItem("darkTheme", nowPresent);
+  {
+    document.currentScript.previousElementSibling.addEventListener(
+      "click",
+      () => {
+        localStorage.setItem(
+          "darkTheme",
+          document.documentElement.classList.toggle("dark"),
+        );
+      },
+    );
   }
-
-  window.document
-    .getElementById("themeSwitcher")
-    .addEventListener("click", switchTheme);
 </script>
