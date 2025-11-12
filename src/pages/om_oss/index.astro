@@ -14,7 +14,6 @@ import ProfilePicture from "@/components/Images/ProfilePicture.astro";
 import { Image } from "astro:assets";
 
 import { SHOWS } from "@/lib/shows";
-import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 import { Calendar, Pencil } from "lucide-astro";
@@ -23,31 +22,27 @@ const om_oss = await getCollection("om_oss");
 const groups = await getCollection("grupper");
 const leaders = await getCollection("ledere");
 
-const spotlightGroupIdx = Math.floor(Math.random() * groups.length);
-const spotlight = groups[spotlightGroupIdx];
-const spotlightLeader =
-  spotlight.data.leaders && spotlight.data.leaders.length >= 1
-    ? await getEntry(spotlight.data.leaders[0])
-    : await getEntry("ledere", "hamre");
+const spotlight = groups[0];
+const spotlightLeader = leaders[0];
 ---
 
 <PageLayout title="Om oss">
-  <div class="container mx-auto space-y-6 px-3">
-    <Title
-      >Om <span class="text-primary" id="about-branding">Abakusrevyen</span
-      ></Title
-    >
+  <div
+    id="root"
+    data-groups={JSON.stringify(groups)}
+    data-leaders={JSON.stringify(leaders)}
+    class="container mx-auto space-y-6 px-3"
+  >
+    <Title>
+      Om <span class="text-primary" id="about-branding">Abakusrevyen</span>
+    </Title>
 
     <div
       class="mx-auto grid max-w-screen-sm grid-cols-2 gap-10 py-6 md:gap-16 md:px-6 lg:gap-24"
     >
-      <a href="/grupper" class="group">
+      <a href="/grupper" class="group" id="groups-card" data-role="groups-card">
         <MultiImageCard
-          images={[
-            groups[(spotlightGroupIdx + 1) % groups.length],
-            spotlight,
-            groups[(spotlightGroupIdx + 2) % groups.length],
-          ].map((group) => ({
+          images={[groups[0], groups[1], groups[2]].map((group) => ({
             src: group.data.logo,
             alt: `${group.data.name} logo`,
           }))}
@@ -56,7 +51,12 @@ const spotlightLeader =
         </MultiImageCard>
       </a>
 
-      <a href="/ledere" class="group">
+      <a
+        href="/ledere"
+        class="group"
+        id="leaders-card"
+        data-role="leaders-card"
+      >
         <MultiImageCard
           images={[leaders[0], spotlightLeader, leaders[1]].map((leader) => ({
             src: leader!.data.image,
@@ -106,85 +106,152 @@ const spotlightLeader =
       <div class="order-2 flex flex-col gap-3">
         <h2 class="text-lg font-bold">Spotlight</h2>
 
-        <LinkCard href={`/grupper/${spotlight.slug}`} class="flex">
-          <div class="relative max-w-fit">
-            <Image
-              src={spotlight.data.logo}
-              alt="Spotlight group logo"
-              loading="eager"
-              class="h-full w-36 min-w-36 rounded-l-lg"
-            />
-            {
-              spotlightLeader ? (
-                <ProfilePicture
-                  src={spotlightLeader.data.image}
-                  alt="Spotlight leader"
-                  class="absolute bottom-1.5 right-1.5 h-1/3 object-cover opacity-60 transition-opacity hover:opacity-100"
-                />
-              ) : undefined
-            }
-          </div>
-          <CardContent class="py-3 pl-3 pr-1.5">
-            <h3 class="font-medium">{spotlight.data.name}</h3>
-            <p class="text-sm sm:text-base md:text-sm lg:text-base">
-              {spotlight.data.spotlight ?? spotlight.data.brief}
-            </p>
-          </CardContent>
-        </LinkCard>
+        <div data-role="spotlight">
+          <LinkCard href={`/grupper/${spotlight.slug}`} class="flex">
+            <div class="relative max-w-fit">
+              <Image
+                src={spotlight.data.logo}
+                alt="Spotlight group logo"
+                loading="eager"
+                class="h-full w-36 min-w-36 rounded-l-lg"
+                data-spotlight="logo"
+              />
+              <ProfilePicture
+                src={spotlightLeader.data.image}
+                alt="Spotlight leader"
+                class="absolute bottom-1.5 right-1.5 h-1/3 object-cover opacity-60 transition-opacity hover:opacity-100"
+                data-spotlight="leader"
+              />
+              <CardContent class="py-3 pl-3 pr-1.5">
+                <h3 class="font-medium" data-spotlight="name">
+                  {spotlight.data.name}
+                </h3>
+                <p
+                  class="text-sm sm:text-base md:text-sm lg:text-base"
+                  data-spotlight="desc"
+                >
+                  {spotlight.data.spotlight ?? spotlight.data.brief}
+                </p>
+              </CardContent>
+            </div>
+          </LinkCard>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <h2 class="text-lg font-bold">Innlegg</h2>
+        <ul class="space-y-3">
+          {
+            om_oss
+              .sort((a, b) => (b.data.pubDate < a.data.pubDate ? 1 : -1))
+              .map(
+                ({
+                  slug,
+                  data: { title, pubDate, updateDate, description, image },
+                }) => (
+                  <li>
+                    <LinkCard href={`/om_oss/${slug}`}>
+                      <div class="flex flex-col gap-3 rounded-lg border-[1px] border-gray-200 sm:flex-row dark:border-gray-500">
+                        <CardImage
+                          src={image}
+                          alt={`${title} post`}
+                          class="h-40 w-full overflow-hidden !rounded-t-md sm:h-48 sm:max-w-[25%] sm:!rounded-tr-none"
+                        />
+
+                        <CardContent class="flex flex-col justify-between px-1.5 py-3">
+                          <h2 class="font-medium">{title}</h2>
+                          <p>{description}</p>
+
+                          <div class="flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
+                            <CardDetail>
+                              <Calendar />
+                              {pubDate.toLocaleString("NO-nb", {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                              })}
+                            </CardDetail>
+                            <CardDetail>
+                              <Pencil />
+                              {(updateDate ?? pubDate).toLocaleString("NO-nb", {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                              })}
+                            </CardDetail>
+                          </div>
+                        </CardContent>
+                      </div>
+                    </LinkCard>
+                  </li>
+                ),
+              )
+          }
+        </ul>
       </div>
     </div>
 
-    <div class="space-y-6">
-      <h2 class="text-lg font-bold">Innlegg</h2>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        const root = document.getElementById("root");
+        if (!root) return;
 
-      <ul class="space-y-3">
-        {
-          om_oss
-            .sort((a, b) => (b.data.pubDate < a.data.pubDate ? 1 : -1))
-            .map(
-              ({
-                slug,
-                data: { title, pubDate, updateDate, description, image },
-              }) => (
-                <li>
-                  <LinkCard href={`/om_oss/${slug}`}>
-                    <div class="flex flex-col gap-3 rounded-lg border-[1px] border-gray-200 sm:flex-row dark:border-gray-500">
-                      <CardImage
-                        src={image}
-                        alt={`${title} post`}
-                        class="h-40 w-full overflow-hidden !rounded-t-md sm:h-48 sm:max-w-[25%] sm:!rounded-tr-none"
-                      />
+        const groups = JSON.parse(root.dataset.groups);
+        const leaders = JSON.parse(root.dataset.leaders);
 
-                      <CardContent class="flex flex-col justify-between px-1.5 py-3">
-                        <h2 class="font-medium">{title}</h2>
-                        <p>{description}</p>
+        const spotlightGroupIdx = Math.floor(Math.random() * groups.length);
+        const spotlight = groups[spotlightGroupIdx];
+        const spotlightLeader =
+          leaders.find((l) => l.slug === spotlight.data.leaders?.[0].slug) ??
+          leaders[0];
 
-                        <div class="flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
-                          <CardDetail>
-                            <Calendar />
-                            {pubDate.toLocaleString("NO-nb", {
-                              day: "numeric",
-                              month: "numeric",
-                              year: "numeric",
-                            })}
-                          </CardDetail>
-                          <CardDetail>
-                            <Pencil />
-                            {(updateDate ?? pubDate).toLocaleString("NO-nb", {
-                              day: "numeric",
-                              month: "numeric",
-                              year: "numeric",
-                            })}
-                          </CardDetail>
-                        </div>
-                      </CardContent>
-                    </div>
-                  </LinkCard>
-                </li>
-              ),
-            )
+        const selectedGroups = [
+          groups[(spotlightGroupIdx + 1) % groups.length],
+          groups[spotlightGroupIdx],
+          groups[(spotlightGroupIdx + 2) % groups.length],
+        ];
+
+        const groupCard = document.querySelector("[data-role='groups-card']");
+        if (groupCard) {
+          selectedGroups.forEach((g, i) => {
+            const img = groupCard.querySelector(`[data-card-image='${i}']`);
+            if (img) {
+              img.src = g.data.logo.src;
+              img.alt = `${g.data.name} logo`;
+            }
+          });
         }
-      </ul>
-    </div>
+
+        const leaderCard = document.querySelector("[data-role='leaders-card']");
+        if (leaderCard) {
+          selectedGroups.forEach((g, i) => {
+            const leader = leaders.find(
+              (l) => l.slug === g.data.leaders?.[0].slug,
+            );
+            const img = leaderCard.querySelector(`[data-card-image='${i}']`);
+            if (img && leader) {
+              img.src = leader.data.image.src;
+              img.alt = leader.data.name;
+            }
+          });
+        }
+
+        const spotlightCard = document.querySelector("[data-role='spotlight']");
+        if (spotlightCard) {
+          spotlightCard.querySelector("[data-spotlight='logo']").src =
+            spotlight.data.logo.src;
+          spotlightCard.querySelector("[data-spotlight='logo']").alt =
+            `${spotlight.data.name} logo`;
+          spotlightCard.querySelector("[data-spotlight='leader']").src =
+            spotlightLeader.data.image.src;
+          spotlightCard.querySelector("[data-spotlight='name']").textContent =
+            spotlight.data.name;
+          spotlightCard.querySelector("[data-spotlight='desc']").textContent =
+            spotlight.data.spotlight ?? spotlight.data.brief;
+          spotlightCard.querySelector("[data-spotlight='href']").href =
+            `/grupper/${spotlight.slug}`;
+        }
+      });
+    </script>
   </div>
 </PageLayout>
