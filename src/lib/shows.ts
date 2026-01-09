@@ -45,6 +45,6 @@ export const SHOWS: Show[] = [
 ];
 
 // SLIPP
-export const SHOW_REVEAL = new Date("2026-01-21T22:00:00+0100");
+export const SHOW_REVEAL = new Date("2026-01-09T15:18:00+0100");
 export const TICKET_RELEASE: Date | "TBA" = "TBA";
 export const TICKET_LINK: string | undefined = undefined;
