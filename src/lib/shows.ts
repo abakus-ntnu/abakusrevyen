@@ -32,7 +32,7 @@ export const SHOWS: Show[] = [
   },
   {
     name: "Siste forestilling",
-    when: new Date("2026-02-13T20:30:00+0100"),
+    when: new Date("2026-02-13T20:00:00+0100"),
     where: {
       name: "Verkstedshallen",
       mapLink: "https://maps.app.goo.gl/b8GwxaeLmXmZwPm66",
