@@ -13,7 +13,7 @@ Må du oppdatere nettsidens innhold? Her er en sjekkliste!
 ### Ny revy!
 
 - [ ] Sjekk at [fjorårets revyslutt](#Revyslutt) har blitt utført.
-- [ ] `src/lib/constants.ts`
+- [ ] `src/lib/shows.ts`
   - [ ] Oppdater datoene for forestillingene (`SHOWS`).
   - [ ] Oppdater periodedatoene. Set datoen som første øyeblikk av den nye perioden.
 - [ ] `src/content/ledere`

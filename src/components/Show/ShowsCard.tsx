@@ -108,7 +108,10 @@ export default function ShowsCard({}: Readonly<Props>) {
         </InfoField>
       </div>
       <div className="grid grid-cols-1 gap-3 p-3 md:grid-cols-2">
-        <Button href={show.tickets.live}>
+        <Button
+          href={show.tickets.live || ""}
+          disabled={show.tickets.live === undefined}
+        >
           <Ticket />
           Kjøp billetter
         </Button>
