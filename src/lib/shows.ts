@@ -14,7 +14,7 @@ export const SHOWS: Show[] = [
       mapLink: "https://maps.app.goo.gl/b8GwxaeLmXmZwPm66",
     },
     tickets: {
-      live: undefined,
+      live: "https://tikkio.com/events/61328-abakusrevyen-2026",
       stream: undefined,
     },
   },
@@ -26,7 +26,7 @@ export const SHOWS: Show[] = [
       mapLink: "https://maps.app.goo.gl/b8GwxaeLmXmZwPm66",
     },
     tickets: {
-      live: undefined,
+      live: "https://tikkio.com/events/61329-abakusrevyen-2026",
       stream: undefined,
     },
   },
@@ -38,7 +38,7 @@ export const SHOWS: Show[] = [
       mapLink: "https://maps.app.goo.gl/b8GwxaeLmXmZwPm66",
     },
     tickets: {
-      live: undefined,
+      live: "https://tikkio.com/events/61330-abakusrevyen-2026",
       stream: undefined,
     },
   },
