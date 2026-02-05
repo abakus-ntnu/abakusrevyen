@@ -15,7 +15,8 @@ export const SHOWS: Show[] = [
     },
     tickets: {
       live: "https://tikkio.com/events/61328-abakusrevyen-2026",
-      stream: undefined,
+      stream:
+        "https://vier.live/act/abakusrevyen-2026---skal-skal-ikke-premiereshow-",
     },
   },
   {
@@ -39,7 +40,8 @@ export const SHOWS: Show[] = [
     },
     tickets: {
       live: "https://tikkio.com/events/61330-abakusrevyen-2026",
-      stream: undefined,
+      stream:
+        "https://vier.live/act/abakusrevyen-2026---skal-skal-ikke-siste-forestilling-",
     },
   },
 ];
