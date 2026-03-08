@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail } from "lucide-astro";
+import { Facebook, Instagram, Mail, Youtube } from "lucide-astro";
 import PushPopBalubaLogo from "../images/revy_logoer/pushpop_small.webp";
 import SolidariskLogo from "../images/revy_logoer/solidarisk_web.webp";
 import SolidariskGroupImage from "../images/gruppebilder/solidarisk.webp";
@@ -14,6 +14,8 @@ import BestFoerLogo from "../images/revy_logoer/best_foer_sentrert.webp";
 import BestFoerGroupImage from "../images/gruppebilder/best_foer.webp";
 import ObjektivtSettLogo from "../images/revy_logoer/objektivt_sett_light_logo.webp";
 import ObjektivtSettGroupImage from "../images/gruppebilder/objektivt_sett.webp";
+import SkalSkalIkkeLogo from "../images/revy_logoer/skal_skal_ikke.webp";
+import SkalSkalIkkeGroupImage from "../images/gruppebilder/skal_skal_ikke.webp";
 import { SHOWS, SHOW_REVEAL } from "./shows";
 import { Scroll } from "lucide-react";
 
@@ -56,12 +58,26 @@ export const SOCIALS = [
     Icon: Instagram,
   },
   {
+    name: "YouTube",
+    href: "https://www.youtube.com/@abakusrevyen",
+    external: true,
+    Icon: Youtube,
+  },
+  {
     name: "Email",
     href: "/kontakt",
     external: false,
     Icon: Mail,
   },
 ];
+
+export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@abakusrevyen";
+
+export type RevueLink = {
+  name: string;
+  href: string;
+  embed?: string;
+};
 
 export type Revuy = {
   year: string;
@@ -70,7 +86,23 @@ export type Revuy = {
   groupImage?: ImageMetadata;
   color: string;
   dark: boolean;
-  links: { name: string; href: string; embed?: string }[];
+  links?: RevueLink[];
+  mainLink?: RevueLink;
+  otherLinks?: RevueLink[];
+  playlistLink?: RevueLink;
+};
+
+export const getRevueMainLink = (revue: Revuy): RevueLink | undefined =>
+  revue.mainLink ?? revue.links?.[0];
+
+export const getRevueOtherLinks = (revue: Revuy): RevueLink[] =>
+  revue.otherLinks ?? revue.links?.slice(1) ?? [];
+
+export const getRevueDisplayLinks = (revue: Revuy): RevueLink[] => {
+  const mainLink = getRevueMainLink(revue);
+  const otherLinks = getRevueOtherLinks(revue);
+
+  return mainLink ? [mainLink, ...otherLinks] : otherLinks;
 };
 
 export const PREVIOUS_REVUES: Revuy[] = [
@@ -215,5 +247,39 @@ export const PREVIOUS_REVUES: Revuy[] = [
         embed: "https://www.youtube.com/embed/w6pnAzlhoaM",
       },
     ],
+  },
+  {
+    year: "2026",
+    name: "Skal, Skal ikke",
+    logo: SkalSkalIkkeLogo,
+    groupImage: SkalSkalIkkeGroupImage,
+    color: "!bg-[#c1e6f9]",
+    dark: false,
+    otherLinks: [
+      {
+        name: "Ingen dekning (Fakk Eduroam)",
+        href: "https://youtu.be/PNmWT9wsP9o",
+        embed: "https://www.youtube.com/embed/PNmWT9wsP9o?si=itP2bbjtYYvrueSN",
+      },
+      {
+        name: "Aldri Mer Hiroshima",
+        href: "https://youtu.be/pi4A-Ye4Nmw",
+        embed: "https://www.youtube.com/embed/pi4A-Ye4Nmw?si=vgzZUHjaepTf88A1",
+      },
+      {
+        name: "AI avsmak (Gjør det selv)",
+        href: "https://youtu.be/k3AYDZ8hUyc",
+        embed: "https://www.youtube.com/embed/k3AYDZ8hUyc?si=3B8IzXX2gE3s7alB",
+      },
+      {
+        name: "Bare vent, snart blir jeg konsulent",
+        href: "https://youtu.be/Si5DGtFvxug",
+        embed: "https://www.youtube.com/embed/Si5DGtFvxug?si=Pzo7S7SzkSk6ZkUI",
+      },
+    ],
+    playlistLink: {
+      name: "Se numrene",
+      href: "https://www.youtube.com/playlist?list=PLeAA7WakWMJqRvvVc10B9Pr5o_UG18xuX",
+    },
   },
 ];

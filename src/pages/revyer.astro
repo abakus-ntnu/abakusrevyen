@@ -18,41 +18,56 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
     >
       {
         PREVIOUS_REVUES.toSorted((a, b) => b.year.localeCompare(a.year)).map(
-          (revue) => (
-            <li>
-              <Card class={revue.color + " !border-0"}>
-                <CardContent>
-                  <Image
-                    src={revue.logo}
-                    alt={`Logo for ${revue.name}`}
-                    class="aspect-square rounded-t-md object-contain"
-                    loading="eager"
-                  />
-                  <h2 class={revue.dark ? "text-white" : "text-black"}>
-                    {revue.year}: {revue.name}
-                  </h2>
-                  <div class="flex gap-2">
-                    {revue.links.map((link) =>
-                      link.href ? (
+          (revue) => {
+            const links =
+              revue.links ?? (revue.mainLink ? [revue.mainLink] : []);
+
+            return (
+              <li>
+                <Card class={revue.color + " !border-0"}>
+                  <CardContent>
+                    <Image
+                      src={revue.logo}
+                      alt={`Logo for ${revue.name}`}
+                      class="aspect-square rounded-t-md object-contain"
+                      loading="eager"
+                    />
+                    <h2 class={revue.dark ? "text-white" : "text-black"}>
+                      {revue.year}: {revue.name}
+                    </h2>
+                    <div class="flex w-full flex-wrap items-start gap-2">
+                      {links.map((link) =>
+                        link.href ? (
+                          <LinkButton
+                            href={link.href}
+                            class="min-w-0 flex-1 whitespace-nowrap text-center"
+                            style={"secondary"}
+                            external
+                          >
+                            {link.name}
+                          </LinkButton>
+                        ) : (
+                          <i class="min-w-0 flex-1 cursor-not-allowed whitespace-nowrap rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
+                            {link.name}
+                          </i>
+                        ),
+                      )}
+                      {revue.playlistLink?.href ? (
                         <LinkButton
-                          href={link.href}
-                          class="flex-grow"
+                          href={revue.playlistLink.href}
+                          class="min-w-0 flex-1 whitespace-nowrap text-center"
                           style={"secondary"}
                           external
                         >
-                          {link.name}
+                          {revue.playlistLink.name || "Se spilleliste"}
                         </LinkButton>
-                      ) : (
-                        <i class="flex-grow cursor-not-allowed rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
-                          {link.name}
-                        </i>
-                      ),
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </li>
-          ),
+                      ) : null}
+                    </div>
+                  </CardContent>
+                </Card>
+              </li>
+            );
+          },
         )
       }
     </ul>
