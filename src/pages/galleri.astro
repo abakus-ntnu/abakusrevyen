@@ -9,6 +9,7 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "photoswipe/style.css";
 
 function parse(glob: Record<string, ImageMetadata>): [string, ImageMetadata][] {
   return Object.entries(glob) as [string, ImageMetadata][];
@@ -89,13 +90,21 @@ const galleryImages = [
           <h2 class="border-b border-foreground text-center leading-[0.1em] opacity-70">
             <span class="bg-background px-6">{name}</span>
           </h2>
-          <Grid>
+          <Grid class="gallery-grid">
             {images.map(([path, src]) => (
-              <Image
-                src={src}
-                alt={path}
-                class="rounded-md transition-transform hover:scale-105"
-              />
+              <a
+                href={src.src}
+                data-pswp-width={src.width}
+                data-pswp-height={src.height}
+                data-pswp-cropped="true"
+                class="group block overflow-hidden rounded-md"
+              >
+                <Image
+                  src={src}
+                  alt={path}
+                  class="rounded-md transition-transform group-hover:scale-105"
+                />
+              </a>
             ))}
           </Grid>
         </>
@@ -187,8 +196,10 @@ const galleryImages = [
 </style>
 
 <script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
   import Swiper from "swiper";
   import { Navigation, Pagination, Autoplay } from "swiper/modules";
+  let galleryLightbox: PhotoSwipeLightbox | undefined;
 
   function initSwiper() {
     const container = document.querySelector<HTMLElement>(".swiper");
@@ -224,6 +235,18 @@ const galleryImages = [
     });
   }
 
+  function initGalleryLightbox() {
+    galleryLightbox?.destroy();
+    galleryLightbox = new PhotoSwipeLightbox({
+      gallery: ".gallery-grid",
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+    });
+    galleryLightbox.init();
+  }
+
   document.addEventListener("DOMContentLoaded", initSwiper);
+  document.addEventListener("DOMContentLoaded", initGalleryLightbox);
   document.addEventListener("astro:page-load", initSwiper);
+  document.addEventListener("astro:page-load", initGalleryLightbox);
 </script>
