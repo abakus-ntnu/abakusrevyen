@@ -7,38 +7,120 @@ import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 
-import { PREVIOUS_REVUES, SOCIALS } from "@/lib/constants";
+import {
+  PREVIOUS_REVUES,
+  SOCIALS,
+  getRevueMainLink,
+  getRevueOtherLinks,
+} from "@/lib/constants";
 
 const lastWellFormedShow = PREVIOUS_REVUES.toReversed().find(
-  (show) => show.links.length >= 1 && show.links[0].embed !== undefined,
+  (show) =>
+    getRevueMainLink(show)?.embed !== undefined ||
+    getRevueOtherLinks(show).some((link) => link.embed !== undefined),
 )!;
+const lastWellFormedShowMainLink = getRevueMainLink(lastWellFormedShow);
+const openInYoutubeHref =
+  lastWellFormedShow.playlistLink?.href ||
+  lastWellFormedShowMainLink?.href ||
+  getRevueOtherLinks(lastWellFormedShow).find((link) => link.href)?.href;
+const fallbackGridEmbeds = getRevueOtherLinks(lastWellFormedShow)
+  .filter((link) => link.embed !== undefined)
+  .slice(0, 4);
+const secondaryEmbeds = getRevueOtherLinks(lastWellFormedShow)
+  .filter((link) => link.embed !== undefined)
+  .slice(0, 2);
 ---
 
 <PageLayout {...Astro.props}>
   <div class="container mx-auto mb-12 space-y-12 p-3">
     <slot />
     <slot name="prev-revy">
-      <h2 class="text-center text-xl font-medium">
-        Revyen <span class="text-primary">{lastWellFormedShow.year}</span>
-      </h2>
-      <iframe
-        width="auto"
-        height="auto"
-        class="mx-auto aspect-video w-full max-w-screen-md rounded-lg"
-        loading="lazy"
-        src={lastWellFormedShow.links[0].embed}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>
-      <LinkButton class="m-auto !mt-4 block w-fit" href="/revyer">
-        Andre tidligere revyer
+      <div class="flex flex-col items-center gap-1 text-center">
+        <h3 class="text-center text-[1.25rem] font-medium">
+          Revyen <span class="text-primary">{lastWellFormedShow.year}</span>
+        </h3>
+        <h2 class="text-center text-4xl font-medium">
+          {lastWellFormedShow.name}
+        </h2>
+        {
+          openInYoutubeHref ? (
+            <a
+              href={openInYoutubeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-base font-normal no-underline opacity-90 hover:opacity-70"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+                <path
+                  class="fill-[#ff0033]"
+                  d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.6 9.4.6 9.4.6s7.6 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8Z"
+                />
+                <path class="fill-white" d="M9.6 15.7V8.3L16 12l-6.4 3.7Z" />
+              </svg>
+              <span>YouTube</span>
+            </a>
+          ) : null
+        }
+      </div>
+      {
+        lastWellFormedShowMainLink?.embed ? (
+          <div class="space-y-4">
+            <iframe
+              width="auto"
+              height="auto"
+              class="mx-auto aspect-video w-full max-w-screen-md rounded-lg"
+              loading="lazy"
+              src={lastWellFormedShowMainLink.embed}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            />
+            {secondaryEmbeds.length > 0 ? (
+              <div class="mx-auto grid w-full max-w-screen-md grid-cols-1 gap-4 md:grid-cols-2">
+                {secondaryEmbeds.map((link) => (
+                  <iframe
+                    width="auto"
+                    height="auto"
+                    class="aspect-video w-full rounded-lg"
+                    loading="lazy"
+                    src={link.embed}
+                    title={`${lastWellFormedShow.name} - ${link.name}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  />
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div class="mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-4 sm:grid-cols-2">
+            {fallbackGridEmbeds.map((link) => (
+              <iframe
+                width="auto"
+                height="auto"
+                class="aspect-video w-full rounded-lg"
+                loading="lazy"
+                src={link.embed}
+                title={`${lastWellFormedShow.name} - ${link.name}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              />
+            ))}
+          </div>
+        )
+      }
+      <LinkButton class="m-auto !mt-12 block w-fit" href="/revyer">
+        Se tidligere revyer
       </LinkButton>
     </slot>
     <slot name="contact">
       <h2 class="text-center text-xl font-medium">Kontakt oss</h2>
       <div
-        class="mx-auto grid max-w-screen-md grid-cols-1 gap-6 px-6 sm:grid-cols-3"
+        class="mx-auto grid max-w-screen-md grid-cols-2 gap-6 px-6 sm:grid-cols-4"
       >
         {
           SOCIALS.map(({ name, href, external, Icon }) => (

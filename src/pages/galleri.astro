@@ -4,6 +4,7 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import Title from "@/components/Common/Title.astro";
 import Grid from "@/components/Common/Grid.astro";
 import { Image } from "astro:assets";
+import { PREVIOUS_REVUES } from "@/lib/constants";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,13 +14,22 @@ function parse(glob: Record<string, ImageMetadata>): [string, ImageMetadata][] {
   return Object.entries(glob) as [string, ImageMetadata][];
 }
 
-const groupImages = parse(
-  import.meta.glob("@/images/gruppebilder/*.webp", {
-    import: "default",
-    eager: true,
-  }),
-);
+const groupImages = PREVIOUS_REVUES.filter((revue) => revue.groupImage)
+  .toSorted((a, b) => b.year.localeCompare(a.year))
+  .map((revue) => ({
+    src: revue.groupImage!,
+    alt: `${revue.year}: ${revue.name}`,
+  }));
 const galleryImages = [
+  {
+    name: "Skal, Skal ikke",
+    images: parse(
+      import.meta.glob("@/images/gallery/skal_skal_ikke/*.webp", {
+        import: "default",
+        eager: true,
+      }),
+    ),
+  },
   {
     name: "Objektivt Sett",
     images: parse(
@@ -48,11 +58,11 @@ const galleryImages = [
     <div class="swiper">
       <div class="swiper-wrapper bg-background-accent pb-10 pt-0.5">
         {
-          groupImages.map(([path, src]) => (
+          groupImages.map(({ alt, src }) => (
             <div class="swiper-slide">
               <Image
                 src={src}
-                alt={path}
+                alt={alt}
                 class="h-full w-full rounded-b-lg object-cover"
               />
             </div>
@@ -164,35 +174,56 @@ const galleryImages = [
       background-color: var(--swiper-theme-color);
     }
   }
+
+  .swiper-pagination-bullet {
+    opacity: 0.7;
+    background-color: var(--accent);
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: var(--primary);
+  }
 </style>
 
 <script>
   import Swiper from "swiper";
   import { Navigation, Pagination, Autoplay } from "swiper/modules";
-  const progressIndicator = document.querySelector<HTMLDivElement>(
-    ".autoplay-progress > div",
-  );
-  const _swiper = new Swiper(".swiper", {
-    modules: [Navigation, Pagination, Autoplay],
-    spaceBetween: 10,
-    pagination: {
-      el: ".swiper-pagination",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    autoplay: {
-      delay: 5000,
-      pauseOnMouseEnter: true,
-    },
-    on: {
-      autoplayTimeLeft(_s, _time, progress) {
-        progressIndicator?.style.setProperty(
-          "--progress",
-          `${(1 - progress) * 100}%`,
-        );
+
+  function initSwiper() {
+    const container = document.querySelector<HTMLElement>(".swiper");
+    const progressIndicator = document.querySelector<HTMLDivElement>(
+      ".autoplay-progress > div",
+    );
+
+    if (!container || container.classList.contains("swiper-initialized"))
+      return;
+
+    new Swiper(container, {
+      modules: [Navigation, Pagination, Autoplay],
+      spaceBetween: 10,
+      pagination: {
+        el: ".swiper-pagination",
       },
-    },
-  });
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      autoplay: {
+        delay: 5000,
+        pauseOnMouseEnter: true,
+      },
+      on: {
+        autoplayTimeLeft(_s, _time, progress) {
+          progressIndicator?.style.setProperty(
+            "--progress",
+            `${(1 - progress) * 100}%`,
+          );
+        },
+      },
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initSwiper);
+  document.addEventListener("astro:page-load", initSwiper);
 </script>
