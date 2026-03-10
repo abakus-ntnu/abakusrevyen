@@ -10,26 +10,72 @@ import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 import {
   PREVIOUS_REVUES,
   SOCIALS,
+  getRevueLinkEmbed,
+  getRevueLinkHref,
   getRevueMainLink,
   getRevueOtherLinks,
+  getRevuePlaylistLink,
+  type RevueLink,
 } from "@/lib/constants";
 
-const lastWellFormedShow = PREVIOUS_REVUES.toReversed().find(
-  (show) =>
-    getRevueMainLink(show)?.embed !== undefined ||
-    getRevueOtherLinks(show).some((link) => link.embed !== undefined),
-)!;
+const pickRandom = <T,>(items: T[], count: number): T[] =>
+  [...items].sort(() => Math.random() - 0.5).slice(0, count);
+const getLiveEmbeds = (links: RevueLink[]) =>
+  links
+    .map((link) => ({ link, embed: getRevueLinkEmbed(link) }))
+    .filter(
+      (item): item is { link: RevueLink; embed: string } =>
+        item.embed !== undefined,
+    );
+
+const lastWellFormedShow = PREVIOUS_REVUES.toReversed().find((show) => {
+  const mainLink = getRevueMainLink(show);
+  return (
+    (mainLink && getRevueLinkEmbed(mainLink) !== undefined) ||
+    getRevueOtherLinks(show).some((link) => getRevueLinkEmbed(link))
+  );
+})!;
 const lastWellFormedShowMainLink = getRevueMainLink(lastWellFormedShow);
+const lastWellFormedShowPlaylistLink = getRevuePlaylistLink(lastWellFormedShow);
+const otherLinks = getRevueOtherLinks(lastWellFormedShow);
 const openInYoutubeHref =
-  lastWellFormedShow.playlistLink?.href ||
-  lastWellFormedShowMainLink?.href ||
-  getRevueOtherLinks(lastWellFormedShow).find((link) => link.href)?.href;
-const fallbackGridEmbeds = getRevueOtherLinks(lastWellFormedShow)
-  .filter((link) => link.embed !== undefined)
-  .slice(0, 4);
-const secondaryEmbeds = getRevueOtherLinks(lastWellFormedShow)
-  .filter((link) => link.embed !== undefined)
-  .slice(0, 2);
+  (lastWellFormedShowMainLink &&
+    getRevueLinkHref(lastWellFormedShowMainLink)) ||
+  (lastWellFormedShowPlaylistLink &&
+    getRevueLinkHref(lastWellFormedShowPlaylistLink)) ||
+  otherLinks.map((link) => getRevueLinkHref(link)).find((href) => href);
+const otherEmbeds = getLiveEmbeds(otherLinks);
+const fallbackEmbedsCount = 4;
+const secondaryEmbedsCount = 2;
+const fallbackGridEmbeds = pickRandom(otherEmbeds, fallbackEmbedsCount);
+const secondaryEmbeds = pickRandom(otherEmbeds, secondaryEmbedsCount);
+const mainEmbed =
+  lastWellFormedShowMainLink && getRevueLinkEmbed(lastWellFormedShowMainLink);
+const mainLinkJson = JSON.stringify(
+  lastWellFormedShowMainLink
+    ? {
+        name: lastWellFormedShowMainLink.name,
+        href: getRevueLinkHref(lastWellFormedShowMainLink),
+        embed: getRevueLinkEmbed(lastWellFormedShowMainLink),
+        liveFrom: lastWellFormedShowMainLink.liveFrom,
+      }
+    : null,
+);
+const otherEmbedsJson = JSON.stringify(
+  otherEmbeds.map(({ link, embed }) => ({
+    name: link.name,
+    embed,
+    liveFrom: link.liveFrom,
+  })),
+);
+const otherLinksJson = JSON.stringify(
+  otherLinks
+    .map((link) => ({
+      href: getRevueLinkHref(link),
+      liveFrom: link.liveFrom,
+    }))
+    .filter((link) => link.href),
+);
 ---
 
 <PageLayout {...Astro.props}>
@@ -46,10 +92,18 @@ const secondaryEmbeds = getRevueOtherLinks(lastWellFormedShow)
         {
           openInYoutubeHref ? (
             <a
+              id="home-youtube-link"
               href={openInYoutubeHref}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 text-base font-normal no-underline opacity-90 hover:opacity-70"
+              data-playlist-href={
+                lastWellFormedShowPlaylistLink
+                  ? getRevueLinkHref(lastWellFormedShowPlaylistLink)
+                  : undefined
+              }
+              data-main-link={mainLinkJson}
+              data-other-links={otherLinksJson}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
                 <path
@@ -63,56 +117,76 @@ const secondaryEmbeds = getRevueOtherLinks(lastWellFormedShow)
           ) : null
         }
       </div>
-      {
-        lastWellFormedShowMainLink?.embed ? (
-          <div class="space-y-4">
+      <div
+        id="home-main-embeds"
+        class:list={["space-y-4", !mainEmbed && "hidden"]}
+      >
+        <iframe
+          id="home-main-embed"
+          width="auto"
+          height="auto"
+          class="mx-auto aspect-video w-full max-w-screen-md rounded-lg"
+          loading="lazy"
+          src={mainEmbed}
+          title="YouTube video player"
+          data-main-link={mainLinkJson}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+        {
+          secondaryEmbeds.length > 0 ? (
+            <div
+              id="home-secondary-embeds"
+              class="mx-auto grid w-full max-w-screen-md grid-cols-1 gap-4 md:grid-cols-2"
+              data-random-embeds
+              data-show-name={lastWellFormedShow.name}
+              data-embed-pool={otherEmbedsJson}
+            >
+              {secondaryEmbeds.map(({ link, embed }) => (
+                <iframe
+                  width="auto"
+                  height="auto"
+                  class="aspect-video w-full rounded-lg"
+                  loading="lazy"
+                  src={embed}
+                  title={`${lastWellFormedShow.name} - ${link.name}`}
+                  data-random-slot
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                />
+              ))}
+            </div>
+          ) : null
+        }
+      </div>
+      <div
+        id="home-fallback-embeds"
+        class:list={[
+          "mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-4 sm:grid-cols-2",
+          mainEmbed && "hidden",
+        ]}
+        data-random-embeds
+        data-show-name={lastWellFormedShow.name}
+        data-embed-pool={otherEmbedsJson}
+      >
+        {
+          fallbackGridEmbeds.map(({ link, embed }) => (
             <iframe
               width="auto"
               height="auto"
-              class="mx-auto aspect-video w-full max-w-screen-md rounded-lg"
+              class="aspect-video w-full rounded-lg"
               loading="lazy"
-              src={lastWellFormedShowMainLink.embed}
-              title="YouTube video player"
+              src={embed}
+              title={`${lastWellFormedShow.name} - ${link.name}`}
+              data-random-slot
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
             />
-            {secondaryEmbeds.length > 0 ? (
-              <div class="mx-auto grid w-full max-w-screen-md grid-cols-1 gap-4 md:grid-cols-2">
-                {secondaryEmbeds.map((link) => (
-                  <iframe
-                    width="auto"
-                    height="auto"
-                    class="aspect-video w-full rounded-lg"
-                    loading="lazy"
-                    src={link.embed}
-                    title={`${lastWellFormedShow.name} - ${link.name}`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
-                  />
-                ))}
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <div class="mx-auto grid w-full max-w-screen-lg grid-cols-1 gap-4 sm:grid-cols-2">
-            {fallbackGridEmbeds.map((link) => (
-              <iframe
-                width="auto"
-                height="auto"
-                class="aspect-video w-full rounded-lg"
-                loading="lazy"
-                src={link.embed}
-                title={`${lastWellFormedShow.name} - ${link.name}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              />
-            ))}
-          </div>
-        )
-      }
+          ))
+        }
+      </div>
       <LinkButton class="m-auto !mt-12 block w-fit" href="/revyer">
         Se tidligere revyer
       </LinkButton>
@@ -147,3 +221,121 @@ const secondaryEmbeds = getRevueOtherLinks(lastWellFormedShow)
     </slot>
   </div>
 </PageLayout>
+
+<script>
+  function shuffle<T>(items: T[]): T[] {
+    return [...items].sort(() => Math.random() - 0.5);
+  }
+
+  function isLive(liveFrom?: string) {
+    return !liveFrom || new Date(liveFrom) <= new Date();
+  }
+
+  function applyClientSideReleaseTiming() {
+    const mainEmbed =
+      document.querySelector<HTMLIFrameElement>("#home-main-embed");
+    const mainSection =
+      document.querySelector<HTMLElement>("#home-main-embeds");
+    const fallbackSection = document.querySelector<HTMLElement>(
+      "#home-fallback-embeds",
+    );
+    const youtubeLink =
+      document.querySelector<HTMLAnchorElement>("#home-youtube-link");
+
+    if (!mainSection || !fallbackSection) return;
+
+    let mainLink: {
+      name?: string;
+      href?: string;
+      embed?: string;
+      liveFrom?: string;
+    } | null = null;
+    try {
+      mainLink = JSON.parse(mainEmbed?.dataset.mainLink ?? "null");
+    } catch {
+      mainLink = null;
+    }
+
+    const shouldShowMain = Boolean(
+      mainLink?.embed && isLive(mainLink.liveFrom),
+    );
+    mainSection.classList.toggle("hidden", !shouldShowMain);
+    fallbackSection.classList.toggle("hidden", shouldShowMain);
+
+    if (shouldShowMain && mainEmbed && mainLink?.embed) {
+      mainEmbed.src = mainLink.embed;
+      mainEmbed.title = "YouTube video player";
+    }
+
+    if (!youtubeLink) return;
+
+    const playlistHref = youtubeLink.dataset.playlistHref;
+    let otherLinks: { href?: string; liveFrom?: string }[] = [];
+    try {
+      otherLinks = JSON.parse(youtubeLink.dataset.otherLinks ?? "[]");
+    } catch {
+      otherLinks = [];
+    }
+
+    const href =
+      (mainLink?.href && isLive(mainLink.liveFrom)
+        ? mainLink.href
+        : undefined) ||
+      playlistHref ||
+      otherLinks.find((link) => link.href && isLive(link.liveFrom))?.href;
+
+    if (href) {
+      youtubeLink.href = href;
+      youtubeLink.classList.remove("hidden");
+    } else {
+      youtubeLink.classList.add("hidden");
+    }
+  }
+
+  function applyRandomEmbedSelection() {
+    document
+      .querySelectorAll<HTMLElement>("[data-random-embeds]")
+      .forEach((container) => {
+        const embedPoolRaw = container.dataset.embedPool;
+        const showName = container.dataset.showName ?? "Revy";
+        if (!embedPoolRaw) return;
+
+        let embedPool: { name: string; embed: string; liveFrom?: string }[] =
+          [];
+        try {
+          embedPool = JSON.parse(embedPoolRaw);
+        } catch {
+          return;
+        }
+
+        const livePool = embedPool.filter((embed) => isLive(embed.liveFrom));
+        if (livePool.length === 0) return;
+        const slots = Array.from(
+          container.querySelectorAll<HTMLIFrameElement>(
+            "iframe[data-random-slot]",
+          ),
+        );
+        if (slots.length === 0) return;
+
+        const picked = shuffle(livePool).slice(0, slots.length);
+        slots.forEach((slot, index) => {
+          const selection = picked[index];
+          if (!selection) {
+            slot.classList.add("hidden");
+            return;
+          }
+          slot.classList.remove("hidden");
+          slot.src = selection.embed;
+          slot.title = `${showName} - ${selection.name}`;
+        });
+      });
+  }
+
+  function initHomeVideoSection() {
+    applyClientSideReleaseTiming();
+    applyRandomEmbedSelection();
+  }
+
+  document.addEventListener("DOMContentLoaded", initHomeVideoSection);
+  document.addEventListener("astro:page-load", initHomeVideoSection);
+</script>

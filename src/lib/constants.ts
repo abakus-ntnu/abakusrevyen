@@ -72,40 +72,96 @@ export const SOCIALS = [
 ];
 
 export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@abakusrevyen";
+export const YOUTUBE_WATCH_BASE_URL = "https://www.youtube.com/watch?v=";
+export const YOUTUBE_EMBED_BASE_URL = "https://www.youtube.com/embed/";
+export const YOUTUBE_PLAYLIST_BASE_URL =
+  "https://www.youtube.com/playlist?list=";
 
 export type RevueLink = {
   name: string;
-  href: string;
+  videoId?: string;
+  playlistId?: string;
+  href?: string;
   embed?: string;
+  embedQuery?: string;
+  liveFrom?: string;
 };
 
-export type Revuy = {
+type Revue = {
   year: string;
   name: string;
   logo: ImageMetadata;
   groupImage?: ImageMetadata;
   color: string;
   dark: boolean;
+  /**
+   * Shared YouTube playlist for this revue.
+   * All revue video links inherit this unless they override `playlistId` per-link.
+   */
+  playlistId?: string;
   links?: RevueLink[];
   mainLink?: RevueLink;
   otherLinks?: RevueLink[];
   playlistLink?: RevueLink;
 };
 
-export const getRevueMainLink = (revue: Revuy): RevueLink | undefined =>
-  revue.mainLink ?? revue.links?.[0];
+const withRevueDefaults = (revue: Revue, link: RevueLink): RevueLink => ({
+  ...link,
+  playlistId: link.playlistId ?? revue.playlistId,
+});
 
-export const getRevueOtherLinks = (revue: Revuy): RevueLink[] =>
-  revue.otherLinks ?? revue.links?.slice(1) ?? [];
+export const getRevueMainLink = (revue: Revue): RevueLink | undefined => {
+  const link = revue.mainLink ?? revue.links?.[0];
+  return link ? withRevueDefaults(revue, link) : undefined;
+};
 
-export const getRevueDisplayLinks = (revue: Revuy): RevueLink[] => {
+export const getRevueOtherLinks = (revue: Revue): RevueLink[] =>
+  (revue.otherLinks ?? revue.links?.slice(1) ?? []).map((link) =>
+    withRevueDefaults(revue, link),
+  );
+
+export const getRevuePlaylistLink = (revue: Revue): RevueLink | undefined =>
+  revue.playlistLink ? withRevueDefaults(revue, revue.playlistLink) : undefined;
+
+export const getRevueDisplayLinks = (revue: Revue): RevueLink[] => {
   const mainLink = getRevueMainLink(revue);
   const otherLinks = getRevueOtherLinks(revue);
 
   return mainLink ? [mainLink, ...otherLinks] : otherLinks;
 };
 
-export const PREVIOUS_REVUES: Revuy[] = [
+export const isRevueLinkLive = (
+  link: RevueLink,
+  now: Date = new Date(),
+): boolean => !link.liveFrom || new Date(link.liveFrom) <= now;
+
+export const getRevueLinkHref = (link: RevueLink): string | undefined =>
+  link.videoId
+    ? `${YOUTUBE_WATCH_BASE_URL}${link.videoId}${link.playlistId ? `&list=${link.playlistId}` : ""}`
+    : link.playlistId
+      ? `${YOUTUBE_PLAYLIST_BASE_URL}${link.playlistId}`
+      : link.href;
+
+export const getRevueLinkEmbed = (link: RevueLink): string | undefined =>
+  link.videoId
+    ? `${YOUTUBE_EMBED_BASE_URL}${link.videoId}${link.embedQuery ? `?${link.embedQuery}` : ""}`
+    : link.embed;
+
+export const getRevueMainLinkAt = (
+  revue: Revue,
+  now: Date = new Date(),
+): RevueLink | undefined => {
+  const mainLink = getRevueMainLink(revue);
+  return mainLink && isRevueLinkLive(mainLink, now) ? mainLink : undefined;
+};
+
+export const getRevueOtherLinksAt = (
+  revue: Revue,
+  now: Date = new Date(),
+): RevueLink[] =>
+  getRevueOtherLinks(revue).filter((link) => isRevueLinkLive(link, now));
+
+export const PREVIOUS_REVUES: Revue[] = [
   {
     year: "2017",
     name: "Push Pop Baluba!",
@@ -115,13 +171,11 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se akt 1",
-        href: "https://www.youtube.com/watch?v=8lyOg-lV1pg",
-        embed: "https://www.youtube.com/embed/8lyOg-lV1pg",
+        videoId: "8lyOg-lV1pg",
       },
       {
         name: "Se akt 2",
-        href: "https://www.youtube.com/watch?v=gYTWXmaQfZk",
-        embed: "https://www.youtube.com/embed/gYTWXmaQfZk",
+        videoId: "gYTWXmaQfZk",
       },
     ],
   },
@@ -135,13 +189,11 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se akt 1",
-        href: "https://www.youtube.com/watch?v=yfLDWofs0-8",
-        embed: "https://www.youtube.com/embed/yfLDWofs0-8",
+        videoId: "yfLDWofs0-8",
       },
       {
         name: "Se akt 2",
-        href: "https://www.youtube.com/watch?v=8b91ozp3i6Y",
-        embed: "https://www.youtube.com/embed/8b91ozp3i6Y",
+        videoId: "8b91ozp3i6Y",
       },
     ],
   },
@@ -155,8 +207,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=3XtropmKsrg",
-        embed: "https://www.youtube.com/embed/3XtropmKsrg",
+        videoId: "3XtropmKsrg",
       },
     ],
   },
@@ -169,8 +220,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=dB0fC4VJsGI",
-        embed: "https://www.youtube.com/embed/dB0fC4VJsGI",
+        videoId: "dB0fC4VJsGI",
       },
     ],
   },
@@ -183,8 +233,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=TvA-oNItlwA",
-        embed: "https://www.youtube.com/embed/TvA-oNItlwA",
+        videoId: "TvA-oNItlwA",
       },
     ],
   },
@@ -198,8 +247,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=EiuAtR7zPI4",
-        embed: "https://www.youtube.com/embed/EiuAtR7zPI4",
+        videoId: "EiuAtR7zPI4",
       },
     ],
   },
@@ -213,8 +261,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=GzcgzNqLaRc",
-        embed: "https://www.youtube.com/embed/GzcgzNqLaRc",
+        videoId: "GzcgzNqLaRc",
       },
     ],
   },
@@ -228,8 +275,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://youtu.be/gYgAegpTmyI",
-        embed: "https://www.youtube.com/embed/gYgAegpTmyI",
+        videoId: "gYgAegpTmyI",
       },
     ],
   },
@@ -243,8 +289,7 @@ export const PREVIOUS_REVUES: Revuy[] = [
     links: [
       {
         name: "Se forestillingen",
-        href: "https://www.youtube.com/watch?v=w6pnAzlhoaM",
-        embed: "https://www.youtube.com/embed/w6pnAzlhoaM",
+        videoId: "w6pnAzlhoaM",
       },
     ],
   },
@@ -255,31 +300,61 @@ export const PREVIOUS_REVUES: Revuy[] = [
     groupImage: SkalSkalIkkeGroupImage,
     color: "!bg-[#c1e6f9]",
     dark: false,
+    playlistId: "PLeAA7WakWMJqRvvVc10B9Pr5o_UG18xuX",
+    mainLink: {
+      name: "Se forestillingen",
+      videoId: "bV8POVzQ7Fo",
+      liveFrom: "2026-03-26T12:00:00+01:00",
+    },
     otherLinks: [
       {
         name: "Ingen dekning (Fakk Eduroam)",
-        href: "https://youtu.be/PNmWT9wsP9o",
-        embed: "https://www.youtube.com/embed/PNmWT9wsP9o?si=itP2bbjtYYvrueSN",
+        videoId: "PNmWT9wsP9o",
       },
       {
         name: "Aldri Mer Hiroshima",
-        href: "https://youtu.be/pi4A-Ye4Nmw",
-        embed: "https://www.youtube.com/embed/pi4A-Ye4Nmw?si=vgzZUHjaepTf88A1",
+        videoId: "pi4A-Ye4Nmw",
       },
       {
         name: "AI avsmak (Gjør det selv)",
-        href: "https://youtu.be/k3AYDZ8hUyc",
-        embed: "https://www.youtube.com/embed/k3AYDZ8hUyc?si=3B8IzXX2gE3s7alB",
+        videoId: "k3AYDZ8hUyc",
       },
       {
         name: "Bare vent, snart blir jeg konsulent",
-        href: "https://youtu.be/Si5DGtFvxug",
-        embed: "https://www.youtube.com/embed/Si5DGtFvxug?si=Pzo7S7SzkSk6ZkUI",
+        videoId: "Si5DGtFvxug",
+      },
+      {
+        name: "Bli med oss - Lillefinale",
+        videoId: "mhhSza5s5Jw",
+      },
+      {
+        name: "Bakerst i kjøpeskapet",
+        videoId: "SNLy2ldVa-s",
+        liveFrom: "2026-03-11T12:00:00+01:00",
+      },
+      {
+        name: "Jeg hater kollektiv (Kollektivet mitt)",
+        videoId: "tdYf_nvJa5A",
+        liveFrom: "2026-03-12T12:00:00+01:00",
+      },
+      {
+        name: "Hjem fra byen",
+        videoId: "nJUQmFQns7E",
+        liveFrom: "2026-03-17T12:00:00+01:00",
+      },
+      {
+        name: "Brødrene Dahls",
+        videoId: "SlGwxOWeixY",
+        liveFrom: "2026-03-19T12:00:00+01:00",
+      },
+      {
+        name: "Utvekslingskontoret",
+        videoId: "BIqDJqTd1v8",
+        liveFrom: "2026-03-24T12:00:00+01:00",
       },
     ],
     playlistLink: {
       name: "Se numrene",
-      href: "https://www.youtube.com/playlist?list=PLeAA7WakWMJqRvvVc10B9Pr5o_UG18xuX",
     },
   },
 ];
