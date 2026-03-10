@@ -7,7 +7,12 @@ import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import Title from "@/components/Common/Title.astro";
 import { Image } from "astro:assets";
 
-import { PREVIOUS_REVUES } from "@/lib/constants";
+import {
+  PREVIOUS_REVUES,
+  getRevueLinkHref,
+  getRevueMainLink,
+  getRevuePlaylistLink,
+} from "@/lib/constants";
 ---
 
 <PageLayout title="Tidligere Revyer">
@@ -19,11 +24,25 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
       {
         PREVIOUS_REVUES.toSorted((a, b) => b.year.localeCompare(a.year)).map(
           (revue) => {
-            const links =
-              revue.links ?? (revue.mainLink ? [revue.mainLink] : []);
+            const mainLink = getRevueMainLink(revue);
+            const links = revue.links
+              ? revue.links.map((link) => ({
+                  ...link,
+                  playlistId: link.playlistId ?? revue.playlistId,
+                }))
+              : mainLink
+                ? [mainLink]
+                : [];
+            const hasMainLink = Boolean(revue.mainLink);
+            const isMainOnlyMode = !revue.links && Boolean(mainLink);
+            const playlistLink = getRevuePlaylistLink(revue);
 
             return (
-              <li>
+              <li
+                data-revue-card
+                data-has-main-link={hasMainLink ? "true" : "false"}
+                data-main-live-from={mainLink?.liveFrom}
+              >
                 <Card class={revue.color + " !border-0"}>
                   <CardContent>
                     <Image
@@ -36,31 +55,45 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
                       {revue.year}: {revue.name}
                     </h2>
                     <div class="flex w-full flex-wrap items-start gap-2">
-                      {links.map((link) =>
-                        link.href ? (
+                      {links.map((link) => (
+                        <div
+                          class="min-w-0 flex-1"
+                          data-live-from={link.liveFrom}
+                          data-main-link-item={
+                            isMainOnlyMode ? "true" : undefined
+                          }
+                        >
+                          {getRevueLinkHref(link) ? (
+                            <LinkButton
+                              href={getRevueLinkHref(link)!}
+                              class="block w-full whitespace-nowrap text-center"
+                              style={"secondary"}
+                              external
+                            >
+                              {link.name}
+                            </LinkButton>
+                          ) : (
+                            <i class="block w-full cursor-not-allowed whitespace-nowrap rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
+                              {link.name}
+                            </i>
+                          )}
+                        </div>
+                      ))}
+                      {playlistLink && getRevueLinkHref(playlistLink) ? (
+                        <div
+                          class="min-w-0 flex-1"
+                          data-live-from={playlistLink.liveFrom}
+                          data-playlist-fallback="true"
+                        >
                           <LinkButton
-                            href={link.href}
-                            class="min-w-0 flex-1 whitespace-nowrap text-center"
+                            href={getRevueLinkHref(playlistLink)!}
+                            class="block w-full whitespace-nowrap text-center"
                             style={"secondary"}
                             external
                           >
-                            {link.name}
+                            {playlistLink.name || "Se spilleliste"}
                           </LinkButton>
-                        ) : (
-                          <i class="min-w-0 flex-1 cursor-not-allowed whitespace-nowrap rounded-md border-2 border-gray-300 bg-gray-300 p-1 text-center text-black">
-                            {link.name}
-                          </i>
-                        ),
-                      )}
-                      {revue.playlistLink?.href ? (
-                        <LinkButton
-                          href={revue.playlistLink.href}
-                          class="min-w-0 flex-1 whitespace-nowrap text-center"
-                          style={"secondary"}
-                          external
-                        >
-                          {revue.playlistLink.name || "Se spilleliste"}
-                        </LinkButton>
+                        </div>
                       ) : null}
                     </div>
                   </CardContent>
@@ -73,3 +106,58 @@ import { PREVIOUS_REVUES } from "@/lib/constants";
     </ul>
   </div>
 </PageLayout>
+
+<script>
+  function applyClientSideReleaseTimingForRevyer() {
+    const now = new Date();
+
+    document
+      .querySelectorAll<HTMLElement>("[data-live-from]")
+      .forEach((element) => {
+        const liveFrom = element.dataset.liveFrom;
+        const isLive = !liveFrom || new Date(liveFrom) <= now;
+        element.classList.toggle("hidden", !isLive);
+      });
+
+    document
+      .querySelectorAll<HTMLElement>("[data-revue-card]")
+      .forEach((card) => {
+        const hasMainLink = card.dataset.hasMainLink === "true";
+        const mainLiveFrom = card.dataset.mainLiveFrom;
+        const isMainLive =
+          hasMainLink && (!mainLiveFrom || new Date(mainLiveFrom) <= now);
+
+        const mainLinkItem = card.querySelector<HTMLElement>(
+          "[data-main-link-item]",
+        );
+        const playlistFallback = card.querySelector<HTMLElement>(
+          "[data-playlist-fallback]",
+        );
+
+        if (mainLinkItem) {
+          mainLinkItem.classList.toggle("hidden", !isMainLive);
+        }
+
+        if (playlistFallback) {
+          const playlistLiveFrom = playlistFallback.dataset.liveFrom;
+          const isPlaylistLive =
+            !playlistLiveFrom || new Date(playlistLiveFrom) <= now;
+          const shouldShowPlaylistFallback =
+            isPlaylistLive && (!hasMainLink || !isMainLive);
+          playlistFallback.classList.toggle(
+            "hidden",
+            !shouldShowPlaylistFallback,
+          );
+        }
+      });
+  }
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    applyClientSideReleaseTimingForRevyer,
+  );
+  document.addEventListener(
+    "astro:page-load",
+    applyClientSideReleaseTimingForRevyer,
+  );
+</script>
