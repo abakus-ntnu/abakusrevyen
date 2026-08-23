@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets";
+import { CircleUserRound } from "lucide-astro";
 
 interface Props {
   images: {
-    src: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
+    src?: string | ImageMetadata | Promise<{ default: ImageMetadata }>;
     alt: string;
   }[];
 }
@@ -16,17 +17,16 @@ const { images } = Astro.props;
     class="group relative m-5 aspect-square w-auto max-w-full transition-transform hover:scale-105"
   >
     {
-      images
-        .slice(0, 3)
-        .map(({ src, alt }, i) => (
-          <div
-            class:list={[
-              "absolute left-0 top-0 aspect-square w-full overflow-hidden rounded-lg transition-transform",
-              "first:-z-10 first:-rotate-12 last:-z-10 last:rotate-12",
-              "group-hover:-translate-y-5 group-hover:first:-translate-x-5 group-hover:first:-rotate-[20deg] group-hover:last:translate-x-5 group-hover:last:rotate-[20deg]",
-            ]}
-          >
-            {typeof src === "string" ? (
+      images.slice(0, 3).map(({ src, alt }, i) => (
+        <div
+          class:list={[
+            "absolute left-0 top-0 aspect-square w-full overflow-hidden rounded-lg transition-transform",
+            "first:-z-10 first:-rotate-12 last:-z-10 last:rotate-12",
+            "group-hover:-translate-y-5 group-hover:first:-translate-x-5 group-hover:first:-rotate-[20deg] group-hover:last:translate-x-5 group-hover:last:rotate-[20deg]",
+          ]}
+        >
+          {typeof src === "string" ? (
+            <>
               <Image
                 src={src}
                 alt={alt}
@@ -36,7 +36,19 @@ const { images } = Astro.props;
                 loading="eager"
                 data-card-image={i}
               />
-            ) : (
+              <div
+                class="hidden aspect-square w-full items-center justify-center bg-bg-accent text-primary"
+                aria-label={alt}
+                data-card-fallback={i}
+              >
+                <CircleUserRound
+                  class="h-1/2 w-1/2 opacity-70"
+                  aria-hidden="true"
+                />
+              </div>
+            </>
+          ) : src ? (
+            <>
               <Image
                 src={src}
                 alt={alt}
@@ -44,9 +56,39 @@ const { images } = Astro.props;
                 loading="eager"
                 data-card-image={i}
               />
-            )}
-          </div>
-        ))
+              <div
+                class="hidden aspect-square w-full items-center justify-center bg-bg-accent text-primary"
+                aria-label={alt}
+                data-card-fallback={i}
+              >
+                <CircleUserRound
+                  class="h-1/2 w-1/2 opacity-70"
+                  aria-hidden="true"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <img
+                alt={alt}
+                class="hidden w-full"
+                loading="eager"
+                data-card-image={i}
+              />
+              <div
+                class="flex aspect-square w-full items-center justify-center bg-bg-accent text-primary"
+                aria-label={alt}
+                data-card-fallback={i}
+              >
+                <CircleUserRound
+                  class="h-1/2 w-1/2 opacity-70"
+                  aria-hidden="true"
+                />
+              </div>
+            </>
+          )}
+        </div>
+      ))
     }
   </div>
   <h2 class="text-center text-lg transition-transform group-hover:scale-105">

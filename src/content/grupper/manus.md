@@ -4,7 +4,7 @@ brief: Bad Poets Society
 logo: "@/images/undergrupper_logoer/regi-logo.webp"
 email: revy-manus@abakus.no
 leaders:
-  - oversand
+  - andreas-svendsrud
 ---
 
 # Manus

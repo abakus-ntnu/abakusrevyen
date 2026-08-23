@@ -1,10 +1,12 @@
 ---
-import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
 
 import Card from "@/components/Card/Card.astro";
 import CardContent from "@/components/Card/CardContent.astro";
+import ProseArea from "@/components/Common/ProseArea.astro";
 import Link from "@/components/LinkButton/Link.astro";
 import { Image } from "astro:assets";
+import { CircleUserRound } from "lucide-astro";
 
 import { getEntries } from "astro:content";
 import {
@@ -13,7 +15,6 @@ import {
   getCollection,
   type ValidContentEntrySlug,
 } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 import CardField from "@/components/Card/CardField.astro";
 
 export async function getStaticPaths() {
@@ -25,9 +26,12 @@ export async function getStaticPaths() {
 const { slug }: { slug: ValidContentEntrySlug<"ledere"> } = Astro.params;
 
 const entry = await getEntry("ledere", slug);
-const { name, email, image, leaderOf } = entry.data;
+const { name, email, image, leaderOf, activeIn = [] } = entry.data;
 
-const groups = await getEntries(leaderOf.map((ref) => ref.group));
+const groups = await getEntries([
+  ...leaderOf.map((ref) => ref.group),
+  ...activeIn,
+]);
 
 function getGroup(groupRef: {
   collection: "grupper";
@@ -40,64 +44,103 @@ const alt = leaderOf
   .map((ref) => `${ref.title} of ${getGroup(ref.group)?.data.name}`)
   .join(", ");
 
-// Witchcraft? Yes. Works? Also yes. Fix if you can plz.
-const leaderOfGroups = await leaderOf.reduce<
-  | { [title: string]: CollectionEntry<"grupper">[] }
-  | Promise<{ [title: string]: CollectionEntry<"grupper">[] }>
->(async (acc, ref) => {
-  let nextAcc = await acc;
-  // Fuck it, force it to be a type which probably works or something.
-  nextAcc[ref.title] = [
-    getGroup(ref.group) as CollectionEntry<"grupper">,
-    ...(nextAcc[ref.title] ?? []),
-  ];
-  return nextAcc;
-}, {});
+const leaderOfGroups = leaderOf.reduce(
+  (acc, ref) => {
+    const group = getGroup(ref.group);
+    if (!group) return acc;
+
+    acc[ref.title] = [group, ...(acc[ref.title] ?? [])];
+    return acc;
+  },
+  {} as Record<string, NonNullable<ReturnType<typeof getGroup>>[]>,
+);
+
+const activeInGroups = activeIn
+  .map((ref) => getGroup(ref))
+  .filter((group): group is NonNullable<typeof group> => group !== undefined);
 
 const { Content } = await render(entry);
 ---
 
-<ArticleLayout title={name}>
-  <Image
-    src={image}
-    width={500}
-    height={500}
-    alt={alt}
-    class="w-56 rounded-lg"
-  />
+<PageLayout title={name}>
+  <div
+    class="container mx-auto flex flex-col items-center gap-6 px-3 py-8 md:gap-8 md:py-12"
+  >
+    {
+      image ? (
+        <Image
+          src={image}
+          width={500}
+          height={500}
+          alt={alt}
+          class="w-56 rounded-lg"
+        />
+      ) : (
+        <div
+          class="flex aspect-square w-56 items-center justify-center rounded-lg bg-bg-accent text-primary"
+          aria-label={alt}
+        >
+          <CircleUserRound class="h-28 w-28 opacity-70" aria-hidden="true" />
+        </div>
+      )
+    }
 
-  <Content />
+    <ProseArea
+      class="gap-2 px-0 text-center prose-h1:mb-0 prose-h1:mt-0 prose-p:my-0"
+    >
+      <Content />
+    </ProseArea>
 
-  <Card class="mt-12 w-full max-w-screen-sm">
-    <CardContent>
-      <h2 class="card-header">Kontakt</h2>
+    <Card class="w-full max-w-screen-sm">
+      <CardContent>
+        <h2 class="card-header">Kontakt</h2>
 
-      <CardField title="Email">
+        <CardField title="Email">
+          {
+            email ? (
+              <Link href={`mailto:${email}`}>{email}</Link>
+            ) : (
+              "Ingen emailaddresse"
+            )
+          }
+        </CardField>
+
+        <h2 class="card-header">Grupper</h2>
         {
-          email ? (
-            <Link href={`mailto:${email}`}>{email}</Link>
-          ) : (
-            "Ingen emailaddresse"
+          Object.entries(leaderOfGroups).map(([title, groups]) => (
+            <CardField title={title}>
+              {groups.map((group) => (
+                <>
+                  <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
+                  <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
+                </>
+              ))}
+            </CardField>
+          ))
+        }
+        {
+          activeInGroups.length > 0 && (
+            <div class="flex flex-col gap-1 text-sm sm:flex-row">
+              Også aktiv i:
+              <div class="flex flex-col sm:flex-row">
+                {activeInGroups.map((group) => (
+                  <>
+                    <Link href={`/grupper/${group.slug}`}>
+                      {group.data.name}
+                    </Link>
+                    <span class="mr-1 hidden last:hidden sm:inline-block">
+                      ,
+                    </span>
+                  </>
+                ))}
+              </div>
+            </div>
           )
         }
-      </CardField>
-
-      <h2 class="card-header">Grupper</h2>
-      {
-        Object.entries(leaderOfGroups).map(([title, groups]) => (
-          <CardField title={title}>
-            {groups.map((group) => (
-              <>
-                <Link href={`/grupper/${group.slug}`}>{group.data.name}</Link>
-                <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
-              </>
-            ))}
-          </CardField>
-        ))
-      }
-    </CardContent>
-  </Card>
-</ArticleLayout>
+      </CardContent>
+    </Card>
+  </div>
+</PageLayout>
 
 <style>
   .card-header {

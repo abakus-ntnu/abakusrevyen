@@ -77,7 +77,11 @@ const leaders = await getCollection("ledere");
               </td>
               <td>
                 <div>
-                  <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
+                  {leader.email ? (
+                    <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
+                  ) : (
+                    "Ingen emailaddresse"
+                  )}
                 </div>
               </td>
             </tr>
