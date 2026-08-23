@@ -35,9 +35,10 @@ const ledere = defineCollection({
     z.object({
       name: z.string(),
       email: z.string().email("Not a valid email").optional(),
-      image: image(),
+      image: image().optional(),
       gender: z.enum(["male", "female", "other"]),
       hidden: z.boolean().default(false),
+      activeIn: z.array(reference("grupper")).optional(),
       leaderOf: z
         .array(
           z.object({

@@ -4,7 +4,8 @@ brief: Undertilhørige bandet som passer på at bandet har noe å spille:))
 logo: "@/images/undergrupper_logoer/band-logo.webp"
 email: revy-band@abakus.no
 leaders:
-  - gushkov
+  - phillip-bjornevoll
+  - eirik-roed
 ---
 
 ## Arrangering og komponering

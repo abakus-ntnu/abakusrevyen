@@ -59,7 +59,7 @@ const spotlightLeader = leaders[0];
       >
         <MultiImageCard
           images={[leaders[0], spotlightLeader, leaders[1]].map((leader) => ({
-            src: leader!.data.image,
+            src: leader?.data.image,
             alt: `${leader!.data.name}`,
           }))}
         >
@@ -217,6 +217,7 @@ const spotlightLeader = leaders[0];
           if (img) {
             img.src = g.data.logo.src;
             img.alt = `${g.data.name} logo`;
+            img.classList.remove("hidden");
           }
         });
       }
@@ -228,8 +229,18 @@ const spotlightLeader = leaders[0];
             (l) => l.slug === g.data.leaders?.[0].slug,
           );
           const img = leaderCard.querySelector(`[data-card-image='${i}']`);
+          const fallback = leaderCard.querySelector(
+            `[data-card-fallback='${i}']`,
+          );
           if (img && leader) {
-            img.src = leader.data.image.src;
+            if (leader.data.image?.src) {
+              img.src = leader.data.image.src;
+              img.classList.remove("hidden");
+              fallback?.classList.add("hidden");
+            } else {
+              img.classList.add("hidden");
+              fallback?.classList.remove("hidden");
+            }
             img.alt = leader.data.name;
           }
         });
@@ -241,14 +252,22 @@ const spotlightLeader = leaders[0];
           spotlight.data.logo.src;
         spotlightCard.querySelector("[data-spotlight='logo']").alt =
           `${spotlight.data.name} logo`;
-        spotlightCard.querySelector("[data-spotlight='leader']").src =
-          spotlightLeader.data.image.src;
+        const spotlightLeaderImage = spotlightCard.querySelector(
+          "[data-spotlight='leader']",
+        );
+        if (spotlightLeaderImage && spotlightLeader.data.image?.src) {
+          spotlightLeaderImage.src = spotlightLeader.data.image.src;
+        }
         spotlightCard.querySelector("[data-spotlight='name']").textContent =
           spotlight.data.name;
         spotlightCard.querySelector("[data-spotlight='desc']").textContent =
           spotlight.data.spotlight ?? spotlight.data.brief;
-        spotlightCard.querySelector("[data-spotlight='href']").href =
-          `/grupper/${spotlight.slug}`;
+        const spotlightLink = spotlightCard.querySelector(
+          "[data-spotlight='href']",
+        );
+        if (spotlightLink) {
+          spotlightLink.href = `/grupper/${spotlight.slug}`;
+        }
       }
     });
   </script>

@@ -1,17 +1,33 @@
 ---
+import { CircleUserRound } from "lucide-astro";
+
 interface Props {
   name: string;
-  image: string | ImageMetadata;
+  image?: string | ImageMetadata;
 }
 
 const { name, image } = Astro.props;
-const imageSource = typeof image === "string" ? image : image.src;
+const imageSource = image
+  ? typeof image === "string"
+    ? image
+    : image.src
+  : undefined;
 ---
 
 <div
-  class="flex aspect-[5/6] w-full flex-col justify-end rounded-lg bg-cover bg-center p-1.5"
-  style={`background-image: url(${imageSource})`}
+  class:list={[
+    "flex aspect-[5/6] w-full flex-col justify-end rounded-lg bg-cover bg-center p-1.5",
+    !imageSource && "bg-bg-accent",
+  ]}
+  style={imageSource ? `background-image: url(${imageSource})` : undefined}
 >
+  {
+    !imageSource && (
+      <div class="flex flex-1 items-center justify-center text-primary opacity-70">
+        <CircleUserRound class="h-24 w-24" aria-hidden="true" />
+      </div>
+    )
+  }
   <div class="w-full rounded-md bg-background px-3 py-1 text-center opacity-90">
     <slot name="name">
       <h6 class="font-bold">
