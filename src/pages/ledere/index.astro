@@ -11,6 +11,8 @@ import type { ValidContentEntrySlug } from "astro:content";
 
 const leaders = await getCollection("ledere");
 
+const supremeLeaderOrder = ["Nestleder", "Revysjef", "Økonomiansvarlig"];
+
 const supremeLeaders = leaders
   // Only get the supreme leaders
   .filter(
@@ -30,10 +32,15 @@ const supremeLeaders = leaders
       )?.title,
     },
   }))
-  .toSorted(
-    (a, b) =>
-      (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
-  );
+  .toSorted((a, b) => {
+    const aIndex = supremeLeaderOrder.indexOf(a.data.title ?? "");
+    const bIndex = supremeLeaderOrder.indexOf(b.data.title ?? "");
+
+    return (
+      (aIndex === -1 ? supremeLeaderOrder.length : aIndex) -
+      (bIndex === -1 ? supremeLeaderOrder.length : bIndex)
+    );
+  });
 
 // Find the correct pronoun for the supreme leaders
 const supremeLeaderPronoun =
@@ -69,8 +76,6 @@ const plebians = leaders
       (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
   );
 
-console.log(leaders);
-
 // Get the groups of the leaders
 const groups = await getCollection("grupper");
 
@@ -93,13 +98,20 @@ function getGroup(groupRef: {
       For årets revy er det {supremeLeaderPronoun} her!
     </p>
 
-    <div class="flex w-full flex-col justify-center gap-10 sm:flex-row">
+    <div
+      class="mx-auto grid w-full max-w-screen-lg grid-cols-1 items-center gap-14 py-6 sm:grid-cols-3 sm:gap-16 sm:py-10"
+    >
       {
         supremeLeaders.map(
           ({ slug, data: { name, title, image, leaderOf } }) => (
             <a
               href={`/ledere/${slug}`}
-              class="w-full transition-transform hover:scale-105 sm:w-1/2 md:w-1/3 lg:w-1/4"
+              class:list={[
+                "mx-auto w-full transition-transform hover:scale-105",
+                title === "Revysjef"
+                  ? "max-w-80 sm:order-none sm:scale-110 sm:hover:scale-[1.15]"
+                  : "max-w-72",
+              ]}
             >
               <PersonCard name={name} image={image}>
                 {title} av{" "}
