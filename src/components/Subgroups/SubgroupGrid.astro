@@ -1,27 +1,33 @@
 ---
-import LinkCard from "../Card/LinkCard.astro";
-import CardContent from "../Card/CardContent.astro";
-import CardDetail from "../Card/CardDetail.astro";
-import Grid from "../Common/Grid.astro";
 import ProfilePicture from "../Images/ProfilePicture.astro";
 
 import { getCollection } from "astro:content";
+import { ArrowRight } from "lucide-astro";
 
-const groups = await getCollection("grupper");
+const groups = (await getCollection("grupper")).toSorted((a, b) =>
+  a.data.name.localeCompare(b.data.name, "nb"),
+);
 ---
 
-<Grid>
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
   {
     groups.map(({ slug, data: { name, brief, logo } }) => (
-      <LinkCard class="md:h-full" href={`/grupper/${slug}`}>
-        <CardContent>
-          <div class="flex gap-3 font-medium">
-            <ProfilePicture class="h-6" src={logo} alt={`${name} logo`} />
-            {name}
+      <a
+        href={`/grupper/${slug}`}
+        class="hover:border-primary/60 group flex min-h-32 flex-col justify-between gap-4 rounded-lg border border-gray-200 bg-background p-4 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <ProfilePicture class="h-10" src={logo} alt={`${name} logo`} />
+            <h2 class="text-lg font-semibold">{name}</h2>
           </div>
-          <CardDetail>{brief}</CardDetail>
-        </CardContent>
-      </LinkCard>
+          <ArrowRight
+            class="mt-1 h-5 w-5 text-primary opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"
+            aria-hidden="true"
+          />
+        </div>
+        <p class="text-sm leading-relaxed opacity-75">{brief}</p>
+      </a>
     ))
   }
-</Grid>
+</div>

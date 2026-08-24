@@ -1,10 +1,8 @@
 ---
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
-import Card from "@/components/Card/Card.astro";
-import CardContent from "@/components/Card/CardContent.astro";
-import CardField from "@/components/Card/CardField.astro";
 import { Image } from "astro:assets";
+import { Mail, Users } from "lucide-astro";
 
 import {
   getEntry,
@@ -47,25 +45,52 @@ const { Content } = await render(entry);
 
   <Content />
 
-  <Card class="mt-12 w-full max-w-screen-sm">
-    <CardContent>
-      <CardField title="Email">
-        <Link href={`mailto:${email}`}>{email}</Link>
-      </CardField>
+  <section class="not-prose mt-10 grid w-full max-w-screen-sm gap-3">
+    <a
+      href={`mailto:${email}`}
+      class="hover:border-primary/60 group flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-background p-4 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+    >
+      <span class="flex min-w-0 items-center gap-3">
+        <span
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-accent text-primary transition group-hover:bg-primary group-hover:text-white"
+        >
+          <Mail class="h-5 w-5" aria-hidden="true" />
+        </span>
+        <span class="min-w-0">
+          <span class="block text-sm opacity-70">Kontakt</span>
+          <span class="block truncate font-medium">{email}</span>
+        </span>
+      </span>
+    </a>
 
-      <h2 class="my-3 text-lg leading-none">Ledelse</h2>
-      {
-        Object.entries(rankedLeaders).map(([title, leaders]) => (
-          <CardField title={title}>
-            {leaders.map((leader) => (
-              <>
-                <Link href={`/ledere/${leader.slug}`}>{leader.data.name}</Link>
-                <span class="mr-1 hidden last:hidden sm:inline-block">,</span>
-              </>
-            ))}
-          </CardField>
-        ))
-      }
-    </CardContent>
-  </Card>
+    <div
+      class="rounded-lg border border-gray-200 bg-background p-4 dark:border-gray-800"
+    >
+      <div class="mb-4 flex items-center gap-3">
+        <span
+          class="flex h-10 w-10 items-center justify-center rounded-md bg-bg-accent text-primary"
+        >
+          <Users class="h-5 w-5" aria-hidden="true" />
+        </span>
+        <h2 class="text-lg font-semibold">Ledelse</h2>
+      </div>
+
+      <div class="grid gap-3">
+        {
+          Object.entries(rankedLeaders).map(([title, leaders]) => (
+            <div class="rounded-md bg-bg-accent px-3 py-2">
+              <span class="block text-sm font-medium opacity-70">{title}</span>
+              <div class="mt-1 flex flex-wrap gap-x-2 gap-y-1">
+                {leaders.map((leader) => (
+                  <Link href={`/ledere/${leader.slug}`}>
+                    {leader.data.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </ArticleLayout>

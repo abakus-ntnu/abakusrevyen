@@ -2,6 +2,7 @@
 name: Rikke Schjønsby
 email: rikke.schjoensby@abakus.no
 gender: female
+image: "@/images/ledere/rikke-schjonsby.webp"
 leaderOf:
   - group: revystyret
     title: Nestleder
@@ -9,4 +10,4 @@ leaderOf:
 
 # Rikke Schjønsby
 
-Nestleder for Abakusrevyen 2026/2027.
+Nestleder for 2027-revyen.

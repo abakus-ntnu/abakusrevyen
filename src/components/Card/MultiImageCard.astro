@@ -32,12 +32,12 @@ const { images } = Astro.props;
                 alt={alt}
                 width={500}
                 height={500}
-                class="w-full"
+                class="h-full w-full object-cover object-top"
                 loading="eager"
                 data-card-image={i}
               />
               <div
-                class="hidden aspect-square w-full items-center justify-center bg-bg-accent text-primary"
+                class="hidden h-full w-full items-center justify-center bg-bg-accent text-primary"
                 aria-label={alt}
                 data-card-fallback={i}
               >
@@ -52,12 +52,12 @@ const { images } = Astro.props;
               <Image
                 src={src}
                 alt={alt}
-                class="w-full"
+                class="h-full w-full object-cover object-top"
                 loading="eager"
                 data-card-image={i}
               />
               <div
-                class="hidden aspect-square w-full items-center justify-center bg-bg-accent text-primary"
+                class="hidden h-full w-full items-center justify-center bg-bg-accent text-primary"
                 aria-label={alt}
                 data-card-fallback={i}
               >
@@ -71,7 +71,7 @@ const { images } = Astro.props;
             <>
               <img
                 alt={alt}
-                class="hidden w-full"
+                class="hidden h-full w-full object-cover object-top"
                 loading="eager"
                 data-card-image={i}
               />

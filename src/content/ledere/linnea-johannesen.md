@@ -2,6 +2,7 @@
 name: Linnéa Josefine Johannesen
 email: linnea.johannesen@abakus.no
 gender: female
+image: "@/images/ledere/linnea-johannesen.webp"
 leaderOf:
   - group: revystyret
     title: Revysjef
@@ -9,4 +10,4 @@ leaderOf:
 
 # Linnéa Josefine Johannesen
 
-Revysjef for Abakusrevyen 2026/2027.
+Revysjef for 2027-revyen.
