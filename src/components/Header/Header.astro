@@ -13,9 +13,9 @@ const PAGES = [
 ];
 ---
 
-<header id="header" class="relative z-50 mx-auto w-full max-w-screen-xl">
+<header id="header" class="relative z-[1000] mx-auto w-full max-w-screen-xl">
   <div
-    class="mx-auto flex h-[4.5rem] items-center justify-between px-4 py-2 md:h-32 md:px-6 md:py-3"
+    class="relative z-[1002] mx-auto flex h-[4.5rem] items-center justify-between bg-background px-4 py-2 md:h-32 md:bg-transparent md:px-6 md:py-3"
   >
     <a href="/" data-astro-prefetch="load">
       <Logo />
@@ -52,8 +52,14 @@ const PAGES = [
   </div>
 
   <div
+    id="mobileMenuBackdrop"
+    class="pointer-events-none fixed inset-x-0 -bottom-24 top-0 z-[1000] bg-background opacity-0 transition-opacity md:hidden"
+  >
+  </div>
+
+  <div
     id="mobileMenu"
-    class="pointer-events-none fixed inset-x-0 bottom-0 top-[4.5rem] flex h-[calc(100lvh-4.5rem)] flex-col gap-5 overflow-y-auto overscroll-contain bg-background px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] text-foreground opacity-0 transition-opacity md:hidden"
+    class="pointer-events-none fixed inset-x-0 bottom-0 top-[4.5rem] z-[1001] flex flex-col gap-5 overflow-y-auto overscroll-contain bg-background px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] text-foreground opacity-0 transition-opacity [-webkit-overflow-scrolling:touch] md:hidden"
   >
     <div class="flex flex-col gap-2">
       <span class="px-2 text-base font-semibold">Sider</span>
@@ -94,6 +100,7 @@ const PAGES = [
   </div>
   <script is:inline>
     const header = document.getElementById("header");
+    const mobileMenuBackdrop = document.getElementById("mobileMenuBackdrop");
     const menuButton = document.getElementById("menuButton");
     const menuIcon = menuButton.querySelector(".icon-menu");
     const closeIcon = menuButton.querySelector(".icon-close");
@@ -109,14 +116,18 @@ const PAGES = [
       closeIcon.classList.toggle("opacity-100", menuOpen);
 
       if (menuOpen) {
-        header.classList.add("fixed", "top-0", "left-0", "bg-background");
+        header.classList.add("fixed", "top-0", "inset-x-0", "bg-background");
+        mobileMenuBackdrop.classList.add("opacity-100");
         mobileMenu.classList.add("opacity-100");
         mobileMenu.classList.remove("pointer-events-none");
+        document.documentElement.classList.add("mobile-menu-open");
         document.body.style.overflow = "hidden";
       } else {
-        header.classList.remove("fixed", "top-0", "left-0", "bg-background");
+        header.classList.remove("fixed", "top-0", "inset-x-0", "bg-background");
+        mobileMenuBackdrop.classList.remove("opacity-100");
         mobileMenu.classList.remove("opacity-100");
         mobileMenu.classList.add("pointer-events-none");
+        document.documentElement.classList.remove("mobile-menu-open");
         document.body.style.overflow = "";
       }
     }
@@ -126,4 +137,11 @@ const PAGES = [
       if (window.innerWidth >= 768 && menuOpen) toggleMenu(true);
     });
   </script>
+  <style is:global>
+    @media (max-width: 767px) {
+      html.mobile-menu-open iframe {
+        visibility: hidden;
+      }
+    }
+  </style>
 </header>
