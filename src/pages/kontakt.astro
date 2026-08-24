@@ -23,6 +23,18 @@ const leaders = await getCollection("ledere");
       <Link href="mailto:revysjef@abakus.no">revysjef@abakus.no</Link>
     </p>
 
+    <div
+      class="w-full max-w-prose rounded-lg border border-gray-200 bg-background p-4 text-sm leading-relaxed dark:border-gray-800"
+    >
+      <p class="font-medium">Abakusrevyen</p>
+      <p class="opacity-75">Org.nr. 936 891 942</p>
+      <p class="opacity-75">c/o Abakus, Sem Sælands vei 7-9, 7491 Trondheim</p>
+      <p class="mt-2">
+        Les mer om hvordan vi behandler personopplysninger på
+        <Link href="/personvern">personvernsiden</Link>.
+      </p>
+    </div>
+
     <h2>Grupper</h2>
 
     <table>
@@ -80,7 +92,7 @@ const leaders = await getCollection("ledere");
                   {leader.email ? (
                     <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
                   ) : (
-                    "Ingen emailaddresse"
+                    "Ingen emailadresse"
                   )}
                 </div>
               </td>

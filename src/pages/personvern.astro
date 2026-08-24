@@ -1,0 +1,104 @@
+---
+import Title from "@/components/Common/Title.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+
+const lastUpdated = new Date("2026-08-24");
+---
+
+<PageLayout title="Personvern">
+  <main class="container mx-auto max-w-3xl space-y-8 px-4 py-6 md:py-10">
+    <Title>Person<span class="text-primary">vern</span></Title>
+
+    <section
+      class="rounded-lg border border-gray-200 bg-background p-5 leading-relaxed dark:border-gray-800"
+    >
+      <p class="text-sm font-medium text-primary">
+        Sist oppdatert: {
+          lastUpdated.toLocaleDateString("nb-NO", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })
+        }
+      </p>
+      <p class="mt-3 opacity-80">
+        Denne siden forklarer hvordan Abakusrevyen behandler personopplysninger
+        på abakusrevyen.no. Vi prøver å samle minst mulig, og bruker nettsiden
+        først og fremst til informasjon om revyen, grupper, ledere, opptak og
+        forestillinger.
+      </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-2xl font-semibold">Ansvarlig</h2>
+      <div
+        class="rounded-lg border border-gray-200 bg-background p-5 dark:border-gray-800"
+      >
+        <p class="font-medium">Abakusrevyen</p>
+        <p class="opacity-80">Org.nr. 936 891 942</p>
+        <p class="opacity-80">
+          c/o Abakus, Sem Sælands vei 7-9, 7491 Trondheim
+        </p>
+        <p class="mt-3">
+          Spørsmål om personvern kan sendes til
+          <a class="text-primary underline" href="mailto:revystyret@abakus.no">
+            revystyret@abakus.no</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-2xl font-semibold">Hva vi publiserer</h2>
+      <p class="leading-relaxed opacity-80">
+        Nettsiden kan vise navn, rolle, gruppe, e-postadresse og bilde av ledere
+        og andre personer som representerer Abakusrevyen. Dette publiseres for å
+        gjøre det enkelt å forstå hvem som har ansvar for hva, og for å gjøre
+        det mulig å kontakte riktige personer.
+      </p>
+      <p class="leading-relaxed opacity-80">
+        Bilder av personer skal bare publiseres når personen har godkjent det.
+        Hvis du vil at vi skal endre eller fjerne et bilde, navn eller annen
+        informasjon om deg, tar du kontakt med revystyret.
+      </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-2xl font-semibold">Opptak</h2>
+      <p class="leading-relaxed opacity-80">
+        Selve opptaket skjer via opptak.abakus.no. Når du trykker deg videre dit
+        og sender inn en søknad, behandles opplysningene i opptaksløsningen. Det
+        kan for eksempel være navn, kontaktinformasjon, gruppene du søker og
+        søknadsteksten din.
+      </p>
+      <p class="leading-relaxed opacity-80">
+        Abakusrevyen bruker opplysningene for å vurdere søknader, invitere til
+        intervju og gjennomføre opptaket. Tilgang skal begrenses til de som
+        trenger opplysningene for å gjennomføre opptaket.
+      </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-2xl font-semibold">Statistikk</h2>
+      <p class="leading-relaxed opacity-80">
+        Vi bruker Plausible Analytics via Webkom for enkel besøksstatistikk.
+        Dette brukes til å forstå hvilke sider som blir brukt, slik at vi kan
+        forbedre nettsiden. Plausible er laget for personvernvennlig statistikk
+        uten informasjonskapsler.
+      </p>
+      <p class="leading-relaxed opacity-80">
+        Hvis du bytter mellom lys og mørk modus, lagres dette valget lokalt i
+        nettleseren din. Det sendes ikke til Abakusrevyen.
+      </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-2xl font-semibold">Dine rettigheter</h2>
+      <p class="leading-relaxed opacity-80">
+        Du kan be om innsyn i hvilke opplysninger vi har om deg, og du kan be
+        oss rette eller slette opplysninger som er feil, utdaterte eller ikke
+        lenger bør ligge ute. Send en e-post til revystyret, så følger vi opp.
+      </p>
+    </section>
+  </main>
+</PageLayout>
