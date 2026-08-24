@@ -4,7 +4,6 @@ email: andreas.svendsrud@abakus.no
 gender: male
 leaderOf:
   - group: manus
-    title: Manusansvarlig
 ---
 
 # Andreas Kluge Svendsrud

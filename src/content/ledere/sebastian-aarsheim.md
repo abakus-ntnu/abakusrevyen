@@ -4,7 +4,6 @@ email: sebastian.aarsheim@abakus.no
 gender: male
 leaderOf:
   - group: pr
-    title: PR-sjef
 activeIn:
   - teknikk
 ---
