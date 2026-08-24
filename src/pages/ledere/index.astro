@@ -154,16 +154,16 @@ function getGroup(groupRef: {
           <a
             href={`/ledere/${slug}`}
             class:list={[
-              "mx-auto w-full transition-transform hover:scale-105",
+              "leader-link mx-auto w-full",
               title === "Revysjef" &&
-                "order-1 col-span-2 max-w-64 sm:order-2 sm:col-span-1 sm:max-w-80 sm:scale-110 sm:hover:scale-[1.15]",
+                "revysjef-link order-1 col-span-2 max-w-64 sm:order-2 sm:col-span-1 sm:max-w-80 sm:scale-110",
               title === "Nestleder" &&
                 "order-2 max-w-56 sm:order-1 sm:max-w-72",
               title === "Økonomiansvarlig" &&
                 "order-3 max-w-56 sm:order-3 sm:max-w-72",
             ]}
           >
-            <PersonCard name={name} image={image} naturalImage shine>
+            <PersonCard name={name} image={image} naturalImage shine glow>
               <span class="font-medium text-primary">{title}</span>
             </PersonCard>
           </a>
@@ -183,14 +183,12 @@ function getGroup(groupRef: {
     >
       {
         plebians.map(({ slug, data: { name, title, image, leaderOf } }) => (
-          <a
-            href={`/ledere/${slug}`}
-            class="transition-transform hover:scale-105"
-          >
+          <a href={`/ledere/${slug}`} class="leader-link">
             <PersonCard
               name={name}
               image={image}
               holo={leaderOf.some(({ group }) => group.slug === "teknikk")}
+              glow={slug === "william-saether"}
             >
               {title} av{" "}
               <span class="font-medium text-primary">
@@ -205,3 +203,19 @@ function getGroup(groupRef: {
     </Grid>
   </div>
 </PageLayout>
+
+<style>
+  .leader-link {
+    transition: transform 180ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .leader-link:hover {
+      transform: scale(1.05);
+    }
+
+    .revysjef-link:hover {
+      transform: scale(1.15);
+    }
+  }
+</style>
