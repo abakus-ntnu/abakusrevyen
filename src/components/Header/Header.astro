@@ -13,8 +13,10 @@ const PAGES = [
 ];
 ---
 
-<header id="header" class="container z-50 mx-auto">
-  <div class="mx-auto flex h-32 items-center justify-between px-6 py-3">
+<header id="header" class="relative z-50 mx-auto w-full max-w-screen-xl">
+  <div
+    class="mx-auto flex h-[4.5rem] items-center justify-between px-4 py-2 md:h-32 md:px-6 md:py-3"
+  >
     <a href="/" data-astro-prefetch="load">
       <Logo />
     </a>
@@ -51,38 +53,38 @@ const PAGES = [
 
   <div
     id="mobileMenu"
-    class="pointer-events-none absolute inset-x-0 top-full flex h-[calc(100vh-4rem)] flex-col gap-8 bg-background px-4 py-4 text-foreground opacity-0 transition-opacity md:hidden"
+    class="pointer-events-none absolute inset-x-0 top-full flex h-[calc(100dvh-4.5rem)] flex-col gap-5 overflow-y-auto overscroll-contain bg-background px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] text-foreground opacity-0 transition-opacity md:hidden"
   >
-    <div class="flex flex-col gap-3">
-      <span class="px-2 text-xl font-semibold">Sider</span>
+    <div class="flex flex-col gap-2">
+      <span class="px-2 text-base font-semibold">Sider</span>
       {
         PAGES.map(({ href, title, Icon }) => (
           <a
-            class="hover:bg-primary/10 flex items-center gap-3 rounded-lg bg-bg-accent px-3 py-3 text-lg text-foreground no-underline transition hover:text-primary"
+            class="hover:bg-primary/10 flex items-center gap-2.5 rounded-lg bg-bg-accent px-3 py-2 text-base text-foreground no-underline transition hover:text-primary"
             href={href}
             data-astro-prefetch="load"
           >
-            <span class="flex h-9 w-9 items-center justify-center rounded-md bg-background text-primary">
-              <Icon class="h-5 w-5" aria-hidden="true" />
+            <span class="flex h-8 w-8 items-center justify-center rounded-md bg-background text-primary">
+              <Icon class="h-4 w-4" aria-hidden="true" />
             </span>
             {title}
           </a>
         ))
       }
     </div>
-    <div class="flex flex-col gap-3">
-      <span class="px-2 text-xl font-semibold">Kontakt oss</span>
+    <div class="flex flex-col gap-2">
+      <span class="px-2 text-base font-semibold">Kontakt oss</span>
       {
         SOCIALS.map(({ name, href, external, Icon }) => (
           <a
-            class="hover:bg-primary/10 flex items-center gap-3 rounded-lg bg-bg-accent px-3 py-3 text-lg text-foreground no-underline transition hover:text-primary"
+            class="hover:bg-primary/10 flex items-center gap-2.5 rounded-lg bg-bg-accent px-3 py-2 text-base text-foreground no-underline transition hover:text-primary"
             href={href}
             target={external ? "_blank" : "_self"}
             rel={external ? "noopener noreferrer" : undefined}
             data-astro-prefetch="load"
           >
-            <span class="flex h-9 w-9 items-center justify-center rounded-md bg-background text-primary">
-              <Icon class="h-5 w-5" aria-hidden="true" />
+            <span class="flex h-8 w-8 items-center justify-center rounded-md bg-background text-primary">
+              <Icon class="h-4 w-4" aria-hidden="true" />
             </span>
             {name}
           </a>
