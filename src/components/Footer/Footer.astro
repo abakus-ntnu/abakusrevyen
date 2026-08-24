@@ -19,41 +19,56 @@ const SUBPAGES = [
 ];
 
 import { SOCIALS } from "@/lib/constants";
+import { ArrowUpRight } from "lucide-astro";
 ---
 
-<footer class="mt-12 bg-background text-accent">
+<footer class="mt-16 bg-background">
   <div
-    class="container mx-auto grid grid-cols-1 items-center gap-6 border-t-[1px] border-accent px-6 py-3 md:grid-cols-3"
+    class="container mx-auto grid gap-6 border-t border-gray-200 px-4 py-8 md:grid-cols-[1fr_auto_1fr] md:items-center dark:border-gray-800"
   >
-    <div class="mx-auto w-min md:ml-0">
+    <div class="mx-auto space-y-1 text-center md:ml-0 md:text-left">
       <h1
         id="footer-title"
-        class="font-serif text-xl font-medium tracking-tight"
+        class="font-serif text-2xl font-medium tracking-tight text-foreground"
       >
         Abakusrevyen
       </h1>
+      <p class="text-sm opacity-70">Av studenter, for studenter.</p>
     </div>
 
-    <ul class="mx-auto flex gap-3">
+    <ul class="mx-auto flex flex-wrap justify-center gap-2">
       {
         SUBPAGES.map(({ name, href }) => (
           <li>
-            <a href={href}>{name}</a>
+            <a
+              href={href}
+              class="hover:bg-primary/10 block rounded-full bg-bg-accent px-3 py-1.5 text-sm font-medium no-underline transition hover:text-primary"
+            >
+              {name}
+            </a>
           </li>
         ))
       }
     </ul>
 
-    <ul class="mx-auto flex w-min gap-3 md:mr-0">
+    <ul class="mx-auto flex gap-2 md:mr-0">
       {
         SOCIALS.map(({ name, external, href, Icon }) => (
           <li id={name}>
             <a
               target={external ? "_blank" : "_self"}
+              rel={external ? "noopener noreferrer" : undefined}
               href={href}
               aria-label={name}
+              class="group relative flex h-10 w-10 items-center justify-center rounded-md bg-bg-accent text-primary transition hover:-translate-y-0.5 hover:bg-primary hover:text-white"
             >
-              {<Icon />}
+              <Icon class="h-5 w-5" aria-hidden="true" />
+              {external && (
+                <ArrowUpRight
+                  class="absolute h-3 w-3 -translate-y-3 translate-x-3 opacity-0 transition group-hover:opacity-100"
+                  aria-hidden="true"
+                />
+              )}
             </a>
           </li>
         ))

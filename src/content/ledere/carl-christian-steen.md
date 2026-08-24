@@ -2,6 +2,7 @@
 name: Carl Christian Steen
 email: carl.steen@abakus.no
 gender: male
+image: "@/images/ledere/carl-christian-steen.webp"
 leaderOf:
   - group: revystyret
     title: Økonomiansvarlig
@@ -11,4 +12,4 @@ activeIn:
 
 # Carl Christian Steen
 
-Økonomiansvarlig for Abakusrevyen 2026/2027.
+Økonomiansvarlig for 2027-revyen.

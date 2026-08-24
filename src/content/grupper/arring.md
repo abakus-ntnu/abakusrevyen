@@ -1,6 +1,6 @@
 ---
 name: Arring
-brief: Undertilhørige bandet som passer på at bandet har noe å spille:))
+brief: Vi arrangerer og komponerer musikken bandet spiller!
 logo: "@/images/undergrupper_logoer/band-logo.webp"
 email: revy-band@abakus.no
 leaders:
@@ -19,10 +19,10 @@ deg som har erfaring med å arrangere og komponere musikk, og som vil bidra til
 å gi revyen et løft på den musikalske fronten.
 
 Du vil jobbe tett med bandsjefen og erfarne medlemmer som har arrangert og
-komponert musikk tidligere. Det legges opp til et fast sosialt arre-sesj i uka,
-hvor du kan få hjelp og tilbakemelding på arrangementene dine. Det er ikke lagt
-opp til grunnleggende opplæring, men det vil holdes et arre-kurs for å
-introdusere deg til revyens arre-rutiner.
+komponert musikk tidligere. Det legges opp til jevnlige sosiale arre-sesjer hvor
+du kan få hjelp og tilbakemelding på arrangementene dine. Det er ikke lagt opp
+til grunnleggende opplæring, men det vil holdes et arre-kurs for å introdusere
+deg til revyens arre-rutiner.
 
 Enten du vil arrangere en kort bandsnutt, et stort musikalnummer eller komponere
 noe helt nytt – vi vil ha deg med! Det er ikke et krav at du er medlem av Abakus.

@@ -2,10 +2,11 @@
 name: Sander Rom Skofsrud
 email: sander.skofsrud@abakus.no
 gender: male
+image: "@/images/ledere/sander-skofsrud.webp"
 leaderOf:
   - group: sosial
 ---
 
 # Sander Rom Skofsrud
 
-Sosialsjef for Abakusrevyen 2026/2027.
+Sosialsjef for 2027-revyen.

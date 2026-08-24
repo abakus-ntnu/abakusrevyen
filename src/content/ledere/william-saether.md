@@ -2,6 +2,7 @@
 name: William Sæther
 email: william.saether@abakus.no
 gender: male
+image: "@/images/ledere/william-saether.webp"
 leaderOf:
   - group: teknikk
 activeIn:
@@ -11,4 +12,4 @@ activeIn:
 
 # William Sæther
 
-Teknikksjef for Abakusrevyen 2026/2027.
+Teknikksjef for 2027-revyen.

@@ -50,34 +50,39 @@ const PAGES = [
 
   <div
     id="mobileMenu"
-    class="pointer-events-none absolute inset-x-0 top-full flex h-[calc(100vh-4rem)] flex-col gap-6 bg-background px-6 text-foreground opacity-0 md:hidden"
+    class="pointer-events-none absolute inset-x-0 top-full flex h-[calc(100vh-4rem)] flex-col gap-8 bg-background px-4 py-4 text-foreground opacity-0 transition-opacity md:hidden"
   >
-    <div class="flex flex-col gap-4">
-      <span class="text-[1.5rem] font-semibold">Sider</span>
+    <div class="flex flex-col gap-3">
+      <span class="px-2 text-xl font-semibold">Sider</span>
       {
         PAGES.map(({ href, title, Icon }) => (
           <a
-            class="flex gap-3 text-lg text-foreground transition-colors hover:text-accent"
+            class="hover:bg-primary/10 flex items-center gap-3 rounded-lg bg-bg-accent px-3 py-3 text-lg text-foreground no-underline transition hover:text-primary"
             href={href}
             data-astro-prefetch="load"
           >
-            <Icon />
+            <span class="flex h-9 w-9 items-center justify-center rounded-md bg-background text-primary">
+              <Icon class="h-5 w-5" aria-hidden="true" />
+            </span>
             {title}
           </a>
         ))
       }
     </div>
-    <div class="flex flex-col gap-4">
-      <span class="text-[1.5rem] font-semibold">Kontakt oss</span>
+    <div class="flex flex-col gap-3">
+      <span class="px-2 text-xl font-semibold">Kontakt oss</span>
       {
         SOCIALS.map(({ name, href, external, Icon }) => (
           <a
-            class="flex gap-3 text-lg text-foreground transition-colors hover:text-accent"
+            class="hover:bg-primary/10 flex items-center gap-3 rounded-lg bg-bg-accent px-3 py-3 text-lg text-foreground no-underline transition hover:text-primary"
             href={href}
             target={external ? "_blank" : "_self"}
+            rel={external ? "noopener noreferrer" : undefined}
             data-astro-prefetch="load"
           >
-            <Icon />
+            <span class="flex h-9 w-9 items-center justify-center rounded-md bg-background text-primary">
+              <Icon class="h-5 w-5" aria-hidden="true" />
+            </span>
             {name}
           </a>
         ))

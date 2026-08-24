@@ -14,7 +14,10 @@ const { class: className, src, alt, ...rest } = Astro.props;
 {
   src ? (
     <Image
-      class:list={["aspect-square w-auto rounded-full", className]}
+      class:list={[
+        "aspect-square w-auto rounded-full object-cover object-top",
+        className,
+      ]}
       src={src}
       alt={alt}
       {...rest}
