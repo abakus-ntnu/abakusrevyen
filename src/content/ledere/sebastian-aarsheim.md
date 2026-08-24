@@ -2,6 +2,7 @@
 name: Sebastian Aarsheim
 email: sebastian.aarsheim@abakus.no
 gender: male
+image: "@/images/ledere/sebastian-aarsheim.webp"
 leaderOf:
   - group: pr
 activeIn:
@@ -10,4 +11,4 @@ activeIn:
 
 # Sebastian Aarsheim
 
-PR-sjef for Abakusrevyen 2026/2027.
+PR-sjef for 2027-revyen.

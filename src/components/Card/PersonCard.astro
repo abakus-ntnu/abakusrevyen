@@ -5,9 +5,18 @@ interface Props {
   name: string;
   image?: string | ImageMetadata;
   holo?: boolean;
+  shine?: boolean;
+  naturalImage?: boolean;
 }
 
-const { name, image, holo = false } = Astro.props;
+const {
+  name,
+  image,
+  holo = false,
+  shine = false,
+  naturalImage = false,
+} = Astro.props;
+const shouldShine = holo || shine;
 const imageSource = image
   ? typeof image === "string"
     ? image
@@ -17,18 +26,21 @@ const imageSource = image
 
 <div
   class:list={[
-    "flex aspect-[5/6] w-full flex-col rounded-lg bg-cover bg-center",
+    "person-card flex aspect-[5/6] w-full flex-col rounded-lg",
     !imageSource && "bg-bg-accent",
+    shouldShine && "shine-card",
     holo && "holo-card",
+    naturalImage && "natural-image",
   ]}
-  style={imageSource ? `background-image: url(${imageSource})` : undefined}
+  style={imageSource ? `--person-image: url(${imageSource})` : undefined}
 >
+  {imageSource && <span class="person-image" aria-hidden="true" />}
   {holo && <span class="holo-rainbow" aria-hidden="true" />}
   <div class="card-media">
     {
-      holo && (
-        <span class="holo-shine-layer" aria-hidden="true">
-          <span class="holo-shine" />
+      shouldShine && (
+        <span class="shine-layer" aria-hidden="true">
+          <span class="shine-line" />
         </span>
       )
     }
@@ -41,7 +53,7 @@ const imageSource = image
     }
   </div>
   <div
-    class="relative z-20 mx-1.5 mb-1.5 w-[calc(100%-0.75rem)] rounded-md bg-background px-3 py-1 text-center opacity-90"
+    class="relative z-20 mx-1.5 mb-1.5 w-[calc(100%-0.75rem)] rounded-md bg-background px-2 py-1 text-center text-sm opacity-90 sm:px-3 sm:text-base"
   >
     <slot name="name">
       <h6 class="font-bold">
@@ -53,14 +65,45 @@ const imageSource = image
 </div>
 
 <style>
-  .holo-card {
+  .person-card {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+  }
+
+  .person-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background-image: var(--person-image);
+    background-position: center top;
+    background-size: cover;
+    filter: saturate(0.82) contrast(0.96) brightness(0.95);
+    transition: filter 220ms ease;
+  }
+
+  .person-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.08), rgb(0 0 0 / 0.2));
+  }
+
+  .person-card:hover .person-image,
+  .person-card:focus-within .person-image,
+  .natural-image .person-image {
+    filter: none;
+  }
+
+  .natural-image .person-image::after {
+    content: none;
+  }
+
+  .shine-card {
     box-shadow:
       0 0 0 1px rgb(255 255 255 / 0),
-      0 0 26px rgb(65 201 255 / 0),
-      0 0 44px rgb(244 114 182 / 0);
+      0 0 24px rgb(255 255 255 / 0);
     transition: box-shadow 220ms ease;
   }
 
@@ -74,7 +117,7 @@ const imageSource = image
   }
 
   .holo-card .holo-rainbow,
-  .holo-card .holo-shine-layer {
+  .shine-card .shine-layer {
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -95,11 +138,11 @@ const imageSource = image
     transition: opacity 220ms ease;
   }
 
-  .holo-card .holo-shine-layer {
+  .shine-card .shine-layer {
     z-index: 1;
   }
 
-  .holo-card .holo-shine {
+  .shine-card .shine-line {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -120,6 +163,13 @@ const imageSource = image
       transform 520ms ease-out;
   }
 
+  .shine-card:hover,
+  .shine-card:focus-within {
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.18),
+      0 0 24px rgb(255 255 255 / 0.12);
+  }
+
   .holo-card:hover,
   .holo-card:focus-within {
     box-shadow:
@@ -128,8 +178,8 @@ const imageSource = image
       0 0 44px rgb(244 114 182 / 0.16);
   }
 
-  .holo-card:hover .holo-shine,
-  .holo-card:focus-within .holo-shine {
+  .shine-card:hover .shine-line,
+  .shine-card:focus-within .shine-line {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(14deg) translateX(80%);
   }
