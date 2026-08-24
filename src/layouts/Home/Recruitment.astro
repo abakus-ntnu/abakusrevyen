@@ -1,56 +1,131 @@
 ---
 import HomePageLayout from "./HomePageLayout.astro";
 
-import CardDetail from "@/components/Card/CardDetail.astro";
-import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
+import ProfilePicture from "@/components/Images/ProfilePicture.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
-import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
 import PreviousRevuesBanner from "@/components/Branding/PreviousRevuesBanner.astro";
 
 import { getCollection } from "astro:content";
+import { ArrowRight, Sparkles } from "lucide-astro";
 
-const groups = await getCollection("grupper");
+const groups = (await getCollection("grupper"))
+  .filter((group) => group.slug !== "revystyret")
+  .toSorted((a, b) => a.data.name.localeCompare(b.data.name, "nb"));
+
+const featuredGroupSlugs = ["skuespill", "teknikk", "scene", "pr"];
+const featuredGroups = featuredGroupSlugs
+  .map((slug) => groups.find((group) => group.slug === slug))
+  .filter((group): group is (typeof groups)[number] => group !== undefined);
+const otherGroups = groups.filter(
+  (group) => !featuredGroupSlugs.includes(group.slug),
+);
 ---
 
 <HomePageLayout>
-  <div class="space-y-3 md:space-y-6">
-    <h1 class="text-center text-2xl font-medium">Abakusrevyen har opptak!</h1>
+  <div class="space-y-4 md:space-y-6">
+    <div class="mx-auto max-w-3xl space-y-3 text-center">
+      <p
+        class="bg-primary/10 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-primary"
+      >
+        <Sparkles class="h-4 w-4" aria-hidden="true" />
+        Opptaket er åpent
+      </p>
+      <h1 class="text-balance text-center text-3xl font-semibold md:text-5xl">
+        Bli med på å lage Abakusrevyen
+      </h1>
+      <p class="mx-auto max-w-2xl text-pretty text-base opacity-80 md:text-lg">
+        Revyen trenger folk som vil skrive, spille, bygge, designe, fikse,
+        danse, arrangere og lage show sammen gjennom året.
+      </p>
+    </div>
 
     <PreviousRevuesBanner />
   </div>
 
-  <div class="space-y-3 md:space-y-6">
-    <p class="text-center">Søk på verv i revyen og bli å lage årets revy!</p>
+  <div class="space-y-4 md:space-y-6">
+    <div class="grid gap-3 md:grid-cols-[1.05fr_1.95fr] md:items-stretch">
+      <div
+        class="flex flex-col justify-between gap-4 rounded-lg bg-bg-accent p-4 md:p-6"
+      >
+        <div class="space-y-3">
+          <h2 class="text-2xl font-semibold">Finn gjengen din</h2>
+          <p class="text-pretty opacity-80">
+            Du trenger ikke å ha gjort revy før. Velg gruppa som virker mest
+            gøy, eller søk flere hvis du er usikker.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 text-sm">
+          <span class="rounded-full bg-background px-3 py-1">På scenen</span>
+          <span class="rounded-full bg-background px-3 py-1">Bak scenen</span>
+          <span class="rounded-full bg-background px-3 py-1">Teknisk</span>
+          <span class="rounded-full bg-background px-3 py-1">Sosialt</span>
+        </div>
+        <LinkButton href="https://opptak.abakus.no/">Søk her!</LinkButton>
+      </div>
 
-    <div
-      class="mx-auto grid h-28 max-w-screen-sm grid-cols-1 gap-3 overflow-scroll sm:grid-cols-2 md:h-auto md:grid-cols-3 lg:grid-cols-4"
-    >
-      {
-        groups.map(({ data: { name } }) => (
-          <CardDetail>
-            <span class="font-medium">{name}</span>
-          </CardDetail>
-        ))
-      }
+      <div class="grid gap-3 sm:grid-cols-2">
+        {
+          featuredGroups.map(({ slug, data: { name, brief, logo } }) => (
+            <a
+              href={`/grupper/${slug}`}
+              class="hover:border-primary/60 group flex min-h-32 flex-col justify-between gap-4 rounded-lg border border-gray-200 bg-background p-4 no-underline transition hover:-translate-y-0.5 hover:shadow-md dark:border-gray-800"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <ProfilePicture
+                    class="h-10"
+                    src={logo}
+                    alt={`${name} logo`}
+                  />
+                  <h3 class="text-lg font-semibold">{name}</h3>
+                </div>
+                <ArrowRight
+                  class="mt-1 h-5 w-5 text-primary opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
+              </div>
+              <p class="text-sm leading-relaxed opacity-75">{brief}</p>
+            </a>
+          ))
+        }
+      </div>
     </div>
 
-    <div class="flex justify-center">
-      <LinkButton href="https://opptak.abakus.no/">Søk her!</LinkButton>
+    <div class="flex flex-wrap justify-center gap-2">
+      {
+        otherGroups.map(({ slug, data: { name, logo } }) => (
+          <a
+            href={`/grupper/${slug}`}
+            class="hover:bg-primary/10 inline-flex items-center gap-1.5 rounded-full bg-bg-accent px-2 py-1.5 text-sm font-medium no-underline transition hover:text-primary"
+          >
+            <ProfilePicture class="h-5" src={logo} alt={`${name} logo`} />
+            {name}
+          </a>
+        ))
+      }
     </div>
   </div>
 
   <div slot="recruitment" class="space-y-6">
     <h2 class="text-center text-xl font-medium">
-      Opptaket er <span class="text-primary">nå</span>!
+      Alle gruppene tar inn nye folk
     </h2>
 
-    <p class="mx-auto max-w-prose">
-      Revyen har opptak nå! Søk på verv i revyen og bli med oss å lage nok en
-      topp revy!
-    </p>
-
-    <FoldableFade>
-      <SubgroupGrid />
-    </FoldableFade>
+    <div class="mx-auto grid max-w-screen-md gap-2 sm:grid-cols-2">
+      {
+        groups.map(({ slug, data: { name, brief, logo } }) => (
+          <a
+            href={`/grupper/${slug}`}
+            class="group flex items-center gap-3 rounded-lg px-3 py-2 no-underline transition hover:bg-bg-accent"
+          >
+            <ProfilePicture class="h-8" src={logo} alt={`${name} logo`} />
+            <span class="min-w-0">
+              <span class="block font-medium">{name}</span>
+              <span class="line-clamp-1 block text-sm opacity-70">{brief}</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
   </div>
 </HomePageLayout>

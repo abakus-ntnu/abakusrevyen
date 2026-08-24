@@ -20,11 +20,11 @@ import { SHOWS, SHOW_REVEAL } from "./shows";
 import { Scroll } from "lucide-react";
 
 // Perioder
-export const RECRUITMENT_START = new Date("2025-08-25T07:00:00+0100"); // Start av opptak
-export const RECRUITMENT_END = new Date("2025-09-01T11:00:00+0100"); // Opptak slutt
+export const RECRUITMENT_START = new Date("2026-08-25T14:00:00+0200"); // Start av opptak
+export const RECRUITMENT_END = new Date("2026-09-11T00:00:00+0200"); // Første øyeblikk etter opptak
 export const COUNTDOWN_START = SHOW_REVEAL;
 
-export const TICKET_RELEASE = new Date("2026-02-19T16:00:00+0100");
+export const TICKET_RELEASE = new Date("2027-02-19T16:00:00+0100");
 export const SHOW_START = new Date(SHOWS[0].when); // Premiære
 export const SHOW_END = new Date(SHOWS.toReversed()[0].when); // Siste forestilling
 

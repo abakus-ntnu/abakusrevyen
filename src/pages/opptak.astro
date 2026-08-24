@@ -1,66 +1,138 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
 
-import Title from "@/components/Common/Title.astro";
 import PreviousRevuesBanner from "@/components/Branding/PreviousRevuesBanner.astro";
-import ProseArea from "@/components/Common/ProseArea.astro";
+import ProfilePicture from "@/components/Images/ProfilePicture.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
-import Link from "@/components/LinkButton/Link.astro";
-import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
-import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import { getCurrentPeriod } from "@/lib/periods";
+
+import { getCollection } from "astro:content";
+import {
+  ArrowRight,
+  CheckCircle2,
+  MessagesSquare,
+  Send,
+  Sparkles,
+} from "lucide-astro";
+
+const groups = (await getCollection("grupper"))
+  .filter((group) => group.slug !== "revystyret")
+  .toSorted((a, b) => a.data.name.localeCompare(b.data.name, "nb"));
+
+const isRecruitmentOpen = getCurrentPeriod() === "recruitment";
+
+const steps = [
+  {
+    title: "Finn gruppene",
+    text: "Les om gruppene og velg én eller flere du har lyst til å søke på.",
+    Icon: Sparkles,
+  },
+  {
+    title: "Skriv søknad",
+    text: "På opptak.abakus.no skriver du en søknadstekst om deg selv og gruppene du søker.",
+    Icon: Send,
+  },
+  {
+    title: "Møt på intervju",
+    text: "Du blir invitert til et hyggelig og uformelt intervju med folk fra gruppene du søker.",
+    Icon: MessagesSquare,
+  },
+];
 ---
 
 <PageLayout title="Opptak">
-  <ProseArea class="container mx-auto text-center">
-    <Title><span class="text-primary">Bli med</span> i revyen!</Title>
+  <section class="container mx-auto space-y-10 px-4 py-6 text-center md:py-10">
+    <div class="mx-auto max-w-3xl space-y-5">
+      <p
+        class:list={[
+          "inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium",
+          isRecruitmentOpen
+            ? "bg-primary/10 text-primary"
+            : "bg-bg-accent opacity-80",
+        ]}
+      >
+        <CheckCircle2 class="h-4 w-4" aria-hidden="true" />
+        {isRecruitmentOpen ? "Opptaket er åpent" : "Opptaket er ikke åpent nå"}
+      </p>
+
+      <h1 class="text-balance text-4xl font-semibold md:text-6xl">
+        Bli med på å lage Abakusrevyen
+      </h1>
+
+      <p class="mx-auto max-w-2xl text-pretty text-base opacity-80 md:text-lg">
+        Revyen er laget av studenter, for studenter. Vi trenger folk som vil
+        skrive, spille, danse, bygge, arrangere, designe, fikse teknikk og lage
+        show sammen gjennom året.
+      </p>
+
+      <div class="flex justify-center">
+        <LinkButton
+          href="https://opptak.abakus.no/"
+          class="!text-white !no-underline"
+          disabled={!isRecruitmentOpen}
+        >
+          Søk på revyen her
+        </LinkButton>
+      </div>
+    </div>
 
     <PreviousRevuesBanner />
+  </section>
 
-    <p>
-      Revyen er laget av studenter, for studenter. Hvert år har vi et opptak
-      hvor enhver student kan søke for å bli med å lage et utrolig show!
-    </p>
+  <section
+    class="container mx-auto grid gap-4 px-4 py-4 md:grid-cols-3 md:py-8"
+  >
+    {
+      steps.map(({ title, text, Icon }) => (
+        <div class="rounded-lg bg-bg-accent p-5 text-left md:p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-background text-primary">
+            <Icon class="h-5 w-5" aria-hidden="true" />
+          </div>
+          <h2 class="text-lg font-semibold">{title}</h2>
+          <p class="mt-2 text-sm leading-relaxed opacity-75">{text}</p>
+        </div>
+      ))
+    }
+  </section>
 
-    <p>
-      Når du søker om å bli med i revyen, kan du velge én eller flere
-      undergrupper hvor du blir invitert til et hyggelig og uformelt intervju.
-      Du kan bli <Link href="/grupper/skuespill">skuespiller</Link>,
-      <Link href="/grupper/dans">danser</Link>, <Link href="/grupper/kor"
-        >korist</Link
-      > eller <Link href="/grupper/band">bandmedlem</Link> hvis du trives i scenelyset.
-      Alternativt kan du jobbe bak scenen som <Link href="/grupper/scene"
-        >scenearbeider</Link
-      > eller <Link href="/grupper/teknikk">teknisk ansvarlig</Link>. Om ingen
-      av disse rollene frister, kan du bidra med viktig arbeid i forkant av
-      revyen gjennom <Link href="/grupper/pr">PR</Link>, <Link
-        href="/grupper/sosial">sosial-gruppen</Link
-      >, <Link href="/grupper/kostyme">kostyme</Link> eller <Link
-        href="/grupper/manus">manus</Link
-      >.
-    </p>
+  <section class="container mx-auto space-y-6 px-4 py-6 md:py-10">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-2xl font-semibold">Finn gruppa di</h2>
+      <p class="mt-2 opacity-75">
+        Alle gruppene gjør noe forskjellig, men ingen forventer at du kan alt
+        fra før.
+      </p>
+    </div>
 
-    <h2 class="mt-3">Du kan se alle mulighetene dine her</h2>
-  </ProseArea>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        groups.map(({ slug, data: { name, brief, logo } }) => (
+          <a
+            href={`/grupper/${slug}`}
+            class="hover:border-primary/60 group flex min-h-36 flex-col justify-between gap-5 rounded-lg border border-gray-200 bg-background p-5 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+          >
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <ProfilePicture class="h-10" src={logo} alt={`${name} logo`} />
+                <h3 class="text-lg font-semibold">{name}</h3>
+              </div>
+              <ArrowRight
+                class="mt-1 h-5 w-5 text-primary opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"
+                aria-hidden="true"
+              />
+            </div>
+            <p class="text-sm leading-relaxed opacity-75">{brief}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
-  <div class="mx-auto my-6 max-w-screen-md space-y-6">
-    <FoldableFade>
-      <SubgroupGrid />
-    </FoldableFade>
-  </div>
-
-  <ProseArea class="container mx-auto text-center">
-    <LinkButton
-      href="https://opptak.abakus.no/"
-      class="!text-white !no-underline"
-      disabled={getCurrentPeriod() !== "recruitment"}
-    >
-      Søk på revyen her
-    </LinkButton>
-
-    <p>
+  <section class="container mx-auto px-4 py-6 text-center md:py-10">
+    <p class="mx-auto max-w-prose opacity-80">
       Å være med i revyen er et <i>frivillig verv</i>. Det er ikke betalt, men
-      et veldig gøy og sosialt prosjekt over to semestere.
+      et sosialt prosjekt over to semestere hvor du får lage noe stort sammen
+      med andre.
     </p>
-  </ProseArea>
+  </section>
 </PageLayout>

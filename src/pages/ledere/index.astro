@@ -12,6 +12,45 @@ import type { ValidContentEntrySlug } from "astro:content";
 const leaders = await getCollection("ledere");
 
 const supremeLeaderOrder = ["Nestleder", "Revysjef", "Økonomiansvarlig"];
+const roleOrder = [
+  "Regissør",
+  "Assisterende regissør",
+  "Musikalsk regissør",
+  "Bandsjef",
+];
+const groupOrder = [
+  "skuespill",
+  "arring",
+  "band",
+  "manus",
+  "dans",
+  "scene",
+  "teknikk",
+  "kostyme",
+  "pr",
+  "sosial",
+];
+
+function sortableIndex(value: string | undefined, order: string[]) {
+  const index = value ? order.indexOf(value) : -1;
+  return index === -1 ? order.length : index;
+}
+
+function leaderRoleIndex(leader: (typeof leaders)[number]) {
+  return Math.min(
+    ...leader.data.leaderOf
+      .filter(({ group }) => group.slug !== "revystyret")
+      .map(({ title }) => sortableIndex(title, roleOrder)),
+  );
+}
+
+function leaderGroupIndex(leader: (typeof leaders)[number]) {
+  return Math.min(
+    ...leader.data.leaderOf
+      .filter(({ group }) => group.slug !== "revystyret")
+      .map(({ group }) => sortableIndex(group.slug, groupOrder)),
+  );
+}
 
 const supremeLeaders = leaders
   // Only get the supreme leaders
@@ -33,12 +72,9 @@ const supremeLeaders = leaders
     },
   }))
   .toSorted((a, b) => {
-    const aIndex = supremeLeaderOrder.indexOf(a.data.title ?? "");
-    const bIndex = supremeLeaderOrder.indexOf(b.data.title ?? "");
-
     return (
-      (aIndex === -1 ? supremeLeaderOrder.length : aIndex) -
-      (bIndex === -1 ? supremeLeaderOrder.length : bIndex)
+      sortableIndex(a.data.title, supremeLeaderOrder) -
+      sortableIndex(b.data.title, supremeLeaderOrder)
     );
   });
 
@@ -66,15 +102,27 @@ const plebians = leaders
     ...leader,
     data: {
       ...leader.data,
-      title: leader.data.leaderOf.reduce((last, curr) =>
-        curr.title === "Leder" ? curr : last,
-      ).title,
+      title: leader.data.leaderOf.toSorted((a, b) => {
+        const roleDiff =
+          sortableIndex(a.title, roleOrder) - sortableIndex(b.title, roleOrder);
+        if (roleDiff !== 0) return roleDiff;
+
+        return (
+          sortableIndex(a.group.slug, groupOrder) -
+          sortableIndex(b.group.slug, groupOrder)
+        );
+      })[0].title,
     },
   }))
-  .toSorted(
-    (a, b) =>
-      (b.data.title === "Leder" ? 1 : 0) - (a.data.title === "Leder" ? 1 : 0),
-  );
+  .toSorted((a, b) => {
+    const roleDiff = leaderRoleIndex(a) - leaderRoleIndex(b);
+    if (roleDiff !== 0) return roleDiff;
+
+    const groupDiff = leaderGroupIndex(a) - leaderGroupIndex(b);
+    if (groupDiff !== 0) return groupDiff;
+
+    return a.data.name.localeCompare(b.data.name, "nb");
+  });
 
 // Get the groups of the leaders
 const groups = await getCollection("grupper");
@@ -141,7 +189,11 @@ function getGroup(groupRef: {
             href={`/ledere/${slug}`}
             class="transition-transform hover:scale-105"
           >
-            <PersonCard name={name} image={image}>
+            <PersonCard
+              name={name}
+              image={image}
+              holo={leaderOf.some(({ group }) => group.slug === "teknikk")}
+            >
               {title} av{" "}
               <span class="font-medium text-primary">
                 {leaderOf

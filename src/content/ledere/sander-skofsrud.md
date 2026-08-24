@@ -4,7 +4,6 @@ email: sander.skofsrud@abakus.no
 gender: male
 leaderOf:
   - group: sosial
-    title: Sosialsjef
 ---
 
 # Sander Rom Skofsrud

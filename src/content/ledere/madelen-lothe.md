@@ -4,7 +4,6 @@ email: madelen.lothe@abakus.no
 gender: female
 leaderOf:
   - group: kostyme
-    title: Kostyme
 ---
 
 # Madelen Hellervik Lothe
