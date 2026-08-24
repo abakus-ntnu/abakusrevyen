@@ -6,6 +6,7 @@ interface Props {
   image?: string | ImageMetadata;
   holo?: boolean;
   shine?: boolean;
+  glow?: boolean;
   naturalImage?: boolean;
 }
 
@@ -14,6 +15,7 @@ const {
   image,
   holo = false,
   shine = false,
+  glow = false,
   naturalImage = false,
 } = Astro.props;
 const shouldShine = holo || shine;
@@ -30,20 +32,21 @@ const imageSource = image
     !imageSource && "bg-bg-accent",
     shouldShine && "shine-card",
     holo && "holo-card",
+    glow && "glow-card",
     naturalImage && "natural-image",
   ]}
   style={imageSource ? `--person-image: url(${imageSource})` : undefined}
 >
   {imageSource && <span class="person-image" aria-hidden="true" />}
   {holo && <span class="holo-rainbow" aria-hidden="true" />}
+  {
+    shouldShine && (
+      <span class="shine-layer" aria-hidden="true">
+        <span class="shine-line" />
+      </span>
+    )
+  }
   <div class="card-media">
-    {
-      shouldShine && (
-        <span class="shine-layer" aria-hidden="true">
-          <span class="shine-line" />
-        </span>
-      )
-    }
     {
       !imageSource && (
         <div class="relative z-10 flex h-full items-center justify-center text-primary opacity-70">
@@ -79,7 +82,6 @@ const imageSource = image
     background-image: var(--person-image);
     background-position: center top;
     background-size: cover;
-    filter: saturate(0.82) contrast(0.96) brightness(0.95);
     transition: filter 220ms ease;
   }
 
@@ -87,11 +89,8 @@ const imageSource = image
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.08), rgb(0 0 0 / 0.2));
   }
 
-  .person-card:hover .person-image,
-  .person-card:focus-within .person-image,
   .natural-image .person-image {
     filter: none;
   }
@@ -139,7 +138,7 @@ const imageSource = image
   }
 
   .shine-card .shine-layer {
-    z-index: 1;
+    z-index: 15;
   }
 
   .shine-card .shine-line {
@@ -163,29 +162,52 @@ const imageSource = image
       transform 520ms ease-out;
   }
 
-  .shine-card:hover,
-  .shine-card:focus-within {
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.18),
-      0 0 24px rgb(255 255 255 / 0.12);
+  @media (hover: hover) and (pointer: fine) and (min-width: 601px) {
+    .person-image {
+      filter: saturate(0.82) contrast(0.96) brightness(0.95);
+    }
+
+    .person-image::after {
+      background: linear-gradient(180deg, rgb(0 0 0 / 0.08), rgb(0 0 0 / 0.2));
+    }
+
+    .person-card:hover .person-image,
+    .person-card:focus-within .person-image {
+      filter: none;
+    }
+
+    .shine-card:hover,
+    .shine-card:focus-within {
+      box-shadow:
+        0 0 0 1px rgb(255 255 255 / 0.18),
+        0 0 24px rgb(255 255 255 / 0.12);
+    }
+
+    .holo-card:hover,
+    .holo-card:focus-within {
+      box-shadow:
+        0 0 0 1px rgb(255 255 255 / 0.22),
+        0 0 26px rgb(65 201 255 / 0.26),
+        0 0 44px rgb(244 114 182 / 0.16);
+    }
+
+    .shine-card:hover .shine-line,
+    .shine-card:focus-within .shine-line {
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(14deg) translateX(80%);
+    }
+
+    .holo-card:hover .holo-rainbow,
+    .holo-card:focus-within .holo-rainbow {
+      opacity: 1;
+    }
   }
 
-  .holo-card:hover,
-  .holo-card:focus-within {
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.22),
-      0 0 26px rgb(65 201 255 / 0.26),
-      0 0 44px rgb(244 114 182 / 0.16);
-  }
-
-  .shine-card:hover .shine-line,
-  .shine-card:focus-within .shine-line {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(14deg) translateX(80%);
-  }
-
-  .holo-card:hover .holo-rainbow,
-  .holo-card:focus-within .holo-rainbow {
-    opacity: 1;
+  @media (hover: none), (pointer: coarse), (max-width: 600px) {
+    .glow-card {
+      box-shadow:
+        0 0 0 1px rgb(255 255 255 / 0.16),
+        0 0 24px rgb(255 255 255 / 0.12);
+    }
   }
 </style>
