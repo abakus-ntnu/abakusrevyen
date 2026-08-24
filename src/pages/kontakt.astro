@@ -1,134 +1,216 @@
 ---
 import Title from "@/components/Common/Title.astro";
 import ProfilePicture from "@/components/Images/ProfilePicture.astro";
-import Link from "@/components/LinkButton/Link.astro";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getCollection } from "astro:content";
+import { Mail, ShieldCheck, Users } from "lucide-astro";
 
-const groups = await getCollection("grupper");
-const leaders = await getCollection("ledere");
+const groups = (await getCollection("grupper")).toSorted((a, b) =>
+  a.data.name.localeCompare(b.data.name, "nb"),
+);
+const leaders = (await getCollection("ledere"))
+  .filter((leader) => !leader.data.hidden)
+  .toSorted((a, b) => a.data.name.localeCompare(b.data.name, "nb"));
+
+const groupNameBySlug = new Map(
+  groups.map((group) => [group.slug, group.data.name]),
+);
+
+function getLeaderRoleText(leader: (typeof leaders)[number]["data"]) {
+  const roles = leader.leaderOf.map(({ group, title }) => {
+    const groupName = groupNameBySlug.get(group.slug) ?? group.slug;
+
+    if (group.slug === "revystyret") {
+      return title;
+    }
+
+    return title === "Leder" ? `Leder av ${groupName}` : title;
+  });
+
+  return [...new Set(roles)].join(", ");
+}
 ---
 
 <PageLayout title="Kontakt">
-  <div
-    class="container mx-auto flex max-w-fit flex-col items-center gap-6 px-3"
-  >
-    <Title>Kontakt <span class="text-primary">oss</span></Title>
-
-    <p class="max-w-prose leading-loose">
-      En melding til styret til revyen?
-      <Link href="mailto:revystyret@abakus.no">revystyret@abakus.no</Link>
-
-      Eller kanskje en melding kun til sjefen av revyen?
-      <Link href="mailto:revysjef@abakus.no">revysjef@abakus.no</Link>
-    </p>
-
-    <div
-      class="w-full max-w-prose rounded-lg border border-gray-200 bg-background p-4 text-sm leading-relaxed dark:border-gray-800"
-    >
-      <p class="font-medium">Abakusrevyen</p>
-      <p class="opacity-75">Org.nr. 936 891 942</p>
-      <p class="opacity-75">c/o Abakus, Sem Sælands vei 7-9, 7491 Trondheim</p>
-      <p class="mt-2">
-        Les mer om hvordan vi behandler personopplysninger på
-        <Link href="/personvern">personvernsiden</Link>.
+  <div class="container mx-auto max-w-6xl space-y-10 px-4 py-6 md:py-10">
+    <div class="mx-auto max-w-3xl text-center">
+      <Title>Kontakt <span class="text-primary">oss</span></Title>
+      <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed opacity-80">
+        Har du spørsmål om revyen, opptak, samarbeid eller noe annet? Send oss
+        en melding, så finner vi riktig person.
       </p>
     </div>
 
-    <h2>Grupper</h2>
+    <section class="grid gap-4 md:grid-cols-3">
+      <a
+        href="mailto:revystyret@abakus.no"
+        class="hover:border-primary/60 group rounded-lg border border-gray-200 bg-background p-5 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+      >
+        <Mail class="h-6 w-6 text-primary" aria-hidden="true" />
+        <h2 class="mt-4 text-lg font-semibold">Revystyret</h2>
+        <p class="mt-2 text-sm opacity-75">
+          Generelle spørsmål og henvendelser til styret.
+        </p>
+        <p class="mt-4 break-all text-sm font-medium text-primary">
+          revystyret@abakus.no
+        </p>
+      </a>
 
-    <table>
-      <tr>
-        <th>Navn</th>
-        <th>Email</th>
-      </tr>
-      {
-        groups.map(({ slug, data: group }) => (
-          <tr>
-            <td>
-              <a href={`/grupper/${slug}`}>
-                <ProfilePicture
-                  class="max-h-8"
-                  src={group.logo}
-                  alt={`${group.name} logo`}
-                />{" "}
-                <span>{group.name}</span>
-              </a>
-            </td>
-            <td>
-              <div>
-                <Link href={`mailto:${group.email}`}>{group.email}</Link>
-              </div>
-            </td>
-          </tr>
-        ))
-      }
-    </table>
+      <a
+        href="mailto:revysjef@abakus.no"
+        class="hover:border-primary/60 group rounded-lg border border-gray-200 bg-background p-5 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+      >
+        <Users class="h-6 w-6 text-primary" aria-hidden="true" />
+        <h2 class="mt-4 text-lg font-semibold">Revysjef</h2>
+        <p class="mt-2 text-sm opacity-75">
+          Direkte kontakt med sjefen for Abakusrevyen.
+        </p>
+        <p class="mt-4 break-all text-sm font-medium text-primary">
+          revysjef@abakus.no
+        </p>
+      </a>
 
-    <h2>Ledere</h2>
+      <a
+        href="mailto:revy-alle@abakus.no"
+        class="hover:border-primary/60 group rounded-lg border border-gray-200 bg-background p-5 no-underline transition hover:-translate-y-0.5 hover:bg-bg-accent hover:shadow-md dark:border-gray-800"
+      >
+        <Mail class="h-6 w-6 text-primary" aria-hidden="true" />
+        <h2 class="mt-4 text-lg font-semibold">Alle i revyen</h2>
+        <p class="mt-2 text-sm opacity-75">
+          Melding som skal nå hele Abakusrevyen.
+        </p>
+        <p class="mt-4 break-all text-sm font-medium text-primary">
+          revy-alle@abakus.no
+        </p>
+      </a>
+    </section>
 
-    <table>
-      <tr>
-        <th>Navn</th>
-        <th>Email</th>
-      </tr>
-      {
-        leaders
-          .filter((leader) => !leader.data.hidden)
-          .map(({ slug, data: leader }) => (
-            <tr>
-              <td>
-                <a href={`/ledere/${slug}`}>
-                  <ProfilePicture
-                    class="h-max max-h-8"
-                    src={leader.image}
-                    alt={`${leader.name}`}
-                  />{" "}
-                  <span>{leader.name}</span>
-                </a>
-              </td>
-              <td>
-                <div>
-                  {leader.email ? (
-                    <Link href={`mailto:${leader.email}`}>{leader.email}</Link>
-                  ) : (
-                    "Ingen emailadresse"
-                  )}
-                </div>
-              </td>
-            </tr>
-          ))
-      }
-    </table>
+    <section
+      class="rounded-lg border border-gray-200 bg-background p-5 text-sm leading-relaxed dark:border-gray-800"
+    >
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+        <div
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-accent text-primary"
+        >
+          <ShieldCheck class="h-5 w-5" aria-hidden="true" />
+        </div>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold">Abakusrevyen</h2>
+          <p class="opacity-75">Org.nr. 936 891 942</p>
+          <p class="opacity-75">
+            c/o Abakus, Sem Sælands vei 7-9, 7491 Trondheim
+          </p>
+          <p class="pt-1 opacity-80">
+            Les mer om hvordan vi behandler personopplysninger på <a
+              href="/personvern"
+              class="text-primary underline transition hover:text-secondary"
+              >personvernsiden</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <p class="max-w-prose leading-loose">
-      Og hvis du har en melding til absolutt alle i revyen?
-      <Link href="mailto:revy-alle@abakus.no">revy-alle@abakus.no</Link>
-    </p>
+    <div class="grid gap-8 lg:grid-cols-2">
+      <section class="space-y-4">
+        <div>
+          <h2 class="text-2xl font-semibold">Grupper</h2>
+          <p class="mt-1 text-sm opacity-75">
+            Kontakt gruppen direkte hvis spørsmålet gjelder en spesifikk del av
+            revyen.
+          </p>
+        </div>
+
+        <div
+          class="overflow-hidden rounded-lg border border-gray-200 bg-background dark:border-gray-800"
+        >
+          <table class="w-full text-left text-sm">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+              {
+                groups.map(({ slug, data: group }) => (
+                  <tr class="transition hover:bg-bg-accent">
+                    <td class="w-1/2 p-3">
+                      <a
+                        href={`/grupper/${slug}`}
+                        class="flex items-center gap-3 no-underline transition hover:text-primary"
+                      >
+                        <ProfilePicture
+                          class="h-8 shrink-0"
+                          src={group.logo}
+                          alt={`${group.name} logo`}
+                        />
+                        <span class="font-medium">{group.name}</span>
+                      </a>
+                    </td>
+                    <td class="p-3">
+                      <a
+                        href={`mailto:${group.email}`}
+                        class="block break-all text-primary underline"
+                      >
+                        {group.email}
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <div>
+          <h2 class="text-2xl font-semibold">Ledere</h2>
+          <p class="mt-1 text-sm opacity-75">
+            Finn personen som leder gruppen eller området du vil kontakte.
+          </p>
+        </div>
+
+        <div
+          class="overflow-hidden rounded-lg border border-gray-200 bg-background dark:border-gray-800"
+        >
+          <table class="w-full text-left text-sm">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+              {
+                leaders.map(({ slug, data: leader }) => (
+                  <tr class="transition hover:bg-bg-accent">
+                    <td class="w-1/2 p-3">
+                      <a
+                        href={`/ledere/${slug}`}
+                        class="flex items-center gap-3 no-underline transition hover:text-primary"
+                      >
+                        <ProfilePicture
+                          class="h-8 shrink-0"
+                          src={leader.image}
+                          alt={leader.name}
+                        />
+                        <span class="min-w-0">
+                          <span class="block font-medium">{leader.name}</span>
+                          <span class="block text-xs opacity-65">
+                            {getLeaderRoleText(leader)}
+                          </span>
+                        </span>
+                      </a>
+                    </td>
+                    <td class="p-3">
+                      {leader.email ? (
+                        <a
+                          href={`mailto:${leader.email}`}
+                          class="block break-all text-primary underline"
+                        >
+                          {leader.email}
+                        </a>
+                      ) : (
+                        <span class="opacity-60">Ingen emailadresse</span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
   </div>
 </PageLayout>
-
-<style>
-  h2 {
-    @apply text-center text-xl font-medium;
-  }
-
-  table {
-    @apply w-full table-fixed border-collapse border-2 shadow md:table-auto dark:border-bg-accent;
-  }
-
-  th {
-    @apply bg-bg-accent;
-  }
-
-  th,
-  td {
-    @apply border p-1.5 dark:border-bg-accent;
-    white-space: nowrap;
-  }
-
-  td > div,
-  a {
-    @apply flex items-center gap-1.5 overflow-x-scroll;
-  }
-</style>
