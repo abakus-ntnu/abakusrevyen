@@ -10,7 +10,9 @@ export function getCurrentPeriod(
 
   let now = new Date();
 
-  for (let period of PERIODS.toReversed()) {
+  for (let period of PERIODS.toSorted(
+    (a, b) => b.from.getTime() - a.from.getTime(),
+  )) {
     if (period.from <= now) {
       return period.period;
     }

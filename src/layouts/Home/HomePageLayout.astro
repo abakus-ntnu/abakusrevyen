@@ -1,8 +1,6 @@
 ---
 import PageLayout from "../PageLayout.astro";
 
-import LinkCard from "@/components/Card/LinkCard.astro";
-import CardContent from "@/components/Card/CardContent.astro";
 import FoldableFade from "@/components/FoldableFade/FoldableFade.astro";
 import LinkButton from "@/components/LinkButton/LinkButton.astro";
 import SubgroupGrid from "@/components/Subgroups/SubgroupGrid.astro";
@@ -17,6 +15,7 @@ import {
   getRevuePlaylistLink,
   type RevueLink,
 } from "@/lib/constants";
+import { ArrowUpRight } from "lucide-astro";
 
 const pickRandom = <T,>(items: T[], count: number): T[] =>
   [...items].sort(() => Math.random() - 0.5).slice(0, count);
@@ -192,22 +191,38 @@ const otherLinksJson = JSON.stringify(
       </LinkButton>
     </slot>
     <slot name="contact">
-      <h2 class="text-center text-xl font-medium">Kontakt oss</h2>
-      <div
-        class="mx-auto grid max-w-screen-md grid-cols-2 gap-6 px-6 sm:grid-cols-4"
-      >
-        {
-          SOCIALS.map(({ name, href, external, Icon }) => (
-            <LinkCard href={href} target={external ? "_blank" : "_self"}>
-              <CardContent>
-                <div class="flex flex-col items-center gap-3">
-                  <Icon />
-                  {name}
-                </div>
-              </CardContent>
-            </LinkCard>
-          ))
-        }
+      <div class="mx-auto max-w-screen-md space-y-4 px-3">
+        <div class="text-center">
+          <h2 class="text-2xl font-semibold">Kontakt oss</h2>
+          <p class="mt-2 text-sm opacity-70">
+            Følg revyen, send oss en melding, eller finn opptaket når det er
+            åpent.
+          </p>
+        </div>
+
+        <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            SOCIALS.map(({ name, href, external, Icon }) => (
+              <a
+                href={href}
+                target={external ? "_blank" : "_self"}
+                rel={external ? "noopener noreferrer" : undefined}
+                class="hover:bg-primary/10 group flex items-center justify-between gap-3 rounded-lg bg-bg-accent px-3 py-3 no-underline transition hover:-translate-y-0.5 hover:text-primary"
+              >
+                <span class="flex items-center gap-3">
+                  <span class="flex h-9 w-9 items-center justify-center rounded-md bg-background text-primary transition group-hover:bg-primary group-hover:text-white">
+                    <Icon class="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span class="font-medium">{name}</span>
+                </span>
+                <ArrowUpRight
+                  class="h-4 w-4 opacity-40 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
+              </a>
+            ))
+          }
+        </div>
       </div>
     </slot>
     <slot name="recruitment">
