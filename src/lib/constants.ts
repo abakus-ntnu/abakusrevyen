@@ -20,7 +20,7 @@ import { SHOWS, SHOW_REVEAL } from "./shows";
 import { Scroll } from "lucide-react";
 
 // Perioder
-export const RECRUITMENT_START = new Date("2026-08-25T14:00:00+0200"); // Start av opptak
+export const RECRUITMENT_START = new Date("2026-08-25T12:00:00+0200"); // Start av opptak
 export const RECRUITMENT_END = new Date("2026-09-11T00:00:00+0200"); // Første øyeblikk etter opptak
 export const COUNTDOWN_START = SHOW_REVEAL;
 
