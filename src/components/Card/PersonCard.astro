@@ -6,6 +6,8 @@ interface Props {
   image?: string | ImageMetadata;
   holo?: boolean;
   shine?: boolean;
+  shineTone?: "default" | "red";
+  delayHolo?: boolean;
   glow?: boolean;
   naturalImage?: boolean;
 }
@@ -15,6 +17,8 @@ const {
   image,
   holo = false,
   shine = false,
+  shineTone = "default",
+  delayHolo = false,
   glow = false,
   naturalImage = false,
 } = Astro.props;
@@ -31,7 +35,9 @@ const imageSource = image
     "person-card flex aspect-[5/6] w-full flex-col rounded-lg",
     !imageSource && "bg-bg-accent",
     shouldShine && "shine-card",
+    shineTone === "red" && "red-shine",
     holo && "holo-card",
+    delayHolo && "delay-holo",
     glow && "glow-card",
     naturalImage && "natural-image",
   ]}
@@ -134,7 +140,11 @@ const imageSource = image
       rgb(244 114 182 / 0.22)
     );
     opacity: 0;
-    transition: opacity 220ms ease;
+    transition: opacity 800ms ease;
+  }
+
+  .holo-card {
+    transition: box-shadow 800ms ease;
   }
 
   .shine-card .shine-layer {
@@ -160,6 +170,20 @@ const imageSource = image
     transition:
       opacity 120ms ease,
       transform 520ms ease-out;
+  }
+
+  .delay-holo .holo-rainbow {
+    transition-delay: 0s;
+  }
+
+  .red-shine .shine-line {
+    background: linear-gradient(
+      90deg,
+      transparent calc(50% - 10px),
+      rgb(248 113 113 / 0.95) 50%,
+      transparent calc(50% + 10px)
+    );
+    filter: blur(14px);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -191,6 +215,23 @@ const imageSource = image
         0 0 44px rgb(244 114 182 / 0.16);
     }
 
+    .delay-holo {
+      transition-delay: 0s;
+    }
+
+    .delay-holo:hover,
+    .delay-holo:focus-within {
+      transition-delay: 1s;
+    }
+
+    .red-shine:hover,
+    .red-shine:focus-within {
+      box-shadow:
+        inset 0 0 28px rgb(220 38 38 / 0.18),
+        0 0 0 1px rgb(248 113 113 / 0.32),
+        0 0 24px rgb(220 38 38 / 0.22);
+    }
+
     .shine-card:hover .shine-line,
     .shine-card:focus-within .shine-line {
       opacity: 1;
@@ -200,6 +241,11 @@ const imageSource = image
     .holo-card:hover .holo-rainbow,
     .holo-card:focus-within .holo-rainbow {
       opacity: 1;
+    }
+
+    .delay-holo:hover .holo-rainbow,
+    .delay-holo:focus-within .holo-rainbow {
+      transition-delay: 1s;
     }
   }
 

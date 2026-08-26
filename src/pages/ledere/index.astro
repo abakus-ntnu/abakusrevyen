@@ -163,7 +163,14 @@ function getGroup(groupRef: {
                 "order-3 max-w-56 sm:order-3 sm:max-w-72",
             ]}
           >
-            <PersonCard name={name} image={image} naturalImage shine glow>
+            <PersonCard
+              name={name}
+              image={image}
+              naturalImage
+              shine
+              shineTone="red"
+              glow
+            >
               <span class="font-medium text-primary">{title}</span>
             </PersonCard>
           </a>
@@ -187,7 +194,9 @@ function getGroup(groupRef: {
             <PersonCard
               name={name}
               image={image}
+              shine
               holo={leaderOf.some(({ group }) => group.slug === "teknikk")}
+              delayHolo={leaderOf.some(({ group }) => group.slug === "teknikk")}
               glow={slug === "william-saether"}
             >
               {title} av{" "}
