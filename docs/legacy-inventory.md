@@ -11,16 +11,17 @@ trenger dem senere.
 
 Origin ble hentet før branchen ble laget. Lokal `main` var allerede lik `origin/main`,
 og arbeidstreet var rent uten usporede kildefiler. Det fantes ingen lokal eller ekstern
-`v2`-branch fra før. `git diff origin/main origin/prod` ga ingen forskjell i filinnhold.
+`v2`-gren fra før. `git diff origin/main origin/prod` ga ingen forskjell i filinnhold.
 `prod` har 18 ekstra commits – 17 merges og én retting av bilderetning – men `main` er
 en forelder av `prod`, og de to Git-trærne er like. Ignorerte bygg- og dependency-cacher
 ble flyttet til en lokal, midlertidig backup og ble ikke commitet.
 
 Påstanden i den gamle README-en om produksjon stemmer med
-`.github/workflows/deploy.yml` ved begge referansene: pushes til `prod` bygger Astro
-og deployer til GitHub Pages-miljøet `github-pages`. Workflowen kan også startes med
-`workflow_dispatch` uten branch-sperre. Eksterne GitHub Pages-innstillinger, siste
-deploy og DNS ble verken undersøkt eller endret; dette bekrefter bare oppsettet i repoet.
+`.github/workflows/deploy.yml` ved begge referansene: endringer som sendes til `prod`,
+bygger Astro og publiserer til GitHub Pages-miljøet `github-pages`. Workflowen kan
+også startes med `workflow_dispatch` uten begrensning til en bestemt gren. Eksterne
+GitHub Pages-innstillinger, siste publisering og DNS ble verken undersøkt eller endret;
+dette bekrefter bare oppsettet i repoet.
 
 Alle stiene under viser til **begge commitene over**, ikke det nye arbeidstreet.
 Hent bare tilbake offentlig innhold som noen har sett gjennom. Historiske easter eggs
@@ -54,7 +55,7 @@ git archive 7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5 src/images public/fonts | t
 
 ## Gamle URL-er
 
-`v2` har foreløpig verken redirects eller de gamle innholdssidene. Før lansering
+`v2` har foreløpig verken videresendinger eller de gamle innholdssidene. Før lansering
 bestemmer vi om hver URL skal beholdes, videresendes eller få hvile. De dynamiske
 URL-ene kommer fra Markdown-filnavnene i tabellen.
 

@@ -1,8 +1,8 @@
 # Instruksjoner for arbeid i repoet
 
 - Les README, CONTRIBUTING og relevante dokumenter før du endrer arkitekturen.
-- Jobb på `v2` eller en feature-branch fra `v2`. Ta vare på lokale endringer og `LICENSE`.
-- Ikke endre `main`/`prod`, push, merge, deploy, DNS eller eksterne innstillinger uten en tydelig bestilling.
+- Jobb på `v2` eller en arbeidsgren fra `v2`. Ta vare på lokale endringer og `LICENSE`.
+- Ikke endre `main`/`prod`, send eller slå sammen kode, publiser, endre DNS eller rør eksterne innstillinger uten en tydelig bestilling.
 - Bruk Node 24.21.0 og pnpm 12.9.1. Ta med `pnpm-lock.yaml` når avhengigheter endres.
 - Behold appen klientrendret med Vite, React Router, Tailwind og shadcn/ui.
 - Hold appskallet lite til innhold, navigasjon og design er avklart.

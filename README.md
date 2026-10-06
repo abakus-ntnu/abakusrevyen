@@ -45,8 +45,8 @@ pnpm check
 ```
 
 `pnpm-lock.yaml` sørger for at alle får de samme avhengighetene. Det finnes ingen
-kommando for produksjonsdeploy her ennå. CI sjekker bare pushes til `v2` og pull
-requests som skal inn i `v2`.
+kommando for publisering til produksjon her ennå. CI sjekker bare endringer som
+sendes til `v2`, og pull requests som skal inn i `v2`.
 
 ## Videre lesing
 

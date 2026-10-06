@@ -10,7 +10,7 @@ README viser hvordan de låste verktøyversjonene installeres. `pnpm dev` starte
 Vite, og `pnpm preview` viser innholdet i `dist` etter `pnpm build`. `pnpm check`
 kjører TypeScript, Oxlint og produksjonsbygg i én omgang.
 
-TypeScript bruker strict mode. pnpm 12-innstillingene ligger i
+TypeScript bruker strenge sjekkeregler. pnpm 12-innstillingene ligger i
 `pnpm-workspace.yaml`, ikke `.npmrc`. Direkte avhengigheter har eksakte versjoner,
 mens lockfilen låser resten av treet.
 
@@ -35,11 +35,11 @@ i både Vite og TypeScript. «Fant ikke siden» er en klientrute; en statisk SPA
 vil derfor returnere HTML med status 200. Vi trenger verken SSR eller Pages
 Functions for dette appskallet.
 
-`tsconfig.json` er en solution-fil som peker på konfigurasjonen for nettleseren og
+`tsconfig.json` er den overordnede filen som peker på konfigurasjonen for nettleseren og
 Node. Innstillinger i roten arves ikke automatisk av prosjektene. Derfor står
 `@/*` også i `tsconfig.app.json`, der appfilene faktisk sjekkes. Kopien i roten
 gjør at shadcn/ui finner aliaset. Vi lar `baseUrl` være borte: TypeScript løser
-`paths` relativt til config-filen, og har avviklet `baseUrl` for denne bruken.
+`paths` relativt til konfigurasjonsfilen, og har avviklet `baseUrl` for denne bruken.
 
 Begge prosjektene sjekker blant annet valgfrie felter, oppslag i lister og objekter,
 returverdier og sideeffekt-importer. Node-konfigurasjonen kobler eksplisitt
@@ -62,7 +62,7 @@ Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate.
 Auth tar seg av identitet, Postgres av strukturerte data, Storage av filer som
 ikke er video, og Edge Functions av operasjoner som trenger servertilgang. Vi
 lager RLS, grants og Storage-policyer før data blir tilgjengelig fra nettleseren.
-Frontend bruker bare publishable key. En skjult URL eller en route guard i React
+Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React
 er aldri tilgangskontroll.
 
 ## Planlagt flyt for database og migrasjoner
@@ -82,7 +82,7 @@ pnpm exec supabase db reset
 
 `db reset` tømmer den **lokale** databasen og spiller migrasjonene på nytt. Lokale
 data forsvinner, så bruk bare syntetiske eller offentlige testdata. Commit gjennomgått
-`supabase/config.toml` og migrasjoner, men aldri lokal runtime-state, login tokens
+`supabase/config.toml` og migrasjoner, men aldri lokale midlertidige data, innloggingstokener
 eller private seed-data.
 
 Kobling mot et eksternt prosjekt og `db push` trenger en egen, avtalt flyt for
@@ -99,15 +99,15 @@ pnpm typecheck
 
 Et annet valg er å logge inn med CLI-en og bruke
 `--project-id <test-project-ref> --schema public` mot et valgt **testprosjekt**.
-Se gjennom og commit den genererte filen sammen med schemaendringen. Den tomme
+Se gjennom og legg til den genererte filen sammen med skjemaendringen. Den tomme
 starttypen beskriver ingen ekte database og skal ikke fylles med tabeller vi gjetter oss til.
 
 ## Video
 
 Cloudflare Stream skal lagre video. Senere kan en innlogget Edge Function lage
-kortlivede upload-URL-er, mens Cloudflare-tokenet bare finnes på serveren. Vi må
-fortsatt bestemme synlighet, signed URLs, størrelsesgrenser og hvem som får laste
-opp. Ingen videoer eller Edge Functions er lastet opp eller deployet.
+kortlivede opplastingsadresser, mens Cloudflare-tokenet bare finnes på serveren. Vi må
+fortsatt bestemme synlighet, signerte URL-er, størrelsesgrenser og hvem som får laste
+opp. Ingen videoer eller Edge Functions er lastet opp eller publisert.
 
 ## Dokumentasjon vi sjekket
 
@@ -152,9 +152,9 @@ Med de låste Node- og pnpm-versjonene har vi kontrollert dette:
 
 - Frossen installasjon, typekontroll, lint og produksjonsbygg
 - Oppstart av Vite uten `.env` eller aktive Supabase-nøkler
-- Forsiden, direkte `/ukjent/side`, refresh, lenken hjem og tilbake/fremover i Safari
-- Den samme fallback-ruten i production preview
-- At Supabase-klienten returnerer `null` uten credentials
+- Forsiden, direkte `/ukjent/side`, oppdatering, lenken hjem og tilbake/fremover i Safari
+- Den samme fallback-ruten i forhåndsvisningen av produksjonsbygget
+- At Supabase-klienten returnerer `null` uten tilgangsnøkler
 - `git diff --check`, uendret `LICENSE` og uendrede referanser til `main` og `prod`
 
 GitHub Actions, respons-headere i Cloudflare Pages og ekte backend-integrasjoner er
