@@ -30,10 +30,37 @@ shadcn/ui ble satt opp med CLI **4.21.1** og et nøytralt utgangspunkt. Tokens o
 farger er bare et praktisk startpunkt, ikke det ferdige designet. Koden til
 komponentene ligger i repoet, slik shadcn/ui er ment å brukes.
 
-`src/App.tsx` inneholder BrowserRouter, `/` og `*`. Aliaset `@/` peker på `src/`
-i både Vite og TypeScript. «Fant ikke siden» er en klientrute; en statisk SPA-host
-vil derfor returnere HTML med status 200. Vi trenger verken SSR eller Pages
-Functions for dette appskallet.
+`src/app/router.tsx` er den sentrale ruteren. Den bruker React Router Data Mode med
+`createBrowserRouter`, et felles layout og egne sider for `/`, ukjente adresser og
+uventede rutefeil. Aliaset `@/` peker på `src/` i både Vite og TypeScript. «Fant
+ikke siden» er en klientrute; en statisk SPA-host vil derfor returnere HTML med
+status 200. Vi trenger verken SSR eller Pages Functions for dette appskallet.
+
+## Hvor ting skal ligge
+
+Vi oppretter mapper når de får en tydelig jobb. Noen foreløpig tomme mapper har en
+`.gitkeep`, slik at strukturen blir med i Git fra starten.
+
+- `src/app` inneholder appens inngang og router.
+- `src/pages` inneholder komponentene som svarer til ruter. En side setter vanligvis
+  sammen mindre komponenter og funksjoner.
+- `src/components/ui` er for shadcn-komponenter og små UI-primitiver.
+- `src/components/layout` er for felles sidestruktur.
+- `src/features` er for avgrensede områder som innlogging, forestillinger eller
+  revyarkiv. Opprett undermapper først når området skal bygges.
+- `src/lib` er for klienter og tekniske hjelpefunksjoner. Supabase-klienten og de
+  genererte databasetypene ligger samlet i `src/lib/supabase`.
+- `src/hooks` er bare for hooks som brukes på tvers av flere områder.
+- `src/types` er bare for typer som faktisk er globale. Props og feature-typer bør
+  ligge nær koden som bruker dem.
+- `src/assets` er for filer som importeres og behandles av Vite. Filer som må ha en
+  fast offentlig URL, hører hjemme i `public`.
+- `src/styles` inneholder globale stiler. Komponentspesifikke stiler holdes sammen
+  med komponenten.
+
+Tester legges ved siden av koden de dekker, for eksempel `HomePage.test.tsx`.
+Vi legger ikke inn en global state-løsning eller et eget datahentingsbibliotek før
+behovet er tydelig.
 
 `tsconfig.json` er den overordnede filen som peker på konfigurasjonen for nettleseren og
 Node. Innstillinger i roten arves ikke automatisk av prosjektene. Derfor står
@@ -93,7 +120,7 @@ Når en modell finnes og migrasjonene er kjørt, genererer vi typer lokalt:
 ```sh
 pnpm exec supabase gen types typescript --local --schema public > /tmp/abakus-database.types.ts
 # Bytt først fil når kommandoen over har lyktes:
-cp /tmp/abakus-database.types.ts src/lib/database.types.ts
+cp /tmp/abakus-database.types.ts src/lib/supabase/database.types.ts
 pnpm typecheck
 ```
 
@@ -117,7 +144,7 @@ Kildene ble kontrollert 6. oktober 2026. De stabile versjonene ligger i
 - [Kom i gang med Vite](https://vite.dev/guide/)
 - [Støttede Node-versjoner](https://nodejs.org/en/about/previous-releases)
 - [Installer pnpm](https://pnpm.io/installation)
-- [React Router i declarative mode](https://reactrouter.com/start/declarative/installation)
+- [React Router i Data Mode](https://reactrouter.com/start/data/installation)
 - [Tailwind med Vite](https://tailwindcss.com/docs/installation/using-vite)
 - [shadcn/ui med Vite](https://ui.shadcn.com/docs/installation/vite)
 - [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started)
