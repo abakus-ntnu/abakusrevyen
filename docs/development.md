@@ -82,9 +82,9 @@ Kobling mot et eksternt prosjekt og `db push` trenger en egen, avtalt flyt for t
 Når en modell finnes og migrasjonene er kjørt, genererer vi typer lokalt:
 
 ```sh
-pnpm exec supabase gen types typescript --local --schema public > /tmp/abakus-database.types.ts
+pnpm exec supabase gen types typescript --local --schema public > /tmp/abakusrevyen-database.types.ts
 # Bytt først fil når kommandoen over har lyktes:
-cp /tmp/abakus-database.types.ts src/lib/supabase/database.types.ts
+cp /tmp/abakusrevyen-database.types.ts src/lib/supabase/database.types.ts
 pnpm typecheck
 ```
 

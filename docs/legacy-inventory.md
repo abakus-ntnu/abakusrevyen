@@ -17,8 +17,8 @@ Alle stiene under viser til **begge commitene over**, ikke det nye arbeidstreet.
 # Se på en tekstfil uten å hente tilbake gammel appkode:
 git show 631e7660ed1f2b59a21e457789e32349c850a3d7:src/lib/constants.ts
 # Hent valgte filer til en egen mappe:
-mkdir -p /tmp/abakus-legacy-review
-git archive 7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5 src/images public/fonts | tar -x -C /tmp/abakus-legacy-review
+mkdir -p /tmp/abakusrevyen-legacy-review
+git archive 7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5 src/images public/fonts | tar -x -C /tmp/abakusrevyen-legacy-review
 ```
 
 ## Hvor lå innholdet?
