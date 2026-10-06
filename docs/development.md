@@ -28,7 +28,19 @@ Tailwind 3 og PostCSS.
 
 shadcn/ui ble satt opp med CLI **4.21.1** og et nøytralt utgangspunkt. Tokens og
 farger er bare et praktisk startpunkt, ikke det ferdige designet. Koden til
-komponentene ligger i repoet, slik shadcn/ui er ment å brukes.
+komponentene ligger i repoet, slik shadcn/ui er ment å brukes. `button.tsx` ble
+generert av shadcn CLI og er vanlig kildekode som vi kan tilpasse.
+
+Legg til nye shadcn-komponenter etter hvert som vi trenger dem:
+
+```sh
+pnpm exec shadcn add dialog
+pnpm exec shadcn add input label textarea
+```
+
+CLI-en legger komponentene i `src/components/ui` og oppdaterer nødvendige
+avhengigheter. Vi bruker den låste CLI-en fra prosjektet, så kommandoene trenger
+ikke `@latest`. Se også den korte forklaringen i `src/components/ui/README.md`.
 
 `src/app/router.tsx` er den sentrale ruteren. Den bruker React Router Data Mode med
 `createBrowserRouter`, et felles layout og egne sider for `/`, ukjente adresser og
