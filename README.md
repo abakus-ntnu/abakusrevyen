@@ -1,51 +1,61 @@
 # Abakusrevyen v2
 
-Minimal foundation for rebuilding Abakusrevyen's website. The browser-rendered
-React application currently has a Norwegian placeholder homepage and a not-found route.
-Content, navigation and visual design remain to be agreed.
+Her bygger vi den nye nettsiden til Abakusrevyen. Foreløpig er dette et lite og
+ryddig utgangspunkt: en klientrendret React-app med en enkel startside og en
+«fant ikke siden»-rute. Innhold, navigasjon og endelig uttrykk finner vi ut av
+sammen før vi bygger resten.
 
-Frontend: Vite, React, TypeScript, React Router, Tailwind CSS and shadcn/ui.
-Planned backend: Supabase Auth, Postgres, Storage and Edge Functions.
-Planned video service: Cloudflare Stream. Hosting target: Cloudflare Pages.
-No backend or hosting resources have been provisioned by this change.
+Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og
+shadcn/ui. Planen er å bruke Supabase til innlogging, database, fillagring og
+Edge Functions, Cloudflare Stream til video og Cloudflare Pages til publisering.
+Ingen skytjenester er satt opp av denne endringen.
 
-## Requirements and quick start
+## Kom i gang
 
-- Node.js **24.21.0** (supported 24 LTS line), pinned in `.node-version` and `.nvmrc`.
-- pnpm **12.9.1**, pinned in `package.json`; `engineStrict` in `pnpm-workspace.yaml` enforces engine requirements.
+Du trenger:
+
+- Node.js **24.21.0**, låst i `.node-version` og `.nvmrc`
+- pnpm **12.9.1**, låst i `package.json`
+
+Hvis du bruker nvm, kommer du i gang slik:
 
 ```sh
-nvm install # if using nvm
+nvm install
 nvm use
 npm install --global pnpm@12.9.1
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open the local URL printed by Vite. Supabase credentials are **optional** for the shell.
-When a project is available, copy `.env.example` to `.env.local` and replace both
-placeholders with its public URL and publishable key. Restart Vite after env changes.
+Åpne adressen Vite skriver i terminalen. Appskallet virker fint uten Supabase-nøkler.
+Når vi har et prosjekt å koble til, kopierer du `.env.example` til `.env.local`
+og fyller inn offentlig prosjekt-URL og publishable key. Start Vite på nytt etter
+at miljøvariablene er endret.
+
+Nyttige kommandoer:
 
 ```sh
 pnpm typecheck
 pnpm lint
 pnpm build
 pnpm preview
-# Or run all three checks:
+
+# Kjør typekontroll, lint og bygg i én omgang
 pnpm check
 ```
 
-`pnpm-lock.yaml` is the reproducible dependency source. No production deploy command
-is configured. The v2 CI only validates pull requests targeting v2 and pushes to v2.
+`pnpm-lock.yaml` sørger for at alle får de samme avhengighetene. Det finnes ingen
+kommando for produksjonsdeploy her ennå. CI sjekker bare pushes til `v2` og pull
+requests som skal inn i `v2`.
 
-## Documentation
+## Videre lesing
 
-- [Contributing](CONTRIBUTING.md): branch flow and review checks
-- [Development](docs/development.md): architecture, versions and future Supabase workflow
-- [Deployment](docs/deployment.md): configured versus pending infrastructure
-- [Content plan](docs/content-plan.md): decisions before content work
-- [Legacy inventory](docs/legacy-inventory.md): original commits, routes and recoverable assets
-- [AI instructions](AGENTS.md)
+- [Bidra til prosjektet](CONTRIBUTING.md)
+- [Lokal utvikling og Supabase-plan](docs/development.md)
+- [Deploy og miljøer](docs/deployment.md)
+- [Mal for innholdsplanlegging](docs/content-plan.md)
+- [Oversikt over den gamle nettsiden](docs/legacy-inventory.md)
+- [Instruksjoner for AI-verktøy](AGENTS.md)
 
-The repository is public. Do not commit unpublished revue themes, imagery or credentials.
-The original [LICENSE](LICENSE) and Git history are preserved.
+Repoet er offentlig. Ikke legg inn hemmelig revytema, upubliserte bilder eller
+tilgangsnøkler. Den opprinnelige [LICENSE](LICENSE) og hele Git-historikken er bevart.

@@ -1,35 +1,42 @@
-# Contributing
+# Bli med og bygge
 
-The rebuild lives on `v2`. Start feature branches from v2 and open pull requests
-**against v2**. Keep changes small and describe their purpose, visible behavior and
-verification. Do not merge the unfinished shell into main or prod.
+Hyggelig at du vil bidra! Den nye nettsiden bor på `v2`. Lag en egen branch fra
+`v2`, gjør en passe stor og forståelig endring, og åpne en pull request tilbake
+til `v2`. Skriv gjerne et par setninger om hva du har gjort, hvorfor, og hvordan
+du sjekket at det virker.
 
-The legacy production branch is `prod`; its GitHub Pages deployment is independent
-of v2. The new CI does not deploy. A future release/cutover process must be agreed
-before promoting v2. Do not restore the old deployment workflow on v2.
+Den gamle produksjonssiden deployes fortsatt fra `prod` til GitHub Pages. Den nye
+CI-en deployer ingenting, og det halvferdige appskallet skal ikke merges til
+`main` eller `prod`. Vi avtaler en egen lanseringsplan når nettsiden er klar.
 
-## Before merge
+## Før du ber noen se over
 
-1. Use the pinned Node/pnpm versions from README.
-2. Run `pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint`, `pnpm build`.
-3. Start `pnpm preview`; inspect `/`, a missing/deep URL and the link back home.
-   Confirm refresh, browser back/forward, keyboard focus and narrow viewport behavior.
-4. Review `git diff --check` and the diff for unintended files or secrets.
-5. Commit `pnpm-lock.yaml` with any dependency changes. Use stable versions and
-   check official migration guidance; keep Node pins and documentation aligned.
-6. Update docs when behavior, environment variables or deployment assumptions change.
+1. Bruk Node- og pnpm-versjonene fra README.
+2. Kjør `pnpm install --frozen-lockfile` og `pnpm check`.
+3. Start `pnpm preview`. Se på `/`, prøv en ukjent dyp URL, oppdater siden og
+   test lenken hjem. Ta gjerne en rask titt på tastaturfokus og smal skjerm også.
+4. Kjør `git diff --check`, og se gjennom endringene for overraskelser og hemmeligheter.
+5. Hvis du endrer avhengigheter, skal `pnpm-lock.yaml` være med. Bruk stabile
+   versjoner og hold versjonsdokumentasjonen oppdatert.
+6. Oppdater dokumentasjonen når oppførsel, miljøvariabler eller deployplaner endres.
 
-CI repeats install, typecheck, lint and build without credentials. Maintainers still
-need to configure required checks and branch protection in GitHub after the branch
-is published. A green local build does not confirm cloud integration.
+CI kjører installasjon, typekontroll, lint og produksjonsbygg uten tilgangsnøkler.
+Når branchen en gang publiseres, må en maintainer fortsatt skru på eventuelle
+påkrevde sjekker og branch protection i GitHub. Et grønt lokalt bygg betyr ikke
+automatisk at koblingen mot skyen virker.
 
-Use English for code, comments and technical docs; Norwegian for public UI copy.
-Follow the generated TypeScript/Oxlint conventions. Keep shared UI primitives in
-`src/components/ui`, app code in `src`, and service clients in `src/lib`.
-Add behavior tests when introducing meaningful application logic.
+Kode, variabelnavn og kommentarer kan gjerne være på engelsk, siden bibliotekene
+og resten av økosystemet er det. Dokumentasjon og synlig innhold skriver vi på
+norsk, med et vennlig og greit språk. Det viktigste er at neste person skjønner
+hva som skjer; teksten trenger ikke høres ut som en kontrakt.
 
-Agree content and design through [the content plan](docs/content-plan.md).
-Recover reviewed public assets using [the legacy inventory](docs/legacy-inventory.md).
-Do not copy old dates, personal information or privacy claims without checking them.
-Never commit unpublished themes, private media, `.env.local`, service-role keys,
-Supabase secret keys or Cloudflare API tokens. No backend credentials belong in `VITE_*`.
+Legg delte UI-komponenter i `src/components/ui`, appkode i `src` og klienter mot
+tjenester i `src/lib`. Legg til gode tester når vi får logikk som faktisk trenger
+det, uten å teste detaljer bare for å få flere tester.
+
+Bruk [innholdsplanen](docs/content-plan.md) når vi begynner å forme nettsiden.
+Gamle bilder og tekster finner du gjennom [legacy-oversikten](docs/legacy-inventory.md).
+Sjekk datoer, personopplysninger, samtykke og personverntekst før noe hentes tilbake.
+Ikke commit `.env.local`, service role keys, hemmelige Supabase-nøkler,
+Cloudflare-tokens, private medier eller noe som røper et upublisert revytema.
+Alt med `VITE_*` blir offentlig.

@@ -1,14 +1,15 @@
-# Repository instructions
+# Instruksjoner for arbeid i repoet
 
-- Read README.md, CONTRIBUTING.md and relevant docs before changing architecture.
-- Work on v2 or a feature branch from it. Preserve unrelated local changes and LICENSE.
-- Do not modify main/prod, push, merge, deploy, change DNS or external service settings unless explicitly requested.
-- Use pinned Node 24.21.0 and pnpm 12.9.1. Commit pnpm-lock.yaml with dependency changes.
-- Keep this a client-rendered Vite app. Use React Router, Tailwind and shadcn/ui conventions.
-- Keep the initial shell minimal; agree content, navigation and design before expanding it.
-- Use Supabase for Auth/database/Storage/Edge Functions and Cloudflare Stream for video.
-- Keep the shell runnable without credentials. Generate database types from the agreed schema; never invent tables.
-- Treat every VITE_* value as public. Never add private keys, unpublished themes or private media.
-- Write English code/comments/docs and Norwegian public UI copy.
-- Run frozen installation, typecheck, lint and build; verify changed routes in a browser.
-- Report checks performed and distinguish local scaffolding from configured cloud infrastructure.
+- Les README, CONTRIBUTING og relevante dokumenter før du endrer arkitekturen.
+- Jobb på `v2` eller en feature-branch fra `v2`. Ta vare på lokale endringer og `LICENSE`.
+- Ikke endre `main`/`prod`, push, merge, deploy, DNS eller eksterne innstillinger uten en tydelig bestilling.
+- Bruk Node 24.21.0 og pnpm 12.9.1. Ta med `pnpm-lock.yaml` når avhengigheter endres.
+- Behold appen klientrendret med Vite, React Router, Tailwind og shadcn/ui.
+- Hold appskallet lite til innhold, navigasjon og design er avklart.
+- Bruk Supabase til Auth, database, Storage og Edge Functions, og Cloudflare Stream til video.
+- Appskallet skal virke uten tilgangsnøkler. Generer databasetyper fra en avtalt modell; ikke dikt opp tabeller.
+- Alt med `VITE_*` er offentlig. Ikke legg inn private nøkler, hemmelige temaer eller private medier.
+- Skriv kode, variabler og kodekommentarer på engelsk. Skriv dokumentasjon og synlig innhold på naturlig norsk.
+- Vær vennlig og konkret i teksten. Unngå unødvendig stivt språk og lange regelverk når en enkel forklaring holder.
+- Kjør frossen installasjon, typekontroll, lint og bygg. Sjekk endrede ruter i nettleseren.
+- Fortell hva som er kontrollert, og skill tydelig mellom lokal klargjøring og faktisk skyoppsett.

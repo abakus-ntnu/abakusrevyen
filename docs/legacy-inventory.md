@@ -1,58 +1,64 @@
-# Legacy inventory
+# Oversikt over den gamle nettsiden
 
-Captured 2026-10-06 before replacing the Astro application on `v2`.
+Denne oversikten ble laget 6. oktober 2026, før Astro-appen ble erstattet på `v2`.
+Tenk på den som et kart tilbake til gamle tekster, bilder og løsninger hvis vi
+trenger dem senere.
 
-## Immutable references
+## Faste referanser
 
-- Legacy main: `631e7660ed1f2b59a21e457789e32349c850a3d7`
-- Legacy prod: `7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5`
+- Gammel main: `631e7660ed1f2b59a21e457789e32349c850a3d7`
+- Gammel prod: `7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5`
 
-Fetched origin before branching. Local main already matched origin/main; working tree was clean,
-with no untracked source changes. No pre-existing local or remote v2 branch was found.
-`git diff origin/main origin/prod` was empty. Prod contains 18 additional commits
-(17 merges and one image-orientation fix); main is an ancestor of prod, and their trees match.
-Existing ignored build/dependency caches were moved to a local temporary backup, not committed.
+Origin ble hentet før branchen ble laget. Lokal `main` var allerede lik `origin/main`,
+og arbeidstreet var rent uten usporede kildefiler. Det fantes ingen lokal eller ekstern
+`v2`-branch fra før. `git diff origin/main origin/prod` ga ingen forskjell i filinnhold.
+`prod` har 18 ekstra commits – 17 merges og én retting av bilderetning – men `main` er
+en forelder av `prod`, og de to Git-trærne er like. Ignorerte bygg- og dependency-cacher
+ble flyttet til en lokal, midlertidig backup og ble ikke commitet.
 
-README's production claim is confirmed by `.github/workflows/deploy.yml` at both references:
-pushes to prod build Astro and deploy to GitHub Pages (`github-pages` environment).
-It also accepts `workflow_dispatch`, without a branch guard. External GitHub Pages settings,
-last deployment and DNS have not been inspected or changed; this confirms repository configuration.
+Påstanden i den gamle README-en om produksjon stemmer med
+`.github/workflows/deploy.yml` ved begge referansene: pushes til `prod` bygger Astro
+og deployer til GitHub Pages-miljøet `github-pages`. Workflowen kan også startes med
+`workflow_dispatch` uten branch-sperre. Eksterne GitHub Pages-innstillinger, siste
+deploy og DNS ble verken undersøkt eller endret; dette bekrefter bare oppsettet i repoet.
 
-All paths below refer to **both commits above**, not the new working tree. Restore only
-reviewed, public content. Historical easter eggs are indexed by path, without copying their
-activation strings. No new theme, unpublished imagery or credentials are introduced.
+Alle stiene under viser til **begge commitene over**, ikke det nye arbeidstreet.
+Hent bare tilbake offentlig innhold som noen har sett gjennom. Historiske easter eggs
+er ført opp med filsti uten at aktiveringsfrasene kopieres hit. Oversikten legger ikke
+inn nye temaer, upubliserte bilder eller tilgangsnøkler.
 
 ```sh
-# Inspect a text file without restoring old application code:
+# Se på en tekstfil uten å hente tilbake gammel appkode:
 git show 631e7660ed1f2b59a21e457789e32349c850a3d7:src/lib/constants.ts
-# Recover selected assets into a separate directory:
+# Hent valgte filer til en egen mappe:
 mkdir -p /tmp/abakus-legacy-review
 git archive 7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5 src/images public/fonts | tar -x -C /tmp/abakus-legacy-review
 ```
 
-## Content and behavior map
+## Hvor lå innholdet?
 
-| Content | Source paths | Notes for recovery |
+| Innhold | Kildestier | Fint å vite før det hentes tilbake |
 | --- | --- | --- |
-| Homepage and seasonal text | `src/pages/index.astro`, `src/layouts/Home/*.astro` | Recruitment, countdown, show and break variants |
-| Show dates, venue, tickets | `src/lib/shows.ts`, `src/lib/constants.ts`, `src/lib/periods.ts` | Dates are historical; reconcile before reuse |
-| Revue archive, YouTube IDs and playlists | `src/lib/constants.ts`, `src/pages/revyer.astro` | Includes scheduled availability and per-revue logos |
-| Recruitment | `src/pages/opptak.astro`, `src/layouts/Home/Recruitment.astro` | Links to external admissions service |
-| Group descriptions and email addresses | `src/content/grupper/*.md`, `src/content/config.ts` | Group slug determines URL; leader references |
-| Leader biographies, roles and portraits | `src/content/ledere/*.md`, `src/images/ledere/*` | Check accuracy and publication consent before reuse |
-| About articles | `src/content/om_oss/*.md`, `src/layouts/ArticleLayout.astro` | Titles, descriptions, dates and full article copy |
-| Contact and legal text | `src/pages/kontakt.astro`, `src/pages/personvern.astro` | Organization details and privacy copy need reassessment for new services |
-| Gallery | `src/pages/galleri.astro`, `src/images/gallery/*` | Swiper/PhotoSwipe image viewer |
-| Brand and group imagery | `src/images/revy-logo.webp`, `src/images/revy_logoer/*`, `src/images/gruppebilder/*`, `src/images/undergrupper_logoer/*` | Exact asset index below |
-| Fonts and licenses | `public/fonts/*` | Inter, Tauri and Lcd; preserve each font license if reused |
-| Site furniture and metadata | `src/components/Header/*`, `src/components/Footer/*`, `src/layouts/RootLayout.astro`, `public/favicon.webp` | Navigation, metadata, theme preference |
+| Forside og sesongstyrt tekst | `src/pages/index.astro`, `src/layouts/Home/*.astro` | Varianter for opptak, nedtelling, forestilling og pause |
+| Datoer, lokale og billetter | `src/lib/shows.ts`, `src/lib/constants.ts`, `src/lib/periods.ts` | Datoene er historiske og må sjekkes før bruk |
+| Revyarkiv, YouTube-ID-er og spillelister | `src/lib/constants.ts`, `src/pages/revyer.astro` | Har tidsstyrt publisering og logo for hver revy |
+| Opptak | `src/pages/opptak.astro`, `src/layouts/Home/Recruitment.astro` | Lenker til den eksterne opptaksløsningen |
+| Gruppebeskrivelser og e-postadresser | `src/content/grupper/*.md`, `src/content/config.ts` | Filnavnet styrer URL-en; gruppene peker til ledere |
+| Ledertekster, roller og portretter | `src/content/ledere/*.md`, `src/images/ledere/*` | Sjekk riktighet og samtykke før gjenbruk |
+| Om oss-artikler | `src/content/om_oss/*.md`, `src/layouts/ArticleLayout.astro` | Titler, beskrivelser, datoer og hele artikkelteksten |
+| Kontakt og juridisk tekst | `src/pages/kontakt.astro`, `src/pages/personvern.astro` | Organisasjonsinfo og personvern må vurderes på nytt med nye tjenester |
+| Galleri | `src/pages/galleri.astro`, `src/images/gallery/*` | Bildevisning med Swiper og PhotoSwipe |
+| Profil- og gruppebilder | `src/images/revy-logo.webp`, `src/images/revy_logoer/*`, `src/images/gruppebilder/*`, `src/images/undergrupper_logoer/*` | Komplett filliste lenger ned |
+| Fonter og lisenser | `public/fonts/*` | Inter, Tauri og Lcd; ta med fontlisensen ved gjenbruk |
+| Navigasjon, footer og metadata | `src/components/Header/*`, `src/components/Footer/*`, `src/layouts/RootLayout.astro`, `public/favicon.webp` | Navigasjon, metadata og lagret temavalg |
 
-## Legacy URLs
+## Gamle URL-er
 
-No redirects or old content pages are implemented in v2 yet. Decide keep/redirect/retire for
-these URLs before launch. Dynamic URLs derive from Markdown filenames listed below.
+`v2` har foreløpig verken redirects eller de gamle innholdssidene. Før lansering
+bestemmer vi om hver URL skal beholdes, videresendes eller få hvile. De dynamiske
+URL-ene kommer fra Markdown-filnavnene i tabellen.
 
-| URL | Source |
+| URL | Kilde |
 | --- | --- |
 | `/galleri` | `src/pages/galleri.astro` |
 | `/grupper/[slug]` | `src/pages/grupper/[slug].astro` |
@@ -94,32 +100,34 @@ these URLs before launch. Dynamic URLs derive from Markdown filenames listed bel
 | `/om_oss/hva_er_revyen` | `src/content/om_oss/hva_er_revyen.md` |
 | `/om_oss/ny_nettside` | `src/content/om_oss/ny_nettside.md` |
 
-Historical easter-egg routes: `src/pages/[secret]/index.astro` and
-`src/pages/[secret]/off.astro`, with definitions in `src/lib/secrets/`. Not carried forward.
+De gamle easter egg-rutene lå i `src/pages/[secret]/index.astro` og
+`src/pages/[secret]/off.astro`, med definisjoner i `src/lib/secrets/`. De ble ikke
+med videre.
 
-## Integrations
+## Integrasjoner
 
-| Service / behavior | Source | Migration decision |
+| Tjeneste eller oppførsel | Kilde | Hva vi gjør videre |
 | --- | --- | --- |
-| GitHub Pages / custom domain | `.github/workflows/deploy.yml`, `public/CNAME`, `astro.config.mjs` | Remove on v2; existing prod unchanged |
-| Plausible (Webkom) | `src/layouts/RootLayout.astro` | `https://ls.webkom.dev/js/plausible.js`, domain abakusrevyen.no; not included in new shell |
-| Admissions | `src/pages/opptak.astro`, `src/layouts/Home/Recruitment.astro` | External `https://opptak.abakus.no/`; future content decision |
-| Tikkio / Vier / Maps | `src/lib/shows.ts` | External links only; exact destinations below |
-| YouTube | `src/lib/constants.ts`, `src/layouts/Home/Show.astro`, `src/pages/revyer.astro` | Links, playlists and embeds; future video uses Cloudflare Stream |
-| Social links | `src/lib/constants.ts` | Facebook, Instagram and YouTube |
-| Email | `src/pages/kontakt.astro`, group/leader Markdown | mailto links; no server email integration found |
-| Calendar | `src/lib/calendar.ts` | Browser-generated ICS data URL; no calendar backend |
-| Browser storage | `src/layouts/RootLayout.astro`, `src/components/Header/ThemeSwitcher.astro`, `src/lib/secrets/*` | Theme/easter-egg preferences |
+| GitHub Pages / eget domene | `.github/workflows/deploy.yml`, `public/CNAME`, `astro.config.mjs` | Fjernet på `v2`; eksisterende `prod` er urørt |
+| Plausible fra Webkom | `src/layouts/RootLayout.astro` | `https://ls.webkom.dev/js/plausible.js` for abakusrevyen.no; ikke med i nytt skall |
+| Opptak | `src/pages/opptak.astro`, `src/layouts/Home/Recruitment.astro` | Ekstern `https://opptak.abakus.no/`; innholdet avklares senere |
+| Tikkio / Vier / Maps | `src/lib/shows.ts` | Bare eksterne lenker; adressene står under |
+| YouTube | `src/lib/constants.ts`, `src/layouts/Home/Show.astro`, `src/pages/revyer.astro` | Lenker, spillelister og embeds; ny video skal bruke Cloudflare Stream |
+| Sosiale medier | `src/lib/constants.ts` | Facebook, Instagram og YouTube |
+| E-post | `src/pages/kontakt.astro`, Markdown for grupper/ledere | `mailto`-lenker; ingen serverintegrasjon ble funnet |
+| Kalender | `src/lib/calendar.ts` | Nettleseren lagde en ICS-data-URL; ingen kalenderbackend |
+| Lagring i nettleseren | `src/layouts/RootLayout.astro`, `src/components/Header/ThemeSwitcher.astro`, `src/lib/secrets/*` | Valg av tema og easter eggs |
 
-No existing Auth, database, Storage, Supabase or Cloudflare Stream integration was found.
+Det fantes ingen integrasjon med Auth, database, Storage, Supabase eller Cloudflare Stream.
 
-### Literal external URLs
+### Eksterne URL-er skrevet rett i koden
 
-Code fragments and interpolated URLs are not final destinations. Video IDs and playlist IDs
-are held separately in `src/lib/constants.ts`; recover that file to rebuild complete URLs.
-Personal email values are retained in their source files rather than duplicated here.
+Kodebiter og sammensatte URL-er er ikke nødvendigvis komplette adresser. Video-ID-er
+og spilleliste-ID-er ligger separat i `src/lib/constants.ts`; hent den filen for å
+bygge de fulle lenkene. Personlige e-postadresser blir liggende i kildefilene i stedet
+for å dupliseres her.
 
-| Source | URL |
+| Kilde | URL |
 | --- | --- |
 | `src/layouts/Home/Recruitment.astro` | `https://opptak.abakus.no/` |
 | `src/layouts/Home/Show.astro` | `https://www.youtube.com/embed/MQBJf0hCznA?si=0ujbg3eG_sriNdCn` |
@@ -138,34 +146,34 @@ Personal email values are retained in their source files rather than duplicated 
 | `src/lib/shows.ts` | `https://vier.live/act/abakusrevyen-2026---skal-skal-ikke-siste-forestilling-` |
 | `src/pages/opptak.astro` | `https://opptak.abakus.no/` |
 
-## Configuration decisions
+## Hva skjedde med konfigurasjonsfilene?
 
-| File | Decision and reason |
+| Fil | Valg og begrunnelse |
 | --- | --- |
-| `LICENSE` | Preserve byte-for-byte; Git history also preserved |
-| `astro.config.mjs` | Remove: Astro-specific build and prefetch behavior |
-| `tailwind.config.mjs` | Remove: old Tailwind 3 design tokens; use Tailwind Vite integration |
-| `tsconfig.json` | Replace with official Vite React TS split configs and alias |
-| `package.json`, `pnpm-lock.yaml` | Replace with fresh stable dependencies and pinned tools |
-| `.gitignore` | Replace; retain legacy cache exclusions and broaden env protection |
-| `.prettierrc` | Remove: Astro plugins and old theme paths; generated Oxlint is the code check |
-| `.husky/pre-commit` | Remove: depends on retired lint-staged/Prettier setup; CI provides checks |
-| `shell.nix` | Remove: unpinned Node/pnpm and automatic install conflict with explicit pinned tools |
-| `.vscode/extensions.json` | Update for Oxlint/Tailwind, remove Astro recommendations |
-| `.vscode/launch.json` | Preserve: pnpm dev/preview remain valid |
-| `.vscode/settings.json` | Preserve: independent editor preference |
-| `.vscode/tasks.json` | Replace with explicit pnpm check task; old npm/fmt/Astro tasks obsolete |
-| `.github/workflows/build.yml` | Replace with v2-only typecheck, lint and build, read-only permissions |
-| `.github/workflows/deploy.yml` | Remove from v2: includes manual production deployment entry point |
-| `public/CNAME` | Remove from v2: avoid carrying production domain configuration |
-| `README.md`, `CONTRIBUTING.md` | Rewrite for v2; originals remain at references above |
+| `LICENSE` | Beholdt byte for byte; hele Git-historikken er også bevart |
+| `astro.config.mjs` | Fjernet fordi den bare styrte Astro-bygg og prefetch |
+| `tailwind.config.mjs` | Fjernet sammen med gamle Tailwind 3-tokens; Vite-integrasjonen brukes nå |
+| `tsconfig.json` | Erstattet med Vites delte React/TypeScript-oppsett og `@`-alias |
+| `package.json`, `pnpm-lock.yaml` | Erstattet med ferske, stabile avhengigheter og låste verktøy |
+| `.gitignore` | Erstattet; gamle cache-unntak ble beholdt og miljøfiler bedre skjermet |
+| `.prettierrc` | Fjernet sammen med Astro-plugins og gamle temastier; Oxlint sjekker koden |
+| `.husky/pre-commit` | Fjernet fordi den var avhengig av det gamle lint-staged/Prettier-oppsettet |
+| `shell.nix` | Fjernet fordi Node/pnpm var ulåst og automatisk installasjon kolliderte med det nye oppsettet |
+| `.vscode/extensions.json` | Oppdatert for Oxlint og Tailwind; Astro-anbefalinger er borte |
+| `.vscode/launch.json` | Beholdt fordi `pnpm dev` og `pnpm preview` fortsatt virker |
+| `.vscode/settings.json` | Beholdt som en uavhengig editorinnstilling |
+| `.vscode/tasks.json` | Erstattet med en tydelig `pnpm check`-oppgave |
+| `.github/workflows/build.yml` | Erstattet med typekontroll, lint og bygg bare for `v2`, med lesetilgang |
+| `.github/workflows/deploy.yml` | Fjernet på `v2` fordi den også kunne starte produksjonsdeploy manuelt |
+| `public/CNAME` | Fjernet på `v2` så produksjonsdomenet ikke blir med i det nye bygget |
+| `README.md`, `CONTRIBUTING.md` | Skrevet på nytt for `v2`; originalene finnes ved commitene over |
 
-## Complete content and asset path index
+## Komplett liste over innhold og filer
 
-Every entry is recoverable from either immutable reference above. This includes source
-components because some legacy copy lives directly in templates rather than Markdown.
+Alt i listen kan hentes fra en av de faste referansene øverst. Komponentene er
+også med fordi noe av den gamle teksten lå rett i templater, ikke i Markdown.
 
-### `src/content/` (28 files)
+### `src/content/` (28 filer)
 
 - `src/content/config.ts`
 - `src/content/grupper/arring.md`
@@ -196,7 +204,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/content/om_oss/hva_er_revyen.md`
 - `src/content/om_oss/ny_nettside.md`
 
-### `src/images/` (108 files)
+### `src/images/` (108 filer)
 
 - `src/images/gallery/DSC01843.webp`
 - `src/images/gallery/DSC01856.webp`
@@ -307,7 +315,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/images/undergrupper_logoer/sosial-logo.webp`
 - `src/images/undergrupper_logoer/teknikk-logo.webp`
 
-### `public/` (11 files)
+### `public/` (11 filer)
 
 - `public/CNAME`
 - `public/favicon.webp`
@@ -321,7 +329,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `public/fonts/Tauri/Tauri-Regular.ttf`
 - `public/stars.webp`
 
-### `src/pages/` (14 files)
+### `src/pages/` (14 filer)
 
 - `src/pages/[secret]/index.astro`
 - `src/pages/[secret]/off.astro`
@@ -338,7 +346,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/pages/personvern.astro`
 - `src/pages/revyer.astro`
 
-### `src/layouts/` (7 files)
+### `src/layouts/` (7 filer)
 
 - `src/layouts/ArticleLayout.astro`
 - `src/layouts/Home/Break.astro`
@@ -348,7 +356,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/layouts/PageLayout.astro`
 - `src/layouts/RootLayout.astro`
 
-### `src/components/` (28 files)
+### `src/components/` (28 filer)
 
 - `src/components/Branding/Logo.astro`
 - `src/components/Branding/PreviousRevuesBanner.astro`
@@ -379,7 +387,7 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/components/Timeline/Timeline.astro`
 - `src/components/Timeline/TimelineDate.astro`
 
-### `src/lib/` (7 files)
+### `src/lib/` (7 filer)
 
 - `src/lib/calendar.ts`
 - `src/lib/constants.ts`
@@ -389,6 +397,6 @@ components because some legacy copy lives directly in templates rather than Mark
 - `src/lib/secrets/starwars.ts`
 - `src/lib/shows.ts`
 
-### `src/styles/` (1 files)
+### `src/styles/` (1 fil)
 
 - `src/styles/globals.css`
