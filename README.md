@@ -1,54 +1,51 @@
-# <img src="./src/images/revy-logo.webp" width="30px" /> [Abakusrevyen.no](https://abakusrevyen.no/)
+# Abakusrevyen v2
 
-[![Deploy to Pages](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/deploy.yml/badge.svg?branch=prod)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/deploy.yml)
-[![Build status](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/abakus-ntnu/abakusrevyen/actions/workflows/build.yml)
+Minimal foundation for rebuilding Abakusrevyen's website. The browser-rendered
+React application currently has a Norwegian placeholder homepage and a not-found route.
+Content, navigation and visual design remain to be agreed.
 
-⚠️ **Har du et problem, eller vil du delta med utviklingen til nettsiden? Se [CONTRIBUTING.md](CONTRIBUTING.md) først!** ⚠️
+Frontend: Vite, React, TypeScript, React Router, Tailwind CSS and shadcn/ui.
+Planned backend: Supabase Auth, Postgres, Storage and Edge Functions.
+Planned video service: Cloudflare Stream. Hosting target: Cloudflare Pages.
+No backend or hosting resources have been provisioned by this change.
 
-Dette er koden til Abakusrevyen sin nettside. Utviklet med 🌯 av Teknikk.
+## Requirements and quick start
 
-## 📋 Oppdater innhold
-
-Se [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## 🏗️ Utvikling
-
-For å starte nettsiden lokalt i utviklingsmodus kan du kjøre følgende kommandoer
-
-```sh
-# Aktiver utviklerverktøy (kun for nix brukere)
-$ nix-shell shell.nix
-
-# Installer avhengigheter
-$ pnpm install
-
-# Start den lokale dev-serveren
-$ pnpm run dev
-```
-
-## 👔 Produksjon
-
-For å bygge og vise nettsiden lokalt i produksjonsmodus kan du istedenfor kjøre følgende kommandoer
+- Node.js **24.21.0** (supported 24 LTS line), pinned in `.node-version` and `.nvmrc`.
+- pnpm **12.9.1**, pinned in `package.json`; `engineStrict` in `pnpm-workspace.yaml` enforces engine requirements.
 
 ```sh
-# Aktiver utviklerverktøy (kun for nix brukere)
-$ nix-shell shell.nix
-
-# Installer avhengigheter
-$ pnpm install
-
-# Bygg nettsiden og vis den lokalt
-$ pnpm run build
-$ pnpm run preview
+nvm install # if using nvm
+nvm use
+npm install --global pnpm@12.9.1
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Hvis alt funker, kan du deploye nettsiden ved å åpne en pull request til `prod` branchen. Når den merges vil nettsiden automatisk oppdateres.
+Open the local URL printed by Vite. Supabase credentials are **optional** for the shell.
+When a project is available, copy `.env.example` to `.env.local` and replace both
+placeholders with its public URL and publishable key. Restart Vite after env changes.
 
-## 🔋 STACK
+```sh
+pnpm typecheck
+pnpm lint
+pnpm build
+pnpm preview
+# Or run all three checks:
+pnpm check
+```
 
-- [Astro](astro.build) for statiske ressurser og HTML
-- [Tailwindcss](tailwindcss.com) for CSS styling
-- [Prettier](prettier.io) for formatering av kode
-- [pnpm](pnpm.io) for avhengigheter
-- [Typescript](typescriptlang.org) som programmeringspråk
-- [nix](https://nixos.org/) for utviklerverktøy
+`pnpm-lock.yaml` is the reproducible dependency source. No production deploy command
+is configured. The v2 CI only validates pull requests targeting v2 and pushes to v2.
+
+## Documentation
+
+- [Contributing](CONTRIBUTING.md): branch flow and review checks
+- [Development](docs/development.md): architecture, versions and future Supabase workflow
+- [Deployment](docs/deployment.md): configured versus pending infrastructure
+- [Content plan](docs/content-plan.md): decisions before content work
+- [Legacy inventory](docs/legacy-inventory.md): original commits, routes and recoverable assets
+- [AI instructions](AGENTS.md)
+
+The repository is public. Do not commit unpublished revue themes, imagery or credentials.
+The original [LICENSE](LICENSE) and Git history are preserved.
