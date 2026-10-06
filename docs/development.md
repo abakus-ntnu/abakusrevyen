@@ -24,6 +24,15 @@ its tokens are scaffolding, not the final design. Component source is checked in
 Vite and TypeScript. The not-found view is client-side; static SPA hosting returns
 HTTP 200 for its HTML fallback. No SSR or Pages Functions are required.
 
+`tsconfig.json` is the solution file that references the browser and Node configs;
+its compiler options are not inherited by those projects. The `@/*` alias is therefore
+also declared in `tsconfig.app.json`, where application files are checked. The root
+copy lets shadcn/ui discover the alias. `baseUrl` is intentionally omitted: TypeScript
+resolves `paths` relative to the config file and deprecated `baseUrl` for this use.
+Both projects enable strict optional-property, indexed-access, return-path and
+side-effect-import checks. The Node config explicitly pairs `module: nodenext` with
+`moduleResolution: nodenext` so editor and CLI behavior cannot drift.
+
 ## Supabase: prepared versus pending
 
 Prepared: `.env.example`, typed `getSupabaseClient()` and an explicitly empty
