@@ -1,32 +1,17 @@
 # Oversikt over den gamle nettsiden
 
-Denne oversikten ble laget 6. oktober 2026, før Astro-appen ble erstattet på `v2`.
-Tenk på den som et kart tilbake til gamle tekster, bilder og løsninger hvis vi
-trenger dem senere.
+Denne oversikten ble laget 6. oktober 2026, før Astro-appen ble erstattet på `v2`. Tenk på den som et kart tilbake til gamle tekster, bilder og løsninger hvis vi trenger dem senere.
 
 ## Faste referanser
 
 - Gammel main: `631e7660ed1f2b59a21e457789e32349c850a3d7`
 - Gammel prod: `7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5`
 
-Origin ble hentet før branchen ble laget. Lokal `main` var allerede lik `origin/main`,
-og arbeidstreet var rent uten usporede kildefiler. Det fantes ingen lokal eller ekstern
-`v2`-gren fra før. `git diff origin/main origin/prod` ga ingen forskjell i filinnhold.
-`prod` har 18 ekstra commits – 17 merges og én retting av bilderetning – men `main` er
-en forelder av `prod`, og de to Git-trærne er like. Ignorerte bygg- og dependency-cacher
-ble flyttet til en lokal, midlertidig backup og ble ikke commitet.
+Origin ble hentet før branchen ble laget. Lokal `main` var allerede lik `origin/main`, og arbeidstreet var rent uten usporede kildefiler. Det fantes ingen lokal eller ekstern `v2`-gren fra før. `git diff origin/main origin/prod` ga ingen forskjell i filinnhold. `prod` har 18 ekstra commits – 17 merges og én retting av bilderetning – men `main` er en forelder av `prod`, og de to Git-trærne er like. Ignorerte bygg- og dependency-cacher ble flyttet til en lokal, midlertidig backup og ble ikke commitet.
 
-Påstanden i den gamle README-en om produksjon stemmer med
-`.github/workflows/deploy.yml` ved begge referansene: endringer som sendes til `prod`,
-bygger Astro og publiserer til GitHub Pages-miljøet `github-pages`. Workflowen kan
-også startes med `workflow_dispatch` uten begrensning til en bestemt gren. Eksterne
-GitHub Pages-innstillinger, siste publisering og DNS ble verken undersøkt eller endret;
-dette bekrefter bare oppsettet i repoet.
+Påstanden i den gamle README-en om produksjon stemmer med `.github/workflows/deploy.yml` ved begge referansene: endringer som sendes til `prod`, bygger Astro og publiserer til GitHub Pages-miljøet `github-pages`. Workflowen kan også startes med `workflow_dispatch` uten begrensning til en bestemt gren. Eksterne GitHub Pages-innstillinger, siste publisering og DNS ble verken undersøkt eller endret; dette bekrefter bare oppsettet i repoet.
 
-Alle stiene under viser til **begge commitene over**, ikke det nye arbeidstreet.
-Hent bare tilbake offentlig innhold som noen har sett gjennom. Historiske easter eggs
-er ført opp med filsti uten at aktiveringsfrasene kopieres hit. Oversikten legger ikke
-inn nye temaer, upubliserte bilder eller tilgangsnøkler.
+Alle stiene under viser til **begge commitene over**, ikke det nye arbeidstreet. Hent bare tilbake offentlig innhold som noen har sett gjennom. Historiske easter eggs er ført opp med filsti uten at aktiveringsfrasene kopieres hit. Oversikten legger ikke inn nye temaer, upubliserte bilder eller tilgangsnøkler.
 
 ```sh
 # Se på en tekstfil uten å hente tilbake gammel appkode:
@@ -55,9 +40,7 @@ git archive 7c366cd3e2ae828e2e9679fc19d1f2b37199d3e5 src/images public/fonts | t
 
 ## Gamle URL-er
 
-`v2` har foreløpig verken videresendinger eller de gamle innholdssidene. Før lansering
-bestemmer vi om hver URL skal beholdes, videresendes eller få hvile. De dynamiske
-URL-ene kommer fra Markdown-filnavnene i tabellen.
+`v2` har foreløpig verken videresendinger eller de gamle innholdssidene. Før lansering bestemmer vi om hver URL skal beholdes, videresendes eller få hvile. De dynamiske URL-ene kommer fra Markdown-filnavnene i tabellen.
 
 | URL | Kilde |
 | --- | --- |
@@ -101,9 +84,7 @@ URL-ene kommer fra Markdown-filnavnene i tabellen.
 | `/om_oss/hva_er_revyen` | `src/content/om_oss/hva_er_revyen.md` |
 | `/om_oss/ny_nettside` | `src/content/om_oss/ny_nettside.md` |
 
-De gamle easter egg-rutene lå i `src/pages/[secret]/index.astro` og
-`src/pages/[secret]/off.astro`, med definisjoner i `src/lib/secrets/`. De ble ikke
-med videre.
+De gamle easter egg-rutene lå i `src/pages/[secret]/index.astro` og `src/pages/[secret]/off.astro`, med definisjoner i `src/lib/secrets/`. De ble ikke med videre.
 
 ## Integrasjoner
 
@@ -123,10 +104,7 @@ Det fantes ingen integrasjon med Auth, database, Storage, Supabase eller Cloudfl
 
 ### Eksterne URL-er skrevet rett i koden
 
-Kodebiter og sammensatte URL-er er ikke nødvendigvis komplette adresser. Video-ID-er
-og spilleliste-ID-er ligger separat i `src/lib/constants.ts`; hent den filen for å
-bygge de fulle lenkene. Personlige e-postadresser blir liggende i kildefilene i stedet
-for å dupliseres her.
+Kodebiter og sammensatte URL-er er ikke nødvendigvis komplette adresser. Video-ID-er og spilleliste-ID-er ligger separat i `src/lib/constants.ts`; hent den filen for å bygge de fulle lenkene. Personlige e-postadresser blir liggende i kildefilene i stedet for å dupliseres her.
 
 | Kilde | URL |
 | --- | --- |
@@ -171,8 +149,7 @@ for å dupliseres her.
 
 ## Komplett liste over innhold og filer
 
-Alt i listen kan hentes fra en av de faste referansene øverst. Komponentene er
-også med fordi noe av den gamle teksten lå rett i templater, ikke i Markdown.
+Alt i listen kan hentes fra en av de faste referansene øverst. Komponentene er også med fordi noe av den gamle teksten lå rett i templater, ikke i Markdown.
 
 ### `src/content/` (28 filer)
 

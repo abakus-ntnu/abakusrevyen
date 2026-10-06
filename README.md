@@ -1,14 +1,8 @@
 # Abakusrevyen v2
 
-Her bygger vi den nye nettsiden til Abakusrevyen. Foreløpig er dette et lite og
-ryddig utgangspunkt: en klientrendret React-app med en enkel startside og en
-«fant ikke siden»-rute. Innhold, navigasjon og endelig uttrykk finner vi ut av
-sammen før vi bygger resten.
+Her bygger vi den nye nettsiden til Abakusrevyen. Foreløpig er dette et lite og ryddig utgangspunkt: en klientrendret React-app med en enkel startside og en «fant ikke siden»-rute. Innhold, navigasjon og endelig uttrykk finner vi ut av sammen før vi bygger resten.
 
-Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og
-shadcn/ui. Planen er å bruke Supabase til innlogging, database, fillagring og
-Edge Functions, Cloudflare Stream til video og Cloudflare Pages til publisering.
-Ingen skytjenester er satt opp av denne endringen.
+Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og shadcn/ui. Planen er å bruke Supabase til innlogging, database, fillagring og Edge Functions, Cloudflare Stream til video og Cloudflare Pages til publisering. Ingen skytjenester er satt opp av denne endringen.
 
 ## Kom i gang
 
@@ -27,10 +21,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Åpne adressen Vite skriver i terminalen. Appskallet virker fint uten Supabase-nøkler.
-Når vi har et prosjekt å koble til, kopierer du `.env.example` til `.env.local`
-og fyller inn offentlig prosjekt-URL og publishable key. Start Vite på nytt etter
-at miljøvariablene er endret.
+Åpne adressen Vite skriver i terminalen. Appskallet virker fint uten Supabase-nøkler. Når vi har et prosjekt å koble til, kopierer du `.env.example` til `.env.local` og fyller inn offentlig prosjekt-URL og publishable key. Start Vite på nytt etter at miljøvariablene er endret.
 
 Nyttige kommandoer:
 
@@ -44,9 +35,7 @@ pnpm preview
 pnpm check
 ```
 
-`pnpm-lock.yaml` sørger for at alle får de samme avhengighetene. Det finnes ingen
-kommando for publisering til produksjon her ennå. CI sjekker bare endringer som
-sendes til `v2`, og pull requests som skal inn i `v2`.
+`pnpm-lock.yaml` sørger for at alle får de samme avhengighetene. Det finnes ingen kommando for publisering til produksjon her ennå. CI sjekker bare endringer som sendes til `v2`, og pull requests som skal inn i `v2`.
 
 ## Videre lesing
 
@@ -57,5 +46,4 @@ sendes til `v2`, og pull requests som skal inn i `v2`.
 - [Oversikt over den gamle nettsiden](docs/legacy-inventory.md)
 - [Instruksjoner for AI-verktøy](AGENTS.md)
 
-Repoet er offentlig. Ikke legg inn hemmelig revytema, upubliserte bilder eller
-tilgangsnøkler. Den opprinnelige [LICENSE](LICENSE) og hele Git-historikken er bevart.
+Repoet er offentlig. Ikke legg inn hemmelig revytema, upubliserte bilder eller tilgangsnøkler. Den opprinnelige [LICENSE](LICENSE) og hele Git-historikken er bevart.

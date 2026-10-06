@@ -1,11 +1,8 @@
 # Innholdsplan
 
-Dette er arbeidsarket vårt for å finne ut hva nettsiden faktisk skal være. Det er
-helt greit at mye står åpent ennå. Fyll inn litt etter litt når vi har snakket med
-folk og tatt ordentlige valg.
+Dette er arbeidsarket vårt for å finne ut hva nettsiden faktisk skal være. Det er helt greit at mye står åpent ennå. Fyll inn litt etter litt når vi har snakket med folk og tatt ordentlige valg.
 
-Bruk bare informasjon som kan være offentlig. Hemmelige revytemaer og upubliserte
-bilder skal fortsatt holdes utenfor repoet.
+Bruk bare informasjon som kan være offentlig. Hemmelige revytemaer og upubliserte bilder skal fortsatt holdes utenfor repoet.
 
 ## Hvem lager vi nettsiden for?
 
