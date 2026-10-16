@@ -375,6 +375,17 @@ Alt i listen kan hentes fra en av de faste referansene øverst. Komponentene er 
 - `src/lib/secrets/starwars.ts`
 - `src/lib/shows.ts`
 
+## Det som er hentet inn i v2
+
+Følgende allerede publiserte materiale ble hentet fra prod-referansen over og brukes i det nye React-oppsettet:
+
+- 62 bilder fra `src/images/gallery/`, fordelt på «Skal, skal ikke», «Objektivt sett» og eldre bilder
+- 14 lederbilder fra `src/images/ledere/`, med navn, roller og offentlige e-postadresser fra `src/content/ledere/`
+- gruppebilder, revylogoer, gruppelogoer og den generelle Abakusrevyen-logoen fra `src/images/`
+- YouTube-lenker og riktig kobling mellom år, revynavn og logo fra `src/lib/constants.ts`
+
+De 108 bildefilene ble lastet opp med de opprinnelige stiene under `images/` i R2-testbucketen. Alle offentlige objekter ble lastet ned igjen og kontrollert byte for byte med SHA-256 før de lokale kopiene i `src/images/` ble fjernet. Filstiene i listen over og commit-referansene tidligere i dokumentet viser hvor originalene kan hentes fra Git-historikken. `public/favicon.webp` ligger fortsatt lokalt fordi nettleseren trenger den sammen med det første HTML-svaret.
+
 ### `src/styles/` (1 fil)
 
 - `src/styles/globals.css`

@@ -1,14 +1,13 @@
 import { Link } from 'react-router'
+import { PageContainer } from '@/components/layout/page-container'
 import { Button } from '@/components/ui/button'
 
 export function NotFoundPage() {
   return (
-    <>
-      <h1 className="text-3xl font-semibold tracking-tight">Fant ikke siden</h1>
-      <p className="text-muted-foreground">Siden finnes ikke.</p>
+    <PageContainer title="Fant ikke siden" intro="Siden finnes ikke, eller adressen har blitt endret.">
       <Button asChild className="self-start">
         <Link to="/">Til startsiden</Link>
       </Button>
-    </>
+    </PageContainer>
   )
 }

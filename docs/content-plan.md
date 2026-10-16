@@ -25,17 +25,18 @@ Andre funksjoner kan komme senere. `v2`-branchen er opprettet for arbeidet med d
 
 ## Sider og innhold
 
-Dette er et første forslag til struktur, ikke en ferdig navigasjon.
+Dette sidekartet er nå lagt inn som et første, enkelt utgangspunkt. Ruter og rekkefølge kan fortsatt endres uten å bygge om hele appen.
 
 | Side / funksjon | Hvem og hvorfor? | Tekst og medier vi trenger | Ansvarlig | Status |
 | --- | --- | --- | --- | --- |
-| Forside | Gi publikum rask vei til det viktigste | Kort introduksjon, aktuelle datoer og tydelige lenker | Avklares | Må planlegges |
-| Om Abakusrevyen | Forklare hvem vi er | Godkjent beskrivelse og kontaktinformasjon | Avklares | Må kartlegges |
+| Forside | Gi publikum rask vei til det viktigste | Kort introduksjon, aktuelle datoer og tydelige lenker | Avklares | Første utkast i appen |
+| Om Abakusrevyen | Forklare hvem vi er | Godkjent beskrivelse og kontaktinformasjon | Avklares | Første utkast i appen |
 | Forestillinger og billetter | Hjelpe publikum å finne tid, sted og billettkjøp | Datoer, praktisk informasjon og lenker | Avklares | Må planlegges |
-| Livestream | Gi betalende seere tilgang til sendingen | Spiller, tilgangsinformasjon og hjelp ved problemer | Avklares | Påkrevd ved lansering |
+| Livestream | Gi betalende seere tilgang til sendingen | Spiller, tilgangsinformasjon og hjelp ved problemer | Avklares | Lokal plassholder i appen |
 | Betaling og tilgang | La seere kjøpe og finne igjen tilgangen sin | Pris, vilkår, kvittering og hjelpetekst | Avklares | Påkrevd ved lansering |
-| Chat | La seere delta under sendingen | Enkle regler og informasjon om moderering | Avklares | Påkrevd ved lansering |
-| Tidligere innhold | Vise relevant offentlig materiale | Tekster, bilder og eventuelle videoer vi har rett til å publisere | Avklares | Avklares |
+| Chat | La seere delta under sendingen | Enkle regler og informasjon om moderering | Avklares | Lokal demo uten Realtime |
+| Grupper og ledere | Vise hvordan revyen er organisert | Oppdaterte roller, bilder og kontaktinfo | Avklares | Offentlig 2027-materiale flyttet inn |
+| Galleri og tidligere revyer | Vise relevant offentlig materiale | Tekster, bilder og eventuelle videoer vi har rett til å publisere | Avklares | Legacy-materiale flyttet inn |
 
 ## Beslutningslogg
 
@@ -48,6 +49,7 @@ Når vi bestemmer noe, skriv inn **hva vi valgte, hvorfor og hva som fortsatt er
 | Bruke Vite, React, TypeScript og pnpm for den nye frontend-koden | Valgt retning for v2 | Planlagt |
 | Bruke Cloudflare Pages, Cloudflare Stream og Supabase | Valgt retning for hosting, video og backend | Planlagt |
 | Lagre bilder og andre aktuelle filer i Cloudflare R2 | Valgt lagringsløsning for v2 | Besluttet |
+| Bruke `/om-oss`, `/grupper`, `/ledere`, `/galleri`, `/revyer`, `/livestream` og `/kontakt` som første offentlige sidekart | Bevarer de viktigste gamle sidene og gir teamet noe konkret å videreutvikle | Første utkast |
 | Bruke Cloudflare Stream til livestream | Valgt løsning for sending og avspilling | Besluttet |
 | Velge betalingsleverandør og utbetalingsoppsett | Må avklares med økans (CC) før implementasjonen låses | Åpent |
 

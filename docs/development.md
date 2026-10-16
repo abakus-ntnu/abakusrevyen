@@ -27,7 +27,7 @@ pnpm exec shadcn add input label textarea
 
 CLI-en legger komponentene i `src/components/ui` og oppdaterer nødvendige avhengigheter. Vi bruker den låste CLI-en fra prosjektet, så kommandoene trenger ikke `@latest`. Se også den korte forklaringen i `src/components/ui/README.md`.
 
-`src/app/router.tsx` er den sentrale ruteren. Den bruker React Router Data Mode med `createBrowserRouter`, et felles layout og egne sider for `/`, ukjente adresser og uventede rutefeil. Aliaset `@/` peker på `src/` i både Vite og TypeScript. «Fant ikke siden» er en klientrute; en statisk SPA-host vil derfor returnere HTML med status 200. Vi trenger verken SSR eller Pages Functions for dette appskallet.
+`src/app/router.tsx` er den sentrale ruteren. Den bruker React Router Data Mode med `createBrowserRouter`, et felles layout og egne sider. Aliaset `@/` peker på `src/` i både Vite og TypeScript. «Fant ikke siden» er en klientrute; en statisk SPA-host vil derfor returnere HTML med status 200. Vi trenger verken SSR eller Pages Functions for dette appskallet.
 
 ## Hvor ting skal ligge
 
@@ -50,25 +50,25 @@ Tester legges ved siden av koden de dekker, for eksempel `HomePage.test.tsx`. Vi
 
 Begge prosjektene sjekker blant annet valgfrie felter, oppslag i lister og objekter, returverdier og sideeffekt-importer. Node-konfigurasjonen kobler eksplisitt `module: nodenext` med `moduleResolution: nodenext`, så editoren og CLI-en er enige.
 
-## Supabase: klart til å kobles på senere
+## Supabase-testprosjektet
 
 Dette finnes allerede:
 
 - `.env.example`
+- lokale, ignorerte testverdier i `.env.local`
 - en typet `getSupabaseClient()`
 - en bevisst tom `Database`-type som startpunkt
+- Supabase CLI 2.121.0 og lokal konfigurasjon i `supabase/config.toml`
 
-Hvis tilgangsnøklene mangler eller fortsatt er eksempelverdiene, returnerer klienten `null`. Kode som bruker den må håndtere det. Forsiden gjør ingen backend-kall. Det finnes ennå ingen datamodell, migrasjoner, buckets, innloggingsside eller Edge Functions.
+Hvis de offentlige prosjektverdiene mangler eller fortsatt er eksempelverdiene, returnerer klienten `null`. Kode som bruker den må håndtere det. Forsiden gjør ingen backend-kall. Testprosjektet er opprettet, og klienten kan opprettes med de lokale verdiene, men det finnes ennå ingen avtalt datamodell, migrasjoner, innloggingsside eller Edge Functions.
 
-Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate. Auth tar seg av identitet, Postgres av strukturerte data, Storage av filer som ikke er video, og Edge Functions av operasjoner som trenger servertilgang. Vi lager RLS, grants og Storage-policyer før data blir tilgjengelig fra nettleseren. Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React er aldri tilgangskontroll.
+Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate. Auth tar seg av identitet, Postgres av strukturerte data og Edge Functions av operasjoner som trenger servertilgang. Vi lager RLS og grants før data blir tilgjengelig fra nettleseren. Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React er aldri tilgangskontroll. Offentlige bilder og filer skal ligge i Cloudflare R2; oppsettet er beskrevet i [medielagringsguiden](media-storage.md).
 
-## Planlagt flyt for database og migrasjoner
+## Database og migrasjoner
 
-Kommandoene under er en oppskrift for senere. De er ikke kjørt mot noe prosjekt i denne oppgaven. Installer Docker først. Når backend-arbeidet begynner, legger vi til og låser den da gjeldende stabile Supabase CLI-en:
+CLI-en er installert og `supabase init` er kjørt. Installer Docker før du starter den lokale Supabase-stacken:
 
 ```sh
-pnpm add -D --save-exact supabase@latest
-pnpm exec supabase init
 pnpm exec supabase start
 pnpm exec supabase migration new <beskrivende_navn>
 # Rediger migrasjonen og ta med RLS/grants der det trengs.
@@ -77,7 +77,14 @@ pnpm exec supabase db reset
 
 `db reset` tømmer den **lokale** databasen og spiller migrasjonene på nytt. Lokale data forsvinner, så bruk bare syntetiske eller offentlige testdata. Commit gjennomgått `supabase/config.toml` og migrasjoner, men aldri lokale midlertidige data, innloggingstokener eller private seed-data.
 
-Kobling mot et eksternt prosjekt og `db push` trenger en egen, avtalt flyt for test og produksjon. Ingenting er koblet eller skrevet til eksterne prosjekter her.
+Repoet er ikke koblet til det eksterne testprosjektet i CLI-en ennå. Logg inn uten å lagre tokenet i repoet, og koble bare testprosjektet:
+
+```sh
+pnpm exec supabase login
+pnpm exec supabase link --project-ref <test-project-ref>
+```
+
+CLI-en bruker en Supabase Personal Access Token, ikke publishable key fra `.env.local`. `db push` skal først brukes når en migrasjon er gjennomgått. Produksjonsprosjektet skal ha en egen og strengere flyt.
 
 Når en modell finnes og migrasjonene er kjørt, genererer vi typer lokalt:
 
@@ -93,6 +100,10 @@ Et annet valg er å logge inn med CLI-en og bruke `--project-id <test-project-re
 ## Video
 
 Cloudflare Stream skal lagre video. Senere kan en innlogget Edge Function lage kortlivede opplastingsadresser, mens Cloudflare-tokenet bare finnes på serveren. Vi må fortsatt bestemme synlighet, signerte URL-er, størrelsesgrenser og hvem som får laste opp. Ingen videoer eller Edge Functions er lastet opp eller publisert.
+
+## Bilder og andre filer
+
+Cloudflare R2 er valgt for offentlige bilder og andre filer som ikke er video. De allerede publiserte legacy-bildene er lastet opp i test-bucketen, kontrollert mot de opprinnelige filene og koblet til sidene gjennom URL-hjelperen i `src/features/media/media-url.ts`. `VITE_MEDIA_BASE_URL` kan overstyre den innbygde testadressen. Se [bilder og filer i Cloudflare R2](media-storage.md) før nye filer lastes opp eller en produksjonsadresse tas i bruk.
 
 ## Dokumentasjon vi sjekket
 
@@ -125,6 +136,7 @@ Kildene ble kontrollert 6. oktober 2026. De stabile versjonene ligger i `pnpm-lo
 | `@tailwindcss/vite` | 4.3.3 |
 | shadcn | 4.21.1 |
 | `@supabase/supabase-js` | 2.117.2 |
+| Supabase CLI | 2.121.0 |
 | Oxlint | 1.86.0 |
 
 Generatoren foreslo først TypeScript 6.0. Vi oppdaterte til stabile 7.0.2 og kjørte hele sjekkrekken. Ingen direkte avhengigheter er beta, canary eller eksperimentelle.
@@ -137,7 +149,7 @@ Med de låste Node- og pnpm-versjonene har vi kontrollert dette:
 - Oppstart av Vite uten `.env` eller aktive Supabase-nøkler
 - Forsiden, direkte `/ukjent/side`, oppdatering, lenken hjem og tilbake/fremover i Safari
 - Den samme fallback-ruten i forhåndsvisningen av produksjonsbygget
-- At Supabase-klienten returnerer `null` uten tilgangsnøkler
+- At Supabase-klienten returnerer `null` uten prosjektverdier og kan opprettes med de lokale testverdiene
 - `git diff --check`, uendret `LICENSE` og uendrede referanser til `main` og `prod`
 
-GitHub Actions, respons-headere i Cloudflare Pages og ekte backend-integrasjoner er ikke kontrollert eksternt. Ingen skyressurser er opprettet eller endret.
+GitHub Actions, respons-headere i Cloudflare Pages og ekte backend-integrasjoner er ikke kontrollert eksternt. R2-testbucketen brukes til de offentlige bildene. Supabase-testprosjektet er opprettet og de offentlige klientverdiene finnes lokalt, men CLI-link, datamodell, Auth og backend-flyt gjenstår. Stream og Pages er fortsatt ikke koblet til appen.

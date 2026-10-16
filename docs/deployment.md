@@ -31,19 +31,23 @@ Cloudflare Pages bruker SPA-fallback når det ikke finnes en `404.html` i roten.
 
 | Variabel eller hemmelig verdi | Hvor skal den ligge? | Trengs nå? |
 | --- | --- | --- |
-| `VITE_SUPABASE_URL` | Lokal `.env.local` eller Pages-miljøet | Valgfri for appskallet; test-URL i testmiljø |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | Samme miljø som prosjekt-URL-en | Valgfri for appskallet; bare offentlig publishable key |
+| `VITE_SUPABASE_URL` | Lokal `.env.local` eller Pages-miljøet | Satt lokalt for testprosjektet; må senere settes i Pages-testmiljøet |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Samme miljø som prosjekt-URL-en | Satt lokalt for testprosjektet; bare offentlig publishable key |
+| `VITE_MEDIA_BASE_URL` | Lokal `.env.local` eller Pages-miljøet | Valgfri overstyring; appen har testbucketens offentlige `r2.dev`-adresse som reserve, mens produksjon skal bruke eget domene |
 | Administrative Supabase-nøkler | Framtidig secret-lager for server/CLI | Ikke satt opp; aldri med `VITE_` foran |
 | Konto-ID og API-token for Cloudflare Stream | Framtidige secrets for Edge Functions | Ikke satt opp; tokenet skal aldri til nettleseren |
+| R2 API-token eller S3-nøkler | Framtidig server/CI-secret hvis automatisert opplasting trengs | Ikke satt opp; skal aldri ligge i frontend eller ha `VITE_`-prefiks |
 
-Test og produksjon skal ha hvert sitt Supabase-prosjekt og egne Pages-verdier. Tillatte returadresser for Auth må passe med adressene vi faktisk bruker. Før nettleseren kobles på data, lager vi riktige RLS-regler, grants og Storage-policyer. Stream-oppsett for avspilling og opplasting kommer sammen med videofunksjonen; vi legger ikke inn tomme Stream-variabler før de trengs.
+Test og produksjon skal ha hvert sitt Supabase-prosjekt og egne Pages-verdier. Tillatte returadresser for Auth må passe med adressene vi faktisk bruker. Før nettleseren kobles på data, lager vi riktige RLS-regler og grants. R2-buckets og oppsettet deres er beskrevet i [medielagringsguiden](media-storage.md). Stream-oppsett for avspilling og opplasting kommer sammen med videofunksjonen; vi legger ikke inn tomme Stream-variabler før de trengs.
+
+Bildene bruker foreløpig testbucketens offentlige `r2.dev`-adresse. Den er egnet til utvikling, men skal erstattes med produksjonsbucket og eget mediedomene før lansering. Dette krever en ny verdi for `VITE_MEDIA_BASE_URL` i Pages og et nytt bygg; ingen DNS-endring er gjort i repoarbeidet.
 
 ## Før første testdeploy
 
 - Gå gjennom `v2` lokalt og avklar at branchen er klar til å sendes til GitHub.
 - Opprett det isolerte Pages-testprosjektet med innstillingene over.
 - Gjør CI-sjekken obligatorisk i GitHub hvis teamet ønsker det.
-- Appskallet trenger ikke Supabase. For backend-testing må vi først bli enige om modell, migrasjoner og policyer, og deretter sette opp et eget testprosjekt.
+- Supabase-testprosjektet er opprettet og lokale klientverdier er satt. Før backend-testing må repoet kobles til testprosjektet med CLI, og modell, migrasjoner og policyer må gjennomgås.
 - Dobbeltsjekk at produksjon, live DNS og GitHub Pages fortsatt er urørt.
 - Kjør CI og test `/`, en ukjent dyp URL, oppdatering, lenken hjem og nettleserhistorikk. Se også etter feil i konsollen og feil respons-headere.
 
