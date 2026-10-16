@@ -5,8 +5,8 @@
 - Ikke endre `main`/`prod`, send eller slå sammen kode, publiser, endre DNS eller rør eksterne innstillinger uten en tydelig bestilling.
 - Bruk Node 24.21.0 og pnpm 12.9.1. Ta med `pnpm-lock.yaml` når avhengigheter endres.
 - Behold appen klientrendret med Vite, React Router, Tailwind og shadcn/ui.
-- Hold appskallet lite til innhold, navigasjon og design er avklart.
-- Bruk Supabase til Auth, database, Storage og Edge Functions, og Cloudflare Stream til video.
+- Hold sider og komponenter enkle å endre mens innhold og design fortsatt avklares.
+- Bruk Supabase til Auth, database og Edge Functions, Cloudflare R2 til bilder og filer, og Cloudflare Stream til video.
 - Appskallet skal virke uten tilgangsnøkler. Generer databasetyper fra en avtalt modell; ikke dikt opp tabeller.
 - Alt med `VITE_*` er offentlig. Ikke legg inn private nøkler, hemmelige temaer eller private medier.
 - Skriv kode, variabler og kodekommentarer på engelsk. Skriv dokumentasjon og synlig innhold på naturlig norsk.

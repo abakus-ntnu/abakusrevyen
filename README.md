@@ -1,8 +1,8 @@
 # Abakusrevyen v2
 
-Her bygger vi den nye nettsiden til Abakusrevyen. Foreløpig er dette et lite og ryddig utgangspunkt: en klientrendret React-app med en enkel startside og en «fant ikke siden»-rute. Innhold, navigasjon og endelig uttrykk finner vi ut av sammen før vi bygger resten.
+Her bygger vi den nye nettsiden til Abakusrevyen. Det finnes nå et klientrendret appskall med responsiv navigasjon, de viktigste offentlige sidene og en enkel skisse av livestream og chat. Tekstene og uttrykket er et startpunkt som kan endres når innholds- og designarbeidet fortsetter.
 
-Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og shadcn/ui. Planen er å bruke Supabase til innlogging, database, fillagring og Edge Functions, Cloudflare Stream til video og Cloudflare Pages til publisering. Ingen skytjenester er satt opp av denne endringen.
+Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og shadcn/ui. Supabase-testprosjektet er opprettet og kan brukes lokalt med offentlige verdier i `.env.local`, men database, innlogging og Edge Functions er ikke bygget ennå. Offentlige bilder hentes fra test-bucketen i Cloudflare R2. Cloudflare Stream og Pages er fortsatt planlagt.
 
 ## Kom i gang
 
@@ -21,7 +21,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Åpne adressen Vite skriver i terminalen. Appskallet virker fint uten Supabase-nøkler. Når vi har et prosjekt å koble til, kopierer du `.env.example` til `.env.local` og fyller inn offentlig prosjekt-URL og publishable key. Start Vite på nytt etter at miljøvariablene er endret.
+Åpne adressen Vite skriver i terminalen. Appen virker uten Supabase-nøkler og bruker den offentlige R2-testadressen som reserve. Hvis du skal koble til Supabase eller prøve en annen medieadresse, kopierer du `.env.example` til `.env.local` og endrer de offentlige verdiene der. Start Vite på nytt etter at miljøvariablene er endret.
 
 Nyttige kommandoer:
 
@@ -30,6 +30,7 @@ pnpm typecheck
 pnpm lint
 pnpm build
 pnpm preview
+pnpm exec supabase --version
 
 # Kjør typekontroll, lint og bygg i én omgang
 pnpm check
@@ -42,6 +43,8 @@ pnpm check
 - [Bidra til prosjektet](CONTRIBUTING.md)
 - [Lokal utvikling og Supabase-plan](docs/development.md)
 - [Deploy og miljøer](docs/deployment.md)
+- [Bilder og filer i Cloudflare R2](docs/media-storage.md)
+- [Tjenestegrenser og kostnader](docs/service-limits-and-costs.md)
 - [Mal for innholdsplanlegging](docs/content-plan.md)
 - [Oversikt over den gamle nettsiden](docs/legacy-inventory.md)
 - [Instruksjoner for AI-verktøy](AGENTS.md)
