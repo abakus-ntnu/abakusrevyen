@@ -206,6 +206,9 @@ importers:
         specifier: 1.4.0
         version: 1.4.0
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: 0.5.12
+        version: 0.5.12
       '@types/node':
         specifier: 24.19.1
         version: 24.19.1
@@ -374,6 +377,9 @@ packages:
     engines: {bun: '>=1', deno: '>=2.7.10', node: '>=16'}
     peerDependencies:
       '@noble/ciphers': ^1.0.0
+
+  '@electric-sql/pglite@0.5.12':
+    resolution: {integrity: sha512-IiAxv1ld1V9QP0AWsflliDqrGRo+20O+yXOr2fjk6YzBHsCvTPclwQhCB1uZ7eHtPrxUrSllNzWgqy/Ot76PEw==}
 
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
@@ -3352,6 +3358,8 @@ snapshots:
   '@ecies/ciphers@0.2.6(@noble/ciphers@1.3.0)':
     dependencies:
       '@noble/ciphers': 1.3.0
+
+  '@electric-sql/pglite@0.5.12': {}
 
   '@floating-ui/core@1.8.0':
     dependencies:

@@ -33,6 +33,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Typecheck
         run: pnpm typecheck
+      - name: Database access rules
+        run: pnpm test:db
       - name: Lint
         run: pnpm lint
       - name: Production build
