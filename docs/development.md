@@ -60,7 +60,7 @@ Dette finnes allerede:
 - en bevisst tom `Database`-type som startpunkt
 - Supabase CLI 2.121.0 og lokal konfigurasjon i `supabase/config.toml`
 
-Hvis de offentlige prosjektverdiene mangler eller fortsatt er eksempelverdiene, returnerer klienten `null`. Kode som bruker den må håndtere det. Forsiden gjør ingen backend-kall. Testprosjektet er opprettet, og klienten kan opprettes med de lokale verdiene, men det finnes ennå ingen avtalt datamodell, migrasjoner, innloggingsside eller Edge Functions.
+Hvis de offentlige prosjektverdiene mangler eller fortsatt er eksempelverdiene, returnerer klienten `null`. Kode som bruker den må håndtere det. Forsiden gjør ingen backend-kall. Testprosjektet er opprettet, og klienten kan opprettes med de lokale verdiene, Datamodellen og migrasjonene er på plass og beskrevet i [databasedokumentasjonen](database.md), men det finnes ennå ingen innloggingsside eller Edge Functions.
 
 Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate. Auth tar seg av identitet, Postgres av strukturerte data og Edge Functions av operasjoner som trenger servertilgang. Vi lager RLS og grants før data blir tilgjengelig fra nettleseren. Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React er aldri tilgangskontroll. Offentlige bilder og filer skal ligge i Cloudflare R2; oppsettet er beskrevet i [medielagringsguiden](media-storage.md).
 
@@ -76,6 +76,8 @@ pnpm exec supabase db reset
 ```
 
 `db reset` tømmer den **lokale** databasen og spiller migrasjonene på nytt. Lokale data forsvinner, så bruk bare syntetiske eller offentlige testdata. Commit gjennomgått `supabase/config.toml` og migrasjoner, men aldri lokale midlertidige data, innloggingstokener eller private seed-data.
+
+`pnpm test:db` kjører alle migrasjonene i en Postgres i minnet (PGlite) og sjekker tilgangsreglene som anonym, seer, moderator, redaktør, admin og service role. Testen trenger ikke Docker og kjører også i CI. Legg til tester i `supabase/tests/access-rules.test.mjs` når du endrer tabeller eller regler.
 
 Repoet er ikke koblet til det eksterne testprosjektet i CLI-en ennå. Logg inn uten å lagre tokenet i repoet, og koble bare testprosjektet:
 

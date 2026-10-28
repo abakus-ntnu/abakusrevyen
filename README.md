@@ -2,7 +2,7 @@
 
 Her bygger vi den nye nettsiden til Abakusrevyen. Det finnes nå et klientrendret appskall med responsiv navigasjon, de viktigste offentlige sidene og en enkel skisse av livestream og chat. Tekstene og uttrykket er et startpunkt som kan endres når innholds- og designarbeidet fortsetter.
 
-Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og shadcn/ui. Supabase-testprosjektet er opprettet og kan brukes lokalt med offentlige verdier i `.env.local`, men database, innlogging og Edge Functions er ikke bygget ennå. Offentlige bilder hentes fra test-bucketen i Cloudflare R2. Cloudflare Stream og Pages er fortsatt planlagt.
+Nettsiden bygges med Vite, React, TypeScript, React Router, Tailwind CSS og shadcn/ui. Supabase-testprosjektet er opprettet og kan brukes lokalt med offentlige verdier i `.env.local`, Databaseskjemaet med tilgangsregler ligger i `supabase/migrations` og er beskrevet i [databasedokumentasjonen](docs/database.md), men innlogging og Edge Functions er ikke bygget ennå. Offentlige bilder hentes fra test-bucketen i Cloudflare R2. Cloudflare Stream og Pages er fortsatt planlagt.
 
 ## Kom i gang
 
@@ -28,6 +28,7 @@ Nyttige kommandoer:
 ```sh
 pnpm typecheck
 pnpm lint
+pnpm test:db
 pnpm build
 pnpm preview
 pnpm exec supabase --version
@@ -42,6 +43,7 @@ pnpm check
 
 - [Bidra til prosjektet](CONTRIBUTING.md)
 - [Lokal utvikling og Supabase-plan](docs/development.md)
+- [Databasen: tabeller, tilgangsregler og flyter](docs/database.md)
 - [Deploy og miljøer](docs/deployment.md)
 - [Bilder og filer i Cloudflare R2](docs/media-storage.md)
 - [Tjenestegrenser og kostnader](docs/service-limits-and-costs.md)
