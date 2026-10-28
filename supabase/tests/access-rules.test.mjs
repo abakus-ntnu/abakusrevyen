@@ -74,7 +74,6 @@ const as = async (role, uid, fn) => {
   }
 }
 const q = async (sql, params) => (await db.query(sql, params)).rows
-const sent = async () => q(`select topic, event, payload, private, extension from realtime.messages order by inserted_at, event`)
 // What Realtime does on join: look at realtime.messages as the user, with the topic set.
 const canJoin = async (role, uid, topic) => {
   await db.exec(`reset role; select set_config('request.jwt.claim.sub', '${''}', false);`)
@@ -312,7 +311,7 @@ await as('authenticated', admin, async () => {
 // --- shows -------------------------------------------------------------------
 const show = (await q(`insert into public.shows (revue_id, title, starts_at, doors_open_at, venue_name, venue_address, visible_from)
   values ($1, 'Lordag kveld', now() + interval '3 days', now() + interval '3 days' - interval '30 minutes', 'Byscenen', 'Kongens gate 19, Trondheim', now() - interval '1 hour') returning id`, [revue]))[0].id
-const hiddenShow = (await q(`insert into public.shows (revue_id, title, starts_at) values ($1, 'Ekstraforestilling', now() + interval '4 days') returning id`, [revue]))[0].id
+await q(`insert into public.shows (revue_id, title, starts_at) values ($1, 'Ekstraforestilling', now() + interval '4 days')`, [revue])
 const otherRevueShow = (await q(`insert into public.shows (revue_id, title, starts_at, visible_from) values ($1, 'Neste aar', now() + interval '400 days', now()) returning id`, [hiddenRevue]))[0].id
 await db.query(`insert into public.ticket_links (revue_id, show_id, label, url, visible_from) values
   ($1, $2, 'Billetter lordag', 'https://example.com/lordag', now() + interval '1 day')`, [revue, show])
