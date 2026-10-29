@@ -93,6 +93,8 @@ Every login gets a row in `profiles`, created automatically at sign-up.
 
 `user_type` decides which price a user pays for a stream. It is set at sign-up: a user becomes `student` if the login provider's ID contains `abakus`.
 
+**Kjent begrensning:** Dette beskriver dagens trigger, ikke en tilstrekkelig studentverifisering. Alle kan opprette AbaID. Direkte LEGO-brukerdata er testet og inneholder `isActive`, `isStudent`, `isAbakusMember`, grupper og medlemskap, men Supabase lagret ikke disse statusfeltene automatisk. #144 må erstatte provider-sjekken med serververifisering og avtalt utløp, også når AbaID kobles til etter Vipps-registrering. Se [AbaID-guiden](abaid.md) for testfunn og gjenstående avklaringer om studietilhørighet og hvor fersk statusen er.
+
 | `role` | Can do |
 |---|---|
 | `user` | Watch streams they have access to, chat, edit their own display name and avatar |
@@ -523,6 +525,6 @@ The files in `supabase/migrations/` are the source of truth, and they match what
 
 - **First admin:** after signing in once, set the role by hand in the Supabase SQL editor: `update public.profiles set role = 'admin' where id = '<user id>';`
 - **Realtime setting:** turn off "Allow public access" under Realtime Settings in the Supabase dashboard, so only private channels can be used.
-- **Login providers:** set up Abakus OAuth and Vipps in Supabase Auth. The Abakus provider's ID has to contain `abakus` for users to be marked as students. If it does not, the sign-up trigger needs a new migration.
+- **Innlogging:** AbaID-provideren er testet manuelt i Supabase-testprosjektet; Vipps, innloggingsside og kontokobling gjenstår. Provider-basert studentstatus må erstattes gjennom #144. Se [AbaID-guiden](abaid.md); en fungerende OAuth-test er ikke en ferdig verifiserings- eller innloggingsfunksjon i appen.
 - **Image upload:** create the upload route (#136). See [Images](#images).
 - **Realtime chat:** not yet tested against the real Realtime service. The database side is tested locally.

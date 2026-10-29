@@ -35,6 +35,7 @@ Cloudflare Pages bruker SPA-fallback når det ikke finnes en `404.html` i roten.
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Samme miljø som prosjekt-URL-en | Satt lokalt for testprosjektet; bare offentlig publishable key |
 | `VITE_MEDIA_BASE_URL` | Lokal `.env.local` eller Pages-miljøet | Valgfri overstyring; appen har testbucketens offentlige `r2.dev`-adresse som reserve, mens produksjon skal bruke eget domene |
 | Administrative Supabase-nøkler | Framtidig secret-lager for server/CLI | Ikke satt opp; aldri med `VITE_` foran |
+| AbaID Client ID og Client Secret | Serverkonfigurasjonen til den egendefinerte OAuth-provideren i Supabase Auth | Satt opp manuelt for test; se [AbaID-guiden](abaid.md). Ikke i frontend eller `VITE_*` |
 | Konto-ID og API-token for Cloudflare Stream | Framtidige secrets for Edge Functions | Ikke satt opp; tokenet skal aldri til nettleseren |
 | R2 API-token eller S3-nøkler | Framtidig server/CI-secret hvis automatisert opplasting trengs | Ikke satt opp; skal aldri ligge i frontend eller ha `VITE_`-prefiks |
 
