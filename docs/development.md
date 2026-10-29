@@ -52,6 +52,8 @@ Begge prosjektene sjekker blant annet valgfrie felter, oppslag i lister og objek
 
 ## Supabase-testprosjektet
 
+AbaID-provideren er manuelt satt opp og testet i Supabase-testprosjektet. Se [oppsett og testing av AbaID](abaid.md) for egen LEGO-applikasjon, callback-adresser og bekreftede brukerfelt. Dette betyr ikke at innloggingsside, kontokobling eller serververifisering er ferdig i appen.
+
 Dette finnes allerede:
 
 - `.env.example`

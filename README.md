@@ -43,6 +43,7 @@ pnpm check
 
 - [Bidra til prosjektet](CONTRIBUTING.md)
 - [Lokal utvikling og Supabase-plan](docs/development.md)
+- [AbaID: opprett testapp og test innlogging](docs/abaid.md)
 - [Databasen: tabeller, tilgangsregler og flyter](docs/database.md)
 - [Deploy og miljøer](docs/deployment.md)
 - [Bilder og filer i Cloudflare R2](docs/media-storage.md)
