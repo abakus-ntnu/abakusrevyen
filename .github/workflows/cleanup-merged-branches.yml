@@ -1,0 +1,81 @@
+name: Clean up merged branches
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview deletions without deleting branches"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: cleanup-merged-branches
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Scheduled runs only delete when this repository variable is explicitly true.
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && toJSON(inputs.dry_run) || (vars.CLEANUP_MERGED_BRANCHES_ENABLED == 'true' && 'false' || 'true') }}
+    steps:
+      - name: Clean up unchanged branches seven days after merge
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const dryRun = process.env.DRY_RUN !== "false";
+            const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+            const { data: repository } = await github.rest.repos.get({ owner, repo });
+            const keep = new Set(["main", "master", "v2", "prod", repository.default_branch]);
+            const closed = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: "closed", per_page: 100
+            });
+
+            // A reused branch must wait seven days after its latest merge.
+            const latest = new Map();
+            for (const pr of closed) {
+              if (!pr.merged_at || pr.head.repo?.full_name !== repository.full_name) continue;
+              const previous = latest.get(pr.head.ref);
+              if (!previous || Date.parse(pr.merged_at) > Date.parse(previous.merged_at)) {
+                latest.set(pr.head.ref, pr);
+              }
+            }
+
+            let candidates = 0;
+            let deleted = 0;
+            for (const [branch, pr] of latest) {
+              if (keep.has(branch) || Date.parse(pr.merged_at) > cutoff) continue;
+              const { data: active } = await github.rest.pulls.list({
+                owner, repo, state: "open", head: `${owner}:${branch}`, per_page: 1
+              });
+              if (active.length > 0) continue;
+
+              let current;
+              try {
+                ({ data: current } = await github.rest.repos.getBranch({ owner, repo, branch }));
+              } catch (error) {
+                if (error.status === 404) continue;
+                throw error;
+              }
+              if (current.protected || current.commit.sha !== pr.head.sha) continue;
+
+              candidates++;
+              core.info(`${dryRun ? "Would delete" : "Deleting"} ${JSON.stringify(branch)} (PR #${pr.number}).`);
+              if (!dryRun) {
+                await github.rest.git.deleteRef({ owner, repo, ref: `heads/${branch}` });
+                deleted++;
+              }
+            }
+
+            await core.summary
+              .addHeading("Opprydding av mergede grener")
+              .addRaw(`Modus: ${dryRun ? "tørrkjøring" : "sletting"}. Kandidater: ${candidates}. Slettet: ${deleted}.`)
+              .write();
