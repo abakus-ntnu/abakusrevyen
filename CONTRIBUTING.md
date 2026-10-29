@@ -4,6 +4,14 @@ Hyggelig at du vil bidra! Utviklingen av den nye nettsiden skjer på `v2`. Lag e
 
 Den gamle produksjonssiden publiseres fortsatt fra `prod` til GitHub Pages. Den nye CI-en publiserer ingenting, og det halvferdige appskallet skal ikke slås sammen med `main` eller `prod`. Vi avtaler en egen lanseringsplan når nettsiden er klar.
 
+## Opprydding av arbeidsgrener
+
+Workflowen `Clean up merged branches` finner arbeidsgrener sju dager etter siste merge. Den hopper over `main`, `master`, `v2`, `prod`, standardgrenen og beskyttede grener, samt grener med åpne pull requests eller endret commit siden merge. Grener fra forks slettes ikke.
+
+Den starter i tørrkjøring og viser kandidatene i kjøreloggen. Manuell kjøring har også tørrkjøring på som standard. For å aktivere sletting i den daglige kjøringen setter en administrator repository-variabelen `CLEANUP_MERGED_BRANCHES_ENABLED` til `true` under Settings → Secrets and variables → Actions → Variables. La GitHubs `Automatically delete head branches` være av, ellers slettes grenene umiddelbart.
+
+Planlagt kjøring krever at workflow-filen finnes på repoets standardgren. En PR til `v2` alene aktiverer derfor ikke tidsplanen når standardgrenen er `main`. Ikke merge resten av `v2` til `main` for å aktivere opprydding; en eventuell overføring av bare workflowen må avtales separat.
+
 ## Før du ber om en gjennomgang
 
 1. Bruk Node- og pnpm-versjonene fra README.
