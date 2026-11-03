@@ -40,7 +40,7 @@ export function SiteHeader() {
 
   return (
     <header className="relative z-50 bg-background">
-      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-5 px-4 sm:px-6 md:h-28 lg:px-8">
+      <div className="mx-auto flex h-18 items-center justify-between gap-5 px-4 sm:px-6 md:h-24 lg:px-12">
         <Link to="/" className="flex items-center gap-3" aria-label="Abakusrevyen – forsiden" onClick={() => setIsOpen(false)}>
           <img src={getMediaUrl('images/revy-logo.webp')} alt="" className="size-10 md:size-12" />
           <span className="font-heading text-lg font-semibold tracking-tight md:text-xl">Abakusrevyen</span>
@@ -75,7 +75,7 @@ export function SiteHeader() {
       {isOpen ? (
         <nav
           id="mobile-navigation"
-          className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto border-t bg-background px-4 py-5 md:top-28 lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-[4.5rem] overflow-y-auto border-t bg-background px-4 py-5 md:top-24 lg:hidden"
           aria-label="Mobilmeny"
         >
           <div className="mx-auto grid max-w-2xl gap-2">
