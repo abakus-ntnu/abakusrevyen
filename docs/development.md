@@ -31,6 +31,18 @@ CLI-en legger komponentene i `src/components/ui` og oppdaterer nødvendige avhen
 
 ## Hvor ting skal ligge
 
+### Forhåndsvisning av livestream-siden
+
+`/livestream` har et avspillingsområde med chat ved siden av på stor skjerm og under på mobil. Sidens egne kontroller kan skjule chatten, utvide avspillingsområdet med kinomodus (Esc avslutter) og åpne fullskjerm når nettleseren støtter det. Dette er lokal visningsfunksjonalitet; ingen sending, innlogging, betaling eller tilgangskontroll er koblet til.
+
+Kinomodus fyller nettleservinduets innhold med spiller og chat uten sidemarg, navigasjon eller sideskrolling. Bare meldingslisten i chatten kan rulles. Nettleserens egne verktøylinjer blir værende. Esc eller kinoknappen går tilbake til vanlig visning, og tastaturfokus holdes i kinovisningen mens den er åpen.
+
+I `pnpm dev` finnes et sammenleggbart felt nederst på siden for å vise tilstandene uten tilgang, før sending, under sending, pause, etter sending, opptak og avbrudd. Velgeren finnes ikke i produksjonsbygget, som viser ventetilstanden. Eksempeltekstene ligger i `src/pages/livestream/preview-states.ts` og er ikke en autoritativ kilde til sendestatus eller kjøpsrettigheter.
+
+Arbeidet hører til #122. Chatkomponentens innhold og funksjonalitet videreutvikles separat i #124/#131; siden gir den bare plass i layouten. Faktisk Cloudflare-avspilling og sikre tokens følger #130/#134. Dato, pris og hvilke opptaksrettigheter billetten gir må hentes fra avtalt modell når integrasjonen bygges.
+
+### Mapper og ansvar
+
 Vi oppretter mapper når de får en tydelig jobb. Noen foreløpig tomme mapper har en `.gitkeep`, slik at strukturen blir med i Git fra starten.
 
 - `src/app` inneholder appens inngang og router.
