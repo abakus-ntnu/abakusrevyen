@@ -4,6 +4,6 @@ const timeFormat = new Intl.DateTimeFormat('nb-NO', {
     timeZone: 'Europe/Oslo'
 })
 
-export function formatMessageTime(sentAt: string) {
-    return timeFormat.format(new Date(sentAt))
+export function formatMessageTime(createdAt: string) {
+    return timeFormat.format(new Date(createdAt))
 }
