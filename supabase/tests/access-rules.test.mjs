@@ -5,56 +5,10 @@
 //
 // Run from the repo root:
 //   pnpm test:db
-import { PGlite } from '@electric-sql/pglite'
-import { readFileSync, readdirSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import { createTestDatabase } from './test-database.mjs'
+import { runRevueModelTests } from './revue-model.test.mjs'
 
-const db = new PGlite()
-const dir = fileURLToPath(new URL('../migrations/', import.meta.url))
-const migrations = readdirSync(dir).filter((f) => f.endsWith('.sql')).sort()
-
-// Stand-ins for what a Supabase project already has.
-await db.exec(`
-  create role anon nologin;
-  create role authenticated nologin;
-  create role service_role nologin bypassrls;
-  create schema auth;
-  create table auth.users (
-    id uuid primary key default gen_random_uuid(),
-    email text,
-    raw_app_meta_data jsonb,
-    raw_user_meta_data jsonb
-  );
-  create function auth.uid() returns uuid language sql stable as $$
-    select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
-  $$;
-  grant usage on schema public, auth to anon, authenticated, service_role;
-  create publication supabase_realtime;
-  create schema realtime;
-  create table realtime.messages (
-    id uuid primary key default gen_random_uuid(),
-    topic text not null,
-    extension text not null,
-    payload jsonb,
-    event text,
-    private boolean default false,
-    inserted_at timestamp not null default now()
-  );
-  alter table realtime.messages enable row level security;
-  create function realtime.topic() returns text language sql stable as $$
-    select nullif(current_setting('realtime.topic', true), '')
-  $$;
-  create function realtime.send(payload jsonb, event text, topic text, private boolean default true)
-  returns void language plpgsql as $$
-  begin
-    insert into realtime.messages (payload, event, topic, private, extension)
-    values (payload, event, topic, private, 'broadcast');
-  end $$;
-  grant usage on schema realtime to anon, authenticated, service_role;
-  grant select, insert on realtime.messages to authenticated;
-`)
-
-for (const file of migrations) await db.exec(readFileSync(dir + file, 'utf8'))
+const { db, migrations } = await createTestDatabase()
 console.log(`${migrations.length} migrations applied`)
 
 let pass = 0
@@ -118,7 +72,7 @@ await db.query(`update public.profiles set role = 'editor' where id = $1`, [edit
 
 const profs = await q(`select id, display_name, user_type from public.profiles`)
 const prof = (id) => profs.find((p) => p.id === id)
-ok('profile created for student with type student', prof(student)?.user_type === 'student' && prof(student)?.display_name === 'Ola Student')
+ok('AbaID alone does not grant student pricing', prof(student)?.user_type === 'external' && prof(student)?.display_name === 'Ola Student')
 ok('profile created for vipps user with type external', prof(external)?.user_type === 'external' && prof(external)?.display_name === 'Kari Ekstern')
 ok('display name falls back to email local part', prof(other)?.display_name === 'per')
 
@@ -127,6 +81,8 @@ const revue = (await q(`insert into public.revues (year, slug, teaser, visible_f
   values (2027, 'revy-2027', 'Noe stort kommer', now() - interval '1 day', now() + interval '7 days', true) returning id`))[0].id
 await db.query(`insert into public.revue_details (revue_id, name, tagline) values ($1, 'Hemmelig navn', 'Tagline')`, [revue])
 const hiddenRevue = (await q(`insert into public.revues (year, slug) values (2028, 'revy-2028') returning id`))[0].id
+await db.query(`insert into public.revue_sales (revue_id, first_show_at, stream_retire_at, stream_delete_at, terms_version)
+  values ($1, now() + interval '2 days', now() + interval '2 months', now() + interval '2 months 20 days', 'test-v1')`, [revue])
 await db.query(`insert into public.ticket_links (revue_id, label, url, visible_from) values
   ($1, 'Premiere', 'https://example.com/a', now() + interval '1 day'),
   ($1, 'Fredag', 'https://example.com/b', now() - interval '1 day')`, [revue])
@@ -205,6 +161,7 @@ await as('service_role', null, async () => {
   const order = (await q(`insert into public.orders (user_id, stream_id, status, amount, stripe_checkout_session_id, paid_at)
     values ($1, $2, 'paid', 14900, 'cs_test_1', now()) returning id`, [external, stream]))[0].id
   await db.query(`insert into public.stream_access (user_id, stream_id, source, order_id) values ($1, $2, 'purchase', $3)`, [external, stream, order])
+  await db.query(`insert into public.revue_access (user_id, revue_id, source, order_id) values ($1, $2, 'purchase', $3)`, [external, revue, order])
   await db.query(`insert into public.stream_access (user_id, stream_id, source, note) values ($1, $2, 'granted', 'skuespiller')`, [student, hiddenStream])
   await db.query(`insert into public.stripe_events (id, type, payload) values ('evt_1', 'checkout.session.completed', '{}')`)
   ok('service role writes orders, access and stripe events', true)
@@ -280,6 +237,7 @@ await as('authenticated', external, async () => {
 
 // refund
 await db.query(`update public.stream_access set revoked_at = now() where user_id = $1`, [external])
+await db.query(`update public.revue_access set revoked_at = now(), revocation_reason = 'test_revocation' where user_id = $1`, [external])
 await as('authenticated', external, async () => {
   ok('revoked access hides the chat again', (await q(`select * from public.chat_messages`)).length === 0)
 })
@@ -362,6 +320,8 @@ const cols = await q(`select 1 from information_schema.columns where table_schem
 ok('ticket_links.show_starts_at is gone', cols.length === 0)
 const norls = await q(`select relname from pg_class c join pg_namespace n on n.oid = c.relnamespace where n.nspname = 'public' and c.relkind = 'r' and not c.relrowsecurity`)
 ok('every public table has RLS enabled', norls.length === 0, JSON.stringify(norls))
+
+await runRevueModelTests({ db, as, q, ok, fails, mk })
 
 console.log(`\n${pass} passed, ${fail} failed`)
 process.exit(fail ? 1 : 0)

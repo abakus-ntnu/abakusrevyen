@@ -1,6 +1,8 @@
 # Database
 
-The database for the Abakusrevyen website: live streams with pay-per-stream access, stream chat, physical shows and ticket links, a photo gallery and a blog.
+Databasen støtter revypass, videokilder, kontoverifisering, chat, forestillinger, galleri og blogg. Den nye modellen i #144 er beskrevet i [Datamodell for verifisering, revyvideoer og revypass](database-revue-model.md).
+
+**Endret i #144:** Studentpris følger serververifisering med utløp, ikke provider-navn eller `profiles.user_type`. Kjøp og interne rettigheter gjelder en revy, ikke én stream. Videokilder og hostingfrister er adskilt fra kjøpsretten. De eldre stream-/Stripe-tabellene er beholdt under overgangen. Beskrivelsene nedenfor dokumenterer den opprinnelige grunnmodellen; bruk den nye guiden for pris, avspilling, video og refusjon.
 
 It runs on Supabase (Postgres 17), project `abakusrevyen.no`, ref `getffkktbyjusuyqxuzw`, region `eu-west-1`. The schema is defined by the SQL files in `supabase/migrations/`. This file explains what is there and why.
 

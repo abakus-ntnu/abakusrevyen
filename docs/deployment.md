@@ -4,6 +4,8 @@ Dette dokumentet skiller mellom det vi allerede har gjort i repoet, og det som f
 
 ## Slik står det nå
 
+**Databasekontroll 12. november 2026:** Supabase-koblingen har tilgang til testprosjektet `abakusrevyen.no` (`getffkktbyjusuyqxuzw`). De fire opprinnelige migrasjonene samsvarte med repoet. Utvidelsen for verifisering, videokilder og revypass i #144 er deretter anvendt og kontrollert der, og databasetypene er generert fra prosjektet. Ny lokal migrasjonshistorikk samsvarer med versjonene koblingen tildelte. Det finnes fortsatt ingen automatisk database-deploy fra GitHub eller CLI-link i denne arbeidskopien. Ny app-/Auth-/betalingsfunksjonalitet og Cloudflare-opprydding er ikke deployet. Se [modellguiden](database-revue-model.md).
+
 Den gamle produksjonssiden ligger fortsatt på GitHub Pages. Ved commitene som er notert i [legacy-oversikten](legacy-inventory.md), starter `deploy.yml` når noen sender endringer til `prod`. Workflowen kan også startes manuelt. Vi har ikke endret `main`, `prod`, DNS eller andre eksterne produksjonsinnstillinger, og vi har heller ikke sjekket hvilken commit som faktisk serveres akkurat nå.
 
 På `v2` er den gamle workflowen for publisering og `public/CNAME` tatt bort. GitHub Actions sjekker bare endringer som sendes til `v2`, og pull requests som skal inn i `v2`. Workflowen har lesetilgang, ingen hemmelige verdier, ingen publiseringssteg og ingen manuell startknapp. Den er klargjort lokalt, men ikke kjørt på GitHub. Ingenting er sendt eller publisert.

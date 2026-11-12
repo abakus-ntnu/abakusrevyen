@@ -71,12 +71,14 @@ Dette finnes allerede:
 - `.env.example`
 - lokale, ignorerte testverdier i `.env.local`
 - en typet `getSupabaseClient()`
-- en bevisst tom `Database`-type som startpunkt
+- en `Database`-type generert fra skjemaet i Supabase-testprosjektet
 - Supabase CLI 2.121.0 og lokal konfigurasjon i `supabase/config.toml`
 
 Hvis de offentlige prosjektverdiene mangler eller fortsatt er eksempelverdiene, returnerer klienten `null`. Kode som bruker den må håndtere det. Forsiden gjør ingen backend-kall. Testprosjektet er opprettet, og klienten kan opprettes med de lokale verdiene, Datamodellen og migrasjonene er på plass og beskrevet i [databasedokumentasjonen](database.md), men det finnes ennå ingen innloggingsside eller Edge Functions.
 
 Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate. Auth tar seg av identitet, Postgres av strukturerte data og Edge Functions av operasjoner som trenger servertilgang. Vi lager RLS og grants før data blir tilgjengelig fra nettleseren. Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React er aldri tilgangskontroll. Offentlige bilder og filer skal ligge i Cloudflare R2; oppsettet er beskrevet i [medielagringsguiden](media-storage.md).
+
+Databaseutvidelsen i #144 er anvendt på testprosjektet via Supabase-koblingen. [Modellguiden](database-revue-model.md) beskriver verifisering, videokilder, revypass og frister. Ingen LEGO-grupper, verifiseringsperiode, aktive salg eller Cloudflare-sletting aktiveres bare ved å opprette disse tabellene. Innlogging og Edge Functions gjenstår.
 
 ## Database og migrasjoner
 
