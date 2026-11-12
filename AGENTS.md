@@ -18,6 +18,36 @@
 - Kjør frossen installasjon, typekontroll, lint og bygg. Sjekk endrede ruter i nettleseren.
 - Fortell hva som er kontrollert, og skill tydelig mellom lokal klargjøring og faktisk skyoppsett.
 
+## Skills for dette repoet
+
+Delte skills ligger i `.agents/skills`. Claude Code finner de samme filene gjennom relative lenker i `.claude/skills`. Les aktuell `SKILL.md` før bruk, og bare referansene som trengs for oppgaven. Se [oppsett og vedlikehold](docs/agent-skills.md).
+
+| Skill | Når den brukes |
+| --- | --- |
+| [supabase](.agents/skills/supabase/SKILL.md) | Backend: Supabase Auth, kontokobling, Edge Functions, Realtime, klienter, CLI og databaseendringer. |
+| [supabase-postgres-best-practices](.agents/skills/supabase-postgres-best-practices/SKILL.md) | Datamodell, SQL, RLS, grants, indekser og spørringsytelse. |
+
+Relevante globale skills, hvis de finnes i agentens skill-katalog:
+
+| Skill | Når den brukes |
+| --- | --- |
+| `frontend-design` | Nye sider eller bevisste designendringer. Følg eksisterende uttrykk og oppgavens avgrensning. |
+| `humanizer` | Språkvask av norsk dokumentasjon og synlig tekst. Bevar fakta og mening. |
+| `openai-docs` | Oppsett og bruk av Codex/OpenAI, inkludert skills. |
+| `skill-installer`, `skill-creator` | Installere, oppdatere eller lage skills når oppgaven gjelder dette. |
+| `imagegen` | Lage eller redigere rasterbilder når oppgaven krever det. |
+
+Globale skills og plugins følger ikke med en klone av repoet. Ikke anta at en annen bidragsyter har dem. Hvis Supabase-pluginen allerede tilbyr samme skill, bruk én utgave per oppgave; ikke les begge. Bruk den delte utgaven som repoets dokumenterte utgangspunkt.
+
+### Backend og database
+
+- Les gjeldende issue, migrasjonene og relevant dokumentasjon før du foreslår en modell. Skill mellom vedtatte krav, åpne spørsmål og kode som bare finnes i en annen PR.
+- Velg den enkleste modellen som dekker kravene. Forklar hvorfor en ny tabell trenger eget livsløp, tilgang eller flere rader, og vurder om eksisterende tabeller eller kolonner er nok. Skill mellom varige tilgangsrettigheter og hvor lenge videoer faktisk er lagret.
+- Test tilgang både for tillatte og avviste handlinger. Ta med anonym bruker, eier, annen bruker og relevante roller når du endrer RLS. Kjør `pnpm test:db` ved endringer i databaseskjema eller tilgangsregler.
+- Verifiser identitet, rettigheter, priser og webhook-signaturer på serveren. Ikke stol på klientdata eller brukerredigerbare metadata for studentstatus, interne medlemskap eller betalt tilgang. Ikke lagre avspillingstokener som en del av datamodellen.
+- Migrasjoner i `supabase/migrations` er kildegrunnlaget. Ikke endre allerede anvendte migrasjoner. SQL-iterasjon fra en generell skill gjelder en lokal, disponibel database; ikke bruk et tilkoblet skyprosjekt som sandkasse. En bestilling om kode gir ikke i seg selv tillatelse til å anvende migrasjoner eller deploye Edge Functions i skyen.
+- Kontroller prosjekt og miljø før autoriserte skyendringer. Bruk eksisterende connector når den dekker oppgaven; ikke opprett MCP-oppsett, be om nye tokens eller endre eksterne innstillinger bare fordi en skill nevner det. Repoets instruksjoner og brukerens bestilling styrer omfanget.
+
 ## Avtalt branchbeskyttelse i GitHub
 
 Dette er ønsket oppsett. Kontroller innstillingene i GitHub før du legger til grunn at de er aktive; denne filen konfigurerer dem ikke.

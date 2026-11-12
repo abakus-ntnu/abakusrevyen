@@ -51,5 +51,6 @@ pnpm check
 - [Mal for innholdsplanlegging](docs/content-plan.md)
 - [Oversikt over den gamle nettsiden](docs/legacy-inventory.md)
 - [Instruksjoner for AI-verktøy](AGENTS.md)
+- [Delte skills for Codex og Claude Code](docs/agent-skills.md)
 
 Repoet er offentlig. Ikke legg inn hemmelig revytema, upubliserte bilder eller tilgangsnøkler. Den opprinnelige [LICENSE](LICENSE) og hele Git-historikken er bevart.
