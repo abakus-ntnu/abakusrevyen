@@ -45,6 +45,7 @@ pnpm check
 - [Lokal utvikling og Supabase-plan](docs/development.md)
 - [AbaID: opprett testapp og test innlogging](docs/abaid.md)
 - [Databasen: tabeller, tilgangsregler og flyter](docs/database.md)
+- [Backend-kontrakter for checkout, tilgang og video](docs/backend-contracts.md)
 - [Deploy og miljøer](docs/deployment.md)
 - [Bilder og filer i Cloudflare R2](docs/media-storage.md)
 - [Tjenestegrenser og kostnader](docs/service-limits-and-costs.md)

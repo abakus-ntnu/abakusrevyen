@@ -4,6 +4,8 @@ Dette dokumentet skiller mellom det vi allerede har gjort i repoet, og det som f
 
 ## Slik står det nå
 
+**Databasekontroll 12. november 2026:** Supabase-koblingen har tilgang til testprosjektet `abakusrevyen.no` (`getffkktbyjusuyqxuzw`). Utvidelsen og den etterfølgende gjennomgangen i #144/PR #151 er anvendt og kontrollert der. Skjemaet har 25 offentlige tabeller med RLS, server-only checkout-klargjøring og oppdaterte videokontroller. Databasetypene er generert fra prosjektet, og lokale migrasjonsversjoner samsvarer med hosted historikk. `supabase/tests/hosted-review-smoke.sql` er kjørt med service role og rollback; ingen syntetiske ordre eller revyer ble beholdt. Det finnes fortsatt ingen automatisk database-deploy fra GitHub eller CLI-link i denne arbeidskopien. Innloggings-/betalings-UI, provider-kall, Edge Functions og Cloudflare-opprydding er ikke deployet. Se [modellguiden](database-revue-model.md) og [backend-kontraktene](backend-contracts.md).
+
 Den gamle produksjonssiden ligger fortsatt på GitHub Pages. Ved commitene som er notert i [legacy-oversikten](legacy-inventory.md), starter `deploy.yml` når noen sender endringer til `prod`. Workflowen kan også startes manuelt. Vi har ikke endret `main`, `prod`, DNS eller andre eksterne produksjonsinnstillinger, og vi har heller ikke sjekket hvilken commit som faktisk serveres akkurat nå.
 
 På `v2` er den gamle workflowen for publisering og `public/CNAME` tatt bort. GitHub Actions sjekker bare endringer som sendes til `v2`, og pull requests som skal inn i `v2`. Workflowen har lesetilgang, ingen hemmelige verdier, ingen publiseringssteg og ingen manuell startknapp. Den er klargjort lokalt, men ikke kjørt på GitHub. Ingenting er sendt eller publisert.
@@ -48,7 +50,7 @@ Bildene bruker foreløpig testbucketens offentlige `r2.dev`-adresse. Den er egne
 - Gå gjennom `v2` lokalt og avklar at branchen er klar til å sendes til GitHub.
 - Opprett det isolerte Pages-testprosjektet med innstillingene over.
 - Gjør CI-sjekken obligatorisk i GitHub hvis teamet ønsker det.
-- Supabase-testprosjektet er opprettet og lokale klientverdier er satt. Før backend-testing må repoet kobles til testprosjektet med CLI, og modell, migrasjoner og policyer må gjennomgås.
+- Supabase-testprosjektet og modellen er kontrollert via connectoren. Bruk den eller en uttrykkelig konfigurert CLI-link til testprosjektet; CLI-link er ikke et krav for connectoren. Ekte Auth-, betalings- og videoflyter må fortsatt integrasjonstestes.
 - Dobbeltsjekk at produksjon, live DNS og GitHub Pages fortsatt er urørt.
 - Kjør CI og test `/`, en ukjent dyp URL, oppdatering, lenken hjem og nettleserhistorikk. Se også etter feil i konsollen og feil respons-headere.
 
