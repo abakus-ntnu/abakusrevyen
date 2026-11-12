@@ -2,7 +2,7 @@ import { PGlite } from '@electric-sql/pglite'
 import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-export async function createTestDatabase(beforeExtension) {
+export async function createTestDatabase(beforeExtension, beforeMigration) {
   const db = new PGlite()
   const dir = fileURLToPath(new URL('../migrations/', import.meta.url))
   const migrations = readdirSync(dir).filter((f) => f.endsWith('.sql')).sort()
@@ -55,9 +55,15 @@ export async function createTestDatabase(beforeExtension) {
   `)
 
 
-  for (const file of migrations) {
-    if (file.endsWith('_account_verification.sql') && beforeExtension) await beforeExtension(db)
-    await db.exec(readFileSync(dir + file, 'utf8'))
+  try {
+    for (const file of migrations) {
+      if (file.endsWith('_account_verification.sql') && beforeExtension) await beforeExtension(db)
+      if (beforeMigration) await beforeMigration(db, file)
+      await db.exec(readFileSync(dir + file, 'utf8'))
+    }
+  } catch (error) {
+    await db.close()
+    throw error
   }
   return { db, migrations }
 }

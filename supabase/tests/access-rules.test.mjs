@@ -7,6 +7,7 @@
 //   pnpm test:db
 import { createTestDatabase } from './test-database.mjs'
 import { runRevueModelTests } from './revue-model.test.mjs'
+import { runReviewRegressions } from './review-regressions.test.mjs'
 
 const { db, migrations } = await createTestDatabase()
 console.log(`${migrations.length} migrations applied`)
@@ -70,10 +71,10 @@ await db.query(`update public.profiles set role = 'admin' where id = $1`, [admin
 await db.query(`update public.profiles set role = 'moderator' where id = $1`, [mod])
 await db.query(`update public.profiles set role = 'editor' where id = $1`, [editor])
 
-const profs = await q(`select id, display_name, user_type from public.profiles`)
+const profs = await q(`select id, display_name from public.profiles`)
 const prof = (id) => profs.find((p) => p.id === id)
-ok('AbaID alone does not grant student pricing', prof(student)?.user_type === 'external' && prof(student)?.display_name === 'Ola Student')
-ok('profile created for vipps user with type external', prof(external)?.user_type === 'external' && prof(external)?.display_name === 'Kari Ekstern')
+ok('AbaID alone does not grant student pricing', (await q(`select private.verified_user_type($1) as tier`, [student]))[0].tier === 'external' && prof(student)?.display_name === 'Ola Student')
+ok('profile created for vipps user with type external', (await q(`select private.verified_user_type($1) as tier`, [external]))[0].tier === 'external' && prof(external)?.display_name === 'Kari Ekstern')
 ok('display name falls back to email local part', prof(other)?.display_name === 'per')
 
 // --- content -------------------------------------------------------------
@@ -81,8 +82,8 @@ const revue = (await q(`insert into public.revues (year, slug, teaser, visible_f
   values (2027, 'revy-2027', 'Noe stort kommer', now() - interval '1 day', now() + interval '7 days', true) returning id`))[0].id
 await db.query(`insert into public.revue_details (revue_id, name, tagline) values ($1, 'Hemmelig navn', 'Tagline')`, [revue])
 const hiddenRevue = (await q(`insert into public.revues (year, slug) values (2028, 'revy-2028') returning id`))[0].id
-await db.query(`insert into public.revue_sales (revue_id, first_show_at, stream_retire_at, stream_delete_at, terms_version)
-  values ($1, now() + interval '2 days', now() + interval '2 months', now() + interval '2 months 20 days', 'test-v1')`, [revue])
+await db.query(`insert into public.revue_sales (revue_id, first_show_at, stream_retire_at, stream_delete_at, terms_version, sales_open_at)
+  values ($1, now() + interval '2 days', now() + interval '2 months', now() + interval '2 months 20 days', 'test-v1', now())`, [revue])
 await db.query(`insert into public.ticket_links (revue_id, label, url, visible_from) values
   ($1, 'Premiere', 'https://example.com/a', now() + interval '1 day'),
   ($1, 'Fredag', 'https://example.com/b', now() - interval '1 day')`, [revue])
@@ -90,12 +91,12 @@ await db.query(`insert into public.ticket_links (revue_id, label, url, visible_f
   ($1, 'Utgaatt', 'https://example.com/c', now() - interval '3 days', now() - interval '1 day'),
   ($1, 'Ikke planlagt', 'https://example.com/d', null, null)`, [revue])
 
-const stream = (await q(`insert into public.streams (revue_id, slug, title, starts_at, visible_from, sales_open_at)
-  values ($1, 'premiere', 'Premiere', now() + interval '2 days', now() - interval '1 hour', now()) returning id`, [revue]))[0].id
+const stream = (await q(`insert into public.streams (revue_id, slug, title, starts_at, visible_from)
+  values ($1, 'premiere', 'Premiere', now() + interval '2 days', now() - interval '1 hour') returning id`, [revue]))[0].id
 const hiddenStream = (await q(`insert into public.streams (revue_id, slug, title, starts_at)
   values ($1, 'lordag', 'Lordag', now() + interval '3 days') returning id`, [revue]))[0].id
-await db.query(`insert into public.stream_prices (stream_id, user_type, amount) values
-  ($1, 'student', 9900), ($1, 'external', 14900), ($2, 'student', 9900)`, [stream, hiddenStream])
+await db.query(`insert into public.revue_prices (revue_id, user_type, amount) values
+  ($1, 'student', 9900), ($1, 'external', 14900)`, [revue])
 await db.query(`insert into public.stream_playback (stream_id, cloudflare_live_input_id) values ($1, 'cf-live-123')`, [stream])
 await db.query(`insert into public.posts (slug, title, body, published_at) values
   ('ute', 'Ute', 'x', now() - interval '1 hour'), ('kladd', 'Kladd', 'x', null), ('planlagt', 'Planlagt', 'x', now() + interval '1 day')`)
@@ -116,7 +117,7 @@ await as('anon', null, async () => {
   ok('anon sees only ticket links inside their window', links.length === 1 && links[0].label === 'Fredag', JSON.stringify(links))
   const streams = await q(`select slug from public.streams`)
   ok('anon sees only the visible stream', streams.length === 1 && streams[0].slug === 'premiere')
-  ok('anon sees prices only for the visible stream', (await q(`select * from public.stream_prices`)).length === 2)
+  ok('anon cannot see revue prices before the reveal', (await q(`select * from public.revue_prices`)).length === 0)
   ok('anon cannot read stream_playback', (await fails(`select * from public.stream_playback`)).failed)
   ok('anon cannot read profiles', (await fails(`select * from public.profiles`)).failed)
   ok('anon cannot read chat', (await fails(`select * from public.chat_messages`)).failed)
@@ -142,14 +143,14 @@ await as('anon', null, async () => {
 await as('authenticated', external, async () => {
   const p = await q(`select id from public.profiles`)
   ok('user reads only their own profile', p.length === 1 && p[0].id === external)
-  ok('user cannot change their user_type', (await fails(`update public.profiles set user_type = 'student' where id = $1`, [external])).failed)
+  ok('student price requires trusted verification', (await q(`select public.current_price_type() as tier`))[0].tier === 'external')
   ok('user cannot change their role', (await fails(`update public.profiles set role = 'admin' where id = $1`, [external])).failed)
   const r = await fails(`update public.profiles set display_name = 'Kari K' where id = $1`, [external])
   ok('user can change their display name', !r.failed && r.affected === 1, JSON.stringify(r))
   const r2 = await fails(`update public.profiles set display_name = 'Hacked' where id = $1`, [student])
   ok('user cannot change another profile', !r2.failed && r2.affected === 0, JSON.stringify(r2))
-  ok('user cannot grant themselves access', (await fails(`insert into public.stream_access (user_id, stream_id, source) values ($1, $2, 'granted')`, [external, stream])).failed)
-  ok('user cannot create an order', (await fails(`insert into public.orders (user_id, stream_id, amount) values ($1, $2, 0)`, [external, stream])).failed)
+  ok('user cannot grant themselves access', (await fails(`insert into public.revue_access (user_id, revue_id, source) values ($1, $2, 'internal')`, [external, revue])).failed)
+  ok('user cannot create an order', (await fails(`insert into public.orders (user_id, revue_id, amount) values ($1, $2, 0)`, [external, revue])).failed)
   ok('user without access cannot post in chat', (await fails(`insert into public.chat_messages (stream_id, body) values ($1, 'hei')`, [stream])).failed)
   ok('user without access does not see the hidden stream', (await q(`select * from public.streams`)).length === 1)
   ok('user cannot read stream_playback rows', (await q(`select * from public.stream_playback`)).length === 0)
@@ -158,14 +159,12 @@ await as('authenticated', external, async () => {
 
 // --- purchase, done by the Worker with the service role ---------------------
 await as('service_role', null, async () => {
-  const order = (await q(`insert into public.orders (user_id, stream_id, status, amount, stripe_checkout_session_id, paid_at)
-    values ($1, $2, 'paid', 14900, 'cs_test_1', now()) returning id`, [external, stream]))[0].id
-  await db.query(`insert into public.stream_access (user_id, stream_id, source, order_id) values ($1, $2, 'purchase', $3)`, [external, stream, order])
+  const order = (await q(`select * from public.prepare_revue_checkout($1, $2, 'test-v1', true)`, [external, revue]))[0].id
+  await q(`update public.orders set status = 'paid', stripe_checkout_session_id = 'cs_test_1' where id = $1`, [order])
   await db.query(`insert into public.revue_access (user_id, revue_id, source, order_id) values ($1, $2, 'purchase', $3)`, [external, revue, order])
-  await db.query(`insert into public.stream_access (user_id, stream_id, source, note) values ($1, $2, 'granted', 'skuespiller')`, [student, hiddenStream])
   await db.query(`insert into public.stripe_events (id, type, payload) values ('evt_1', 'checkout.session.completed', '{}')`)
   ok('service role writes orders, access and stripe events', true)
-  ok('a second paid order for the same user and stream is rejected', (await fails(`insert into public.orders (user_id, stream_id, status, amount) values ($1, $2, 'paid', 14900)`, [external, stream])).failed)
+  ok('checkout refuses a user who already has a revue pass', (await fails(`select * from public.prepare_revue_checkout($1, $2, 'test-v1', true)`, [external, revue])).failed)
   ok('a redelivered stripe event is rejected', (await fails(`insert into public.stripe_events (id, type, payload) values ('evt_1', 'x', '{}')`)).failed)
   const pb = await q(`select cloudflare_live_input_id from public.stream_playback where stream_id = $1`, [stream])
   ok('service role reads stream_playback', pb.length === 1)
@@ -174,7 +173,7 @@ await as('service_role', null, async () => {
 // --- viewer with access ------------------------------------------------------
 await as('authenticated', external, async () => {
   ok('user sees their own order', (await q(`select * from public.orders`)).length === 1)
-  ok('user sees their own access row', (await q(`select * from public.stream_access`)).length === 1)
+  ok('user sees their own access row', (await q(`select * from public.revue_access`)).length === 1)
   const m = await q(`insert into public.chat_messages (stream_id, body) values ($1, 'Gleder meg!') returning id, user_id, display_name`, [stream])
   ok('viewer posts in chat and the name is filled in', m[0]?.user_id === external && m[0]?.display_name === 'Kari K', JSON.stringify(m))
   const b = await as_superuser_sent()
@@ -192,7 +191,7 @@ await as('authenticated', external, async () => {
 
 await as('authenticated', student, async () => {
   const s = await q(`select slug from public.streams order by slug`)
-  ok('user with granted access sees the hidden stream', s.length === 2, JSON.stringify(s))
+  ok('revue rights never reveal an unpublished stream', s.length === 1, JSON.stringify(s))
   ok('user sees no chat from a stream they lack access to', (await q(`select * from public.chat_messages`)).length === 0)
 })
 
@@ -200,7 +199,7 @@ await as('authenticated', student, async () => {
 ok('viewer with access can join the chat topic', (await canJoin('authenticated', external, 'chat:' + stream)) === true)
 ok('viewer cannot join the chat topic of another stream', (await canJoin('authenticated', external, 'chat:' + hiddenStream)) === false)
 ok('user without access cannot join the chat topic', (await canJoin('authenticated', other, 'chat:' + stream)) === false)
-ok('granted access lets a user join that stream chat', (await canJoin('authenticated', student, 'chat:' + hiddenStream)) === true)
+ok('an unverified account cannot join an unpublished stream chat', (await canJoin('authenticated', student, 'chat:' + hiddenStream)) === false)
 ok('moderator can join any chat topic', (await canJoin('authenticated', mod, 'chat:' + stream)) === true)
 ok('nobody joins a topic that is not a chat topic', (await canJoin('authenticated', admin, 'something-else')) === false)
 ok('a malformed chat topic is refused without an error', (await canJoin('authenticated', admin, 'chat:not-a-uuid')) === false)
@@ -236,7 +235,6 @@ await as('authenticated', external, async () => {
 })
 
 // refund
-await db.query(`update public.stream_access set revoked_at = now() where user_id = $1`, [external])
 await db.query(`update public.revue_access set revoked_at = now(), revocation_reason = 'test_revocation' where user_id = $1`, [external])
 await as('authenticated', external, async () => {
   ok('revoked access hides the chat again', (await q(`select * from public.chat_messages`)).length === 0)
@@ -259,8 +257,8 @@ await as('authenticated', admin, async () => {
   ok('admin reads all profiles', (await q(`select * from public.profiles`)).length === 6)
   ok('admin reads stream_playback', (await q(`select * from public.stream_playback`)).length === 1)
   ok('admin reads all settings', (await q(`select * from public.site_settings`)).length === 3)
-  const r = await fails(`insert into public.stream_access (user_id, stream_id, source, granted_by) values ($1, $2, 'granted', $3)`, [other, stream, admin])
-  ok('admin grants access', !r.failed, JSON.stringify(r))
+  const r = await fails(`insert into public.revue_access (user_id, revue_id, source) values ($1, $2, 'internal')`, [other, revue])
+  ok('admin cannot invent verified internal access through the client API', r.failed, JSON.stringify(r))
   const s = await fails(`update public.streams set status = 'live' where id = $1`, [stream])
   ok('admin updates a stream', !s.failed && s.affected === 1, JSON.stringify(s))
   ok('admin cannot change roles through the API', (await fails(`update public.profiles set role = 'admin' where id = $1`, [other])).failed)
@@ -306,7 +304,8 @@ ok('deleting a show removes its ticket links', (await q(`select 1 from public.ti
 
 // --- integrity ---------------------------------------------------------------
 ok('only one current revue', (await fails(`insert into public.revues (year, slug, is_current) values (2029, 'revy-2029', true)`)).failed)
-ok('a stream with orders cannot be deleted', (await fails(`delete from public.streams where id = $1`, [stream])).failed)
+ok('removing a stream preserves the revue purchase', !(await fails(`delete from public.streams where id = $1`, [stream])).failed
+  && (await q(`select 1 from public.orders where revue_id = $1`, [revue])).length === 1)
 await db.query(`delete from auth.users where id = $1`, [external])
 const kept = await q(`select user_id from public.orders`)
 ok('deleting a user keeps the order without the user', kept.length === 1 && kept[0].user_id === null)
@@ -322,6 +321,7 @@ const norls = await q(`select relname from pg_class c join pg_namespace n on n.o
 ok('every public table has RLS enabled', norls.length === 0, JSON.stringify(norls))
 
 await runRevueModelTests({ db, as, q, ok, fails, mk })
+await runReviewRegressions({ db, as, q, ok, fails, mk })
 
 console.log(`\n${pass} passed, ${fail} failed`)
 process.exit(fail ? 1 : 0)

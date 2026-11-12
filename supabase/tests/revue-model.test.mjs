@@ -41,9 +41,16 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
     values (2100, 'model-tests', now() - interval '1 day', now() - interval '1 day') returning id`))[0].id
   const future = (await q(`insert into public.revues(year, slug, visible_from, name_reveal_at)
     values (2101, 'model-future', now() - interval '1 day', now() + interval '1 day') returning id`))[0].id
-  const makeSales = async (id, first = "now() + interval '1 day'") => q(`insert into public.revue_sales
-    (revue_id, first_show_at, stream_retire_at, stream_delete_at, terms_version)
-    values ($1, ${first}, now() + interval '60 days', now() + interval '80 days', 'terms-v1')`, [id])
+  const makeSales = async (id, first = "now() + interval '1 day'") => {
+    await q(`insert into public.revue_sales
+      (revue_id, first_show_at, stream_retire_at, stream_delete_at, terms_version, sales_open_at)
+      values ($1, ${first}, now() + interval '60 days', now() + interval '80 days', 'terms-v1', now())`, [id])
+    await q(`insert into public.revue_prices(revue_id, user_type, amount) values ($1, 'external', 14900), ($1, 'student', 9900)`, [id])
+  }
+  const paidOrder = async (user, id) => {
+    const order = (await q(`select * from public.prepare_revue_checkout($1, $2, 'terms-v1', true)`, [user, id]))[0]
+    return (await q(`update public.orders set status = 'paid' where id = $1 returning *`, [order.id]))[0]
+  }
   await makeSales(revue)
   await makeSales(future)
   ok('hard hosting deadline cannot exceed D plus thirty days', (await fails(`update public.revue_sales
@@ -57,18 +64,18 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
   const draft = await makeVideo(revue, 'Not yet', 'clip', 'null')
   const unrevealed = await makeVideo(future, 'Hidden theme')
   const makeSource = async (vid, rev, provider, date = 'now()') => (await q(`insert into public.video_sources
-    (video_id, revue_id, provider, state, published_at) values ($1, $2, $3, 'ready', ${date}) returning id`, [vid, rev, provider]))[0].id
+    (video_id, revue_id, provider, state, published_at, youtube_video_id) values ($1, $2, $3, 'ready', ${date}, case when $3 = 'youtube' then 'abcdefghijk' else null end) returning id`, [vid, rev, provider]))[0].id
   const cf = await makeSource(video, revue, 'cloudflare')
   const yt = await makeSource(video, revue, 'youtube', "now() + interval '1 day'")
   const hiddenSource = await makeSource(unrevealed, future, 'youtube')
   const draftSource = await makeSource(draft, revue, 'youtube')
-  await q(`insert into public.cloudflare_video_sources(source_id, cloudflare_video_id) values ($1, 'private-video-uid')`, [cf])
-  for (const id of [yt, hiddenSource, draftSource]) await q(`insert into public.youtube_video_sources(source_id, youtube_video_id) values ($1, 'abcdefghijk')`, [id])
+  await q(`insert into public.cloudflare_video_sources(source_id, cloudflare_video_id, scheduled_deletion_at) values ($1, 'private-video-uid', now() + interval '70 days')`, [cf])
+  ok('YouTube IDs are stored on their source rows', Boolean(hiddenSource && draftSource))
   await q(`insert into public.revue_playlists(revue_id, youtube_playlist_id, published_at)
     values ($1, 'PL_test_playlist', now() + interval '1 day')`, [revue])
   await as('anon', null, async () => {
     ok('public video metadata excludes drafts and unrevealed revues', (await q(`select id from public.revue_videos where revue_id in ($1, $2)`, [revue, future])).length === 4)
-    ok('scheduled, draft and unrevealed YouTube IDs are hidden', (await q(`select * from public.youtube_video_sources`)).length === 0)
+    ok('scheduled, draft and unrevealed YouTube IDs are hidden', (await q(`select * from public.video_sources where provider = 'youtube'`)).length === 0)
     ok('playlist has an independent publication date', (await q(`select * from public.revue_playlists`)).length === 0)
     ok('anonymous API cannot read Cloudflare identifiers', (await fails(`select * from public.cloudflare_video_sources`)).failed)
     ok('anonymous API cannot invoke playback authorization', (await fails(`select public.can_play_source($1, $2)`, [buyer, cf])).failed)
@@ -76,7 +83,7 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
   await q(`update public.video_sources set published_at = now() where id = $1`, [yt])
   await q(`update public.revue_playlists set published_at = now() where revue_id = $1`, [revue])
   await as('anon', null, async () => {
-    ok('published YouTube alternative is readable', (await q(`select * from public.youtube_video_sources`)).length === 1)
+    ok('published YouTube alternative is readable', (await q(`select * from public.video_sources where provider = 'youtube'`)).length === 1)
     ok('published playlist is readable alongside individual videos', (await q(`select * from public.revue_playlists`)).length === 1)
   })
   await as('authenticated', buyer, async () => {
@@ -90,57 +97,58 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
       values ($1, 'Editorial draft', 'clip') returning id`, [revue]))[0].id
     const scheduled = (await q(`insert into public.video_sources(video_id, revue_id, provider, published_at)
       values ($1, $2, 'youtube', now() + interval '1 day') returning id`, [editorial, revue]))[0].id
-    await q(`insert into public.youtube_video_sources(source_id, youtube_video_id) values ($1, '12345678901')`, [scheduled])
-    ok('editor can create video metadata and scheduled YouTube links', (await q(`select 1 from public.youtube_video_sources where source_id = $1`, [scheduled])).length === 1)
+    await q(`update public.video_sources set youtube_video_id = '12345678901' where id = $1`, [scheduled])
+    ok('editor can create video metadata and scheduled YouTube links', (await q(`select 1 from public.video_sources where id = $1 and youtube_video_id = '12345678901'`, [scheduled])).length === 1)
     ok('editor cannot declare a source technically ready', (await fails(`update public.video_sources set state = 'ready' where id = $1`, [scheduled])).failed)
     ok('editor cannot read private Cloudflare identifiers', (await q(`select * from public.cloudflare_video_sources`)).length === 0)
     ok('referenced draft cannot be deleted before source cleanup', (await fails(`delete from public.revue_videos where id = $1`, [editorial])).failed)
-    // Remove child rows first; video/source identity is deliberately restrictive.
-    await q(`delete from public.youtube_video_sources where source_id = $1`, [scheduled])
+    // Editors may clean up their YouTube source, then the metadata.
+    await q(`delete from public.video_sources where id = $1`, [scheduled])
+    ok('editor can finish deleting YouTube metadata', !(await fails(`delete from public.revue_videos where id = $1`, [editorial])).failed)
   })
   ok('source cannot point into another revue', (await fails(`insert into public.video_sources
     (video_id, revue_id, provider) values ($1, $2, 'youtube')`, [video, future])).failed)
   ok('Cloudflare ID cannot be attached to YouTube source', (await fails(`insert into public.cloudflare_video_sources
     (source_id, cloudflare_video_id) values ($1, 'wrong-provider')`, [yt])).failed)
-  ok('embed HTML cannot be used as a YouTube ID', (await fails(`update public.youtube_video_sources set youtube_video_id = '<iframe>' where source_id = $1`, [yt])).failed)
-  await q(`insert into public.revue_video_selections(revue_id, full_video_id, featured_video_id) values ($1, $2, $3)`, [revue, video, clip])
-  ok('main selection cannot mix full video and acts', (await fails(`update public.revue_video_selections
+  ok('embed HTML cannot be used as a YouTube ID', (await fails(`update public.video_sources set youtube_video_id = '<iframe>' where id = $1`, [yt])).failed)
+  await q(`insert into public.revue_details(revue_id, name, full_video_id, featured_video_id) values ($1, 'Test revue', $2, $3)`, [revue, video, clip])
+  ok('main selection cannot mix full video and acts', (await fails(`update public.revue_details
     set act_one_video_id = $2, act_two_video_id = $3 where revue_id = $1`, [revue, act1, act2])).failed)
   ok('main full performance cannot silently become a clip', (await fails(`update public.revue_videos set kind = 'clip' where id = $1`, [video])).failed)
-  await q(`update public.revue_video_selections set full_video_id = null, act_one_video_id = $2, act_two_video_id = $3 where revue_id = $1`, [revue, act1, act2])
-  ok('two matching acts replace one full performance', (await q(`select full_video_id from public.revue_video_selections where revue_id = $1`, [revue]))[0].full_video_id === null)
-  ok('featured video cannot belong to another revue', (await fails(`update public.revue_video_selections set featured_video_id = $2 where revue_id = $1`, [revue, unrevealed])).failed)
+  await q(`update public.revue_details set full_video_id = null, act_one_video_id = $2, act_two_video_id = $3 where revue_id = $1`, [revue, act1, act2])
+  ok('two matching acts replace one full performance', (await q(`select full_video_id from public.revue_details where revue_id = $1`, [revue]))[0].full_video_id === null)
+  ok('featured video cannot belong to another revue', (await fails(`update public.revue_details set featured_video_id = $2 where revue_id = $1`, [revue, unrevealed])).failed)
 
-  const order = (await q(`insert into public.orders(user_id, revue_id, status, amount, currency, terms_version)
-    values ($1, $2, 'paid', 14900, 'nok', 'client-substitution') returning *`, [buyer, revue]))[0]
+  const order = await paidOrder(buyer, revue)
   ok('order takes its terms and first-show snapshot from server config', order.terms_version === 'terms-v1' && order.first_show_at && order.cancellation_deadline_at)
+  ok('student checkout records its verified price category and check time', order.price_type === 'student'
+    && order.amount === 9900 && order.eligibility_checked_at && order.terms_accepted_at)
   const received = (await q(`update public.orders set refund_requested_at = '2000-01-01' where id = $1 returning refund_requested_at, created_at`, [order.id]))[0]
   ok('cancellation receipt time is assigned by the database, not backdated by the caller', new Date(received.refund_requested_at) >= new Date(received.created_at))
   ok('recorded cancellation receipt cannot be erased', (await fails(`update public.orders set refund_requested_at = null where id = $1`, [order.id])).failed)
   ok('order coverage cannot be moved to another revue', (await fails(`update public.orders set revue_id = $2 where id = $1`, [order.id, future])).failed)
-  ok('second paid revue purchase is rejected', (await fails(`insert into public.orders(user_id, revue_id, status, amount)
-    values ($1, $2, 'paid', 14900)`, [buyer, revue])).failed)
+  ok('checkout rejects a buyer with a recorded payment even before access is granted', (await fails(`select * from public.prepare_revue_checkout($1, $2, 'terms-v1', true)`, [buyer, revue])).failed)
   ok('access cannot be granted to another orders owner', (await fails(`insert into public.revue_access
     (user_id, revue_id, source, order_id) values ($1, $2, 'purchase', $3)`, [outsider, revue, order.id])).failed)
   await q(`insert into public.revue_access(user_id, revue_id, source, order_id, granted_at)
     values ($1, $2, 'purchase', $3, now() - interval '6 years')`, [buyer, revue, order.id])
   const canPlay = async (user, src = cf) => (await q(`select public.can_play_source($1, $2) as allowed`, [user, src]))[0].allowed
   ok('unverified Cloudflare protection denies playback even after payment', !await canPlay(buyer))
-  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now() where source_id = $1`, [cf])
+  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now(), scheduled_deletion_at = now() + interval '70 days' where source_id = $1`, [cf])
   ok('six-year-old paid right still opens a currently hosted recording', await canPlay(buyer))
   await q(`update public.cloudflare_video_sources set scheduled_deletion_at = now() - interval '1 second' where source_id = $1`, [cf])
   ok('source-specific deletion deadline stops playback', !await canPlay(buyer))
-  await q(`update public.cloudflare_video_sources set scheduled_deletion_at = null where source_id = $1`, [cf])
+  await q(`update public.cloudflare_video_sources set scheduled_deletion_at = now() + interval '70 days' where source_id = $1`, [cf])
   await q(`update public.cloudflare_video_sources set cloudflare_video_id = 'replaced-video-uid' where source_id = $1`, [cf])
   ok('replacement video cannot reuse old signed-URL proof', !await canPlay(buyer))
-  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now() where source_id = $1`, [cf])
+  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now(), scheduled_deletion_at = now() + interval '70 days' where source_id = $1`, [cf])
   ok('replacement becomes playable after a fresh protection check', await canPlay(buyer))
   ok('admin role alone does not open paid playback', !await canPlay(staff))
   ok('another buyer without a revue right cannot play', !await canPlay(outsider))
   const lateVideo = await makeVideo(revue, 'Newly added second performance')
   const lateSource = await makeSource(lateVideo, revue, 'cloudflare')
-  await q(`insert into public.cloudflare_video_sources(source_id, cloudflare_video_id, signed_urls_verified_at)
-    values ($1, 'new-recording', now())`, [lateSource])
+  await q(`insert into public.cloudflare_video_sources(source_id, cloudflare_video_id, signed_urls_verified_at, scheduled_deletion_at)
+    values ($1, 'new-recording', now(), now() + interval '70 days')`, [lateSource])
   ok('existing pass opens a later recording in the same revue', await canPlay(buyer, lateSource))
   await q(`update public.revue_videos set published_at = null where id = $1`, [lateVideo])
   ok('purchased access does not open a video draft', !await canPlay(buyer, lateSource))
@@ -149,7 +157,7 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
   ok('removed physical source denies new tokens', !await canPlay(buyer, lateSource))
   await q(`update public.cloudflare_video_sources set deleted_at = null where source_id = $1`, [lateSource])
   ok('restored provider source must be reverified', !await canPlay(buyer, lateSource))
-  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now() where source_id = $1`, [lateSource])
+  await q(`update public.cloudflare_video_sources set signed_urls_verified_at = now(), scheduled_deletion_at = now() + interval '70 days' where source_id = $1`, [lateSource])
   ok('restored source uses the original entitlement', await canPlay(buyer, lateSource))
   ok('source deletion did not delete the order', (await q(`select 1 from public.orders where id = $1`, [order.id])).length === 1)
 
@@ -190,17 +198,16 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
   ok('unlinking does not remove purchased access', await canPlay(buyer))
 
   await q(`insert into public.order_refunds(order_id, provider_refund_id, amount, status, reason)
-    values ($1, 'failed-refund', 14900, 'failed', 'cancellation')`, [order.id])
+    values ($1, 'failed-refund', $2, 'failed', 'cancellation')`, [order.id, order.amount])
   ok('failed refund does not revoke access', await canPlay(buyer))
   ok('refund cannot exceed order amount', (await fails(`insert into public.order_refunds
-    (order_id, provider_refund_id, amount, status, reason) values ($1, 'over-refund', 14901, 'pending', 'cancellation')`, [order.id])).failed)
+    (order_id, provider_refund_id, amount, status, reason) values ($1, 'over-refund', $2, 'pending', 'cancellation')`, [order.id, order.amount + 1])).failed)
   await q(`insert into public.order_refunds(order_id, provider_refund_id, amount, status, reason, completed_at)
-    values ($1, 'full-refund', 14900, 'succeeded', 'cancellation', now())`, [order.id])
+    values ($1, 'full-refund', $2, 'succeeded', 'cancellation', now())`, [order.id, order.amount])
   ok('confirmed refund revokes only that purchase', !await canPlay(buyer) && await canPlay(outsider))
   ok('late paid webhook cannot reopen refunded order', (await fails(`update public.orders set status = 'paid' where id = $1`, [order.id])).failed)
   ok('completed refund cannot be rewritten', (await fails(`update public.order_refunds set amount = 1 where provider_refund_id = 'full-refund'`)).failed)
-  const repurchase = (await q(`insert into public.orders(user_id, revue_id, status, amount)
-    values ($1, $2, 'paid', 14900) returning id`, [buyer, revue]))[0].id
+  const repurchase = (await paidOrder(buyer, revue)).id
   await q(`insert into public.revue_access(user_id, revue_id, source, order_id) values ($1, $2, 'purchase', $3)`, [buyer, revue, repurchase])
   ok('repurchase preserves old order and opens access again', await canPlay(buyer) && (await q(`select 1 from public.orders where user_id = $1 and revue_id = $2`, [buyer, revue])).length === 2)
   await q(`insert into public.order_refunds(order_id, provider_refund_id, amount, status, reason, completed_at)
@@ -214,14 +221,15 @@ export async function runRevueModelTests({ db, as, q, ok, fails, mk }) {
   ok('hard revue hosting deadline stops playback even with an internal right', !await canPlay(outsider))
   ok('hard deadline does not erase the permanent entitlement', (await q(`select private.user_has_revue_access($1, $2) as allowed`, [outsider, revue]))[0].allowed)
   await q(`update public.revue_sales set stream_retire_at = now() + interval '1 day', stream_delete_at = now() + interval '20 days' where revue_id = $1`, [revue])
+  await q(`update public.cloudflare_video_sources set scheduled_deletion_at = now() + interval '10 days' where source_id = $1`, [cf])
   ok('explicitly restored hosting reuses the existing internal right', await canPlay(outsider))
 
   // A transaction gives all three boundary cases exactly the same server time.
   await db.exec('begin')
   for (const [year, offset, expected] of [[2102, "1 microsecond", true], [2103, "0 seconds", true], [2104, "-1 microsecond", false], [2105, "-3 days", false]]) {
-    const id = (await q(`insert into public.revues(year, slug) values ($1, $2) returning id`, [year, 'cutoff-' + year]))[0].id
+    const id = (await q(`insert into public.revues(year, slug, visible_from, name_reveal_at) values ($1, $2, now(), now()) returning id`, [year, 'cutoff-' + year]))[0].id
     await makeSales(id, `now() + interval '2 hours' + interval '${offset}'`)
-    const purchase = (await q(`insert into public.orders(user_id, revue_id, status, amount) values ($1, $2, 'paid', 100) returning id`, [buyer, id]))[0].id
+    const purchase = (await paidOrder(buyer, id)).id
     ok('shared cancellation cutoff boundary ' + offset, (await q(`select public.order_cancellation_allowed($1) as allowed`, [purchase]))[0].allowed === expected)
   }
   await db.exec('commit')
@@ -248,14 +256,27 @@ async function runUpgradeTest(ok) {
       await q(`insert into public.stream_playback(stream_id, cloudflare_video_id) values ($1, $2)`, [stream, 'old-' + slug])
       await q(`insert into public.stream_prices(stream_id, user_type, amount) values ($1, 'external', 100)`, [stream])
     }
+  }, async (db, file) => {
+    if (!file.endsWith('_simplify_video_model.sql')) return
+    const q = async (sql, params) => (await db.query(sql, params)).rows
+    const video = (await q(`select id from public.revue_videos where revue_id = $1 limit 1`, [legacy.revue]))[0].id
+    legacy.video = video
+    const source = (await q(`insert into public.video_sources(video_id, revue_id, provider, state)
+      values ($1, $2, 'youtube', 'ready') returning id`, [video, legacy.revue]))[0].id
+    await q(`insert into public.youtube_video_sources(source_id, youtube_video_id) values ($1, 'abcdefghijk')`, [source])
+    await q(`insert into public.revue_details(revue_id, name) values ($1, 'Existing revue')`, [legacy.revue])
+    await q(`insert into public.revue_video_selections(revue_id, full_video_id) values ($1, $2)`, [legacy.revue, video])
   })
   const rows = async (sql) => (await db.query(sql)).rows
-  ok('upgrade resets provider-only student eligibility', (await rows(`select user_type from public.profiles`))[0].user_type === 'external')
+  ok('upgrade removes the obsolete provider-derived profile category', (await rows(`select 1 from information_schema.columns where table_schema = 'public' and table_name = 'profiles' and column_name = 'user_type'`)).length === 0)
   ok('upgrade preserves both independent paid order references', (await rows(`select order_id from public.revue_access`)).length === 2)
   ok('upgrade preserves every existing Cloudflare recording identifier', (await rows(`select cloudflare_video_id from public.cloudflare_video_sources`)).length === 2)
   ok('upgrade does not pretend old Cloudflare sources are verified or ready', (await rows(`select 1 from public.cloudflare_video_sources where signed_urls_verified_at is not null`)).length === 0)
   ok('upgrade does not guess hosting deadlines or reopen sales', (await rows(`select 1 from public.revue_sales`)).length === 0)
-  ok('upgrade maps consistent prices without discarding originals', (await rows(`select amount from public.revue_prices`))[0].amount === 100 && (await rows(`select 1 from public.stream_prices`)).length === 2)
+  ok('upgrade preserves consistent prices in the revue model', (await rows(`select amount from public.revue_prices`))[0].amount === 100)
+  ok('upgrade preserves the YouTube identifier in its source row', (await rows(`select youtube_video_id from public.video_sources where provider = 'youtube'`))[0].youtube_video_id === 'abcdefghijk')
+  ok('upgrade preserves main video selection inside existing revue details', (await rows(`select full_video_id from public.revue_details`))[0].full_video_id === legacy.video)
+  ok('upgrade retires the old purchase tables', (await rows(`select 1 from pg_tables where schemaname = 'public' and tablename in ('stream_access', 'stream_prices')`)).length === 0)
   await db.query(`update public.orders set status = 'refunded' where id = $1`, [legacy.orders[0]])
   ok('refund of one migrated purchase preserves another independent right', (await db.query(`select private.user_has_revue_access($1, $2) as allowed`, [legacy.user, legacy.revue])).rows[0].allowed)
   await db.close()

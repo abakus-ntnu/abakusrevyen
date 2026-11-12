@@ -78,7 +78,7 @@ Hvis de offentlige prosjektverdiene mangler eller fortsatt er eksempelverdiene, 
 
 Når vi kommer dit, blir Supabase-prosjektene for test og produksjon separate. Auth tar seg av identitet, Postgres av strukturerte data og Edge Functions av operasjoner som trenger servertilgang. Vi lager RLS og grants før data blir tilgjengelig fra nettleseren. Nettleseren bruker bare publishable key. En skjult URL eller en rutesperre i React er aldri tilgangskontroll. Offentlige bilder og filer skal ligge i Cloudflare R2; oppsettet er beskrevet i [medielagringsguiden](media-storage.md).
 
-Databaseutvidelsen i #144 er anvendt på testprosjektet via Supabase-koblingen. [Modellguiden](database-revue-model.md) beskriver verifisering, videokilder, revypass og frister. Ingen LEGO-grupper, verifiseringsperiode, aktive salg eller Cloudflare-sletting aktiveres bare ved å opprette disse tabellene. Innlogging og Edge Functions gjenstår.
+Databaseutvidelsen og oppryddingen i #144 er anvendt på testprosjektet via Supabase-koblingen. [Modellguiden](database-revue-model.md) beskriver de 25 tabellene, verifisering, videokilder, revypass og frister. [Backend-kontraktene](backend-contracts.md) beskriver server-only checkout-klargjøring og krav til videre integrasjoner. Ingen LEGO-grupper, verifiseringsperiode, aktive salg eller Cloudflare-sletting aktiveres bare ved å opprette tabellene. Innlogging og Edge Functions gjenstår.
 
 ## Database og migrasjoner
 
@@ -93,7 +93,7 @@ pnpm exec supabase db reset
 
 `db reset` tømmer den **lokale** databasen og spiller migrasjonene på nytt. Lokale data forsvinner, så bruk bare syntetiske eller offentlige testdata. Commit gjennomgått `supabase/config.toml` og migrasjoner, men aldri lokale midlertidige data, innloggingstokener eller private seed-data.
 
-`pnpm test:db` kjører alle migrasjonene i en Postgres i minnet (PGlite) og sjekker tilgangsreglene som anonym, seer, moderator, redaktør, admin og service role. Testen trenger ikke Docker og kjører også i CI. Legg til tester i `supabase/tests/access-rules.test.mjs` når du endrer tabeller eller regler.
+`pnpm test:db` kjører alle migrasjonene i en Postgres i minnet (PGlite) og sjekker tilgangsreglene som anonym, seer, moderator, redaktør, admin og service role. Testen trenger ikke Docker og kjører også i CI. Testfilene i `supabase/tests` dekker også oppgradering, checkout og refusjoner. `hosted-review-smoke.sql` kan kjøres mot et uttrykkelig valgt testprosjekt med en eksisterende testprofil; alle syntetiske endringer rulles tilbake. PGlite beviser ikke låseoppførsel med flere samtidige forbindelser eller ekte provider-integrasjoner.
 
 Repoet er ikke koblet til det eksterne testprosjektet i CLI-en ennå. Logg inn uten å lagre tokenet i repoet, og koble bare testprosjektet:
 
@@ -170,4 +170,4 @@ Med de låste Node- og pnpm-versjonene har vi kontrollert dette:
 - At Supabase-klienten returnerer `null` uten prosjektverdier og kan opprettes med de lokale testverdiene
 - `git diff --check`, uendret `LICENSE` og uendrede referanser til `main` og `prod`
 
-GitHub Actions, respons-headere i Cloudflare Pages og ekte backend-integrasjoner er ikke kontrollert eksternt. R2-testbucketen brukes til de offentlige bildene. Supabase-testprosjektet er opprettet og de offentlige klientverdiene finnes lokalt, men CLI-link, datamodell, Auth og backend-flyt gjenstår. Stream og Pages er fortsatt ikke koblet til appen.
+R2-testbucketen brukes til de offentlige bildene. Supabase-modellen er anvendt og SQL-kontrollert i testprosjektet via connectoren; genererte typer følger dette skjemaet. CLI-link, innloggings-UI, ekte backend-/provider-integrasjoner og Pages-headere gjenstår. Stream og Pages er fortsatt ikke koblet til appen. Status for hosted databasekontroll står i [deploy-guiden](deployment.md).

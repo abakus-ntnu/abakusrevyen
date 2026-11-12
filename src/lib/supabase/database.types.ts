@@ -320,17 +320,18 @@ export type Database = {
           cancellation_deadline_at: string | null
           created_at: string
           currency: string
+          eligibility_checked_at: string | null
           first_show_at: string | null
           id: string
-          legacy_stream_purchase: boolean
           paid_at: string | null
+          price_type: Database["public"]["Enums"]["user_type"] | null
           refund_requested_at: string | null
           refunded_at: string | null
           revue_id: string
           status: Database["public"]["Enums"]["order_status"]
-          stream_id: string | null
           stripe_checkout_session_id: string | null
           stripe_payment_intent_id: string | null
+          terms_accepted_at: string | null
           terms_version: string | null
           updated_at: string
           user_id: string | null
@@ -340,17 +341,18 @@ export type Database = {
           cancellation_deadline_at?: string | null
           created_at?: string
           currency?: string
+          eligibility_checked_at?: string | null
           first_show_at?: string | null
           id?: string
-          legacy_stream_purchase?: boolean
           paid_at?: string | null
+          price_type?: Database["public"]["Enums"]["user_type"] | null
           refund_requested_at?: string | null
           refunded_at?: string | null
           revue_id: string
           status?: Database["public"]["Enums"]["order_status"]
-          stream_id?: string | null
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
+          terms_accepted_at?: string | null
           terms_version?: string | null
           updated_at?: string
           user_id?: string | null
@@ -360,17 +362,18 @@ export type Database = {
           cancellation_deadline_at?: string | null
           created_at?: string
           currency?: string
+          eligibility_checked_at?: string | null
           first_show_at?: string | null
           id?: string
-          legacy_stream_purchase?: boolean
           paid_at?: string | null
+          price_type?: Database["public"]["Enums"]["user_type"] | null
           refund_requested_at?: string | null
           refunded_at?: string | null
           revue_id?: string
           status?: Database["public"]["Enums"]["order_status"]
-          stream_id?: string | null
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
+          terms_accepted_at?: string | null
           terms_version?: string | null
           updated_at?: string
           user_id?: string | null
@@ -382,20 +385,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "revues"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "orders_stream_id_fkey"
-            columns: ["stream_id"]
-            isOneToOne: false
-            referencedRelation: "streams"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "orders_stream_revue_fkey"
-            columns: ["stream_id", "revue_id"]
-            isOneToOne: false
-            referencedRelation: "streams"
-            referencedColumns: ["id", "revue_id"]
           },
           {
             foreignKeyName: "orders_user_id_fkey"
@@ -474,7 +463,6 @@ export type Database = {
           id: string
           role: Database["public"]["Enums"]["app_role"]
           updated_at: string
-          user_type: Database["public"]["Enums"]["user_type"]
         }
         Insert: {
           avatar_url?: string | null
@@ -483,7 +471,6 @@ export type Database = {
           id: string
           role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string
-          user_type?: Database["public"]["Enums"]["user_type"]
         }
         Update: {
           avatar_url?: string | null
@@ -492,7 +479,6 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string
-          user_type?: Database["public"]["Enums"]["user_type"]
         }
         Relationships: []
       }
@@ -565,8 +551,12 @@ export type Database = {
       }
       revue_details: {
         Row: {
+          act_one_video_id: string | null
+          act_two_video_id: string | null
           created_at: string
           description: string | null
+          featured_video_id: string | null
+          full_video_id: string | null
           name: string
           poster_path: string | null
           revue_id: string
@@ -574,8 +564,12 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          act_one_video_id?: string | null
+          act_two_video_id?: string | null
           created_at?: string
           description?: string | null
+          featured_video_id?: string | null
+          full_video_id?: string | null
           name: string
           poster_path?: string | null
           revue_id: string
@@ -583,8 +577,12 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          act_one_video_id?: string | null
+          act_two_video_id?: string | null
           created_at?: string
           description?: string | null
+          featured_video_id?: string | null
+          full_video_id?: string | null
           name?: string
           poster_path?: string | null
           revue_id?: string
@@ -592,6 +590,34 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "revue_details_act_one_fkey"
+            columns: ["act_one_video_id", "revue_id"]
+            isOneToOne: false
+            referencedRelation: "revue_videos"
+            referencedColumns: ["id", "revue_id"]
+          },
+          {
+            foreignKeyName: "revue_details_act_two_fkey"
+            columns: ["act_two_video_id", "revue_id"]
+            isOneToOne: false
+            referencedRelation: "revue_videos"
+            referencedColumns: ["id", "revue_id"]
+          },
+          {
+            foreignKeyName: "revue_details_featured_video_fkey"
+            columns: ["featured_video_id", "revue_id"]
+            isOneToOne: false
+            referencedRelation: "revue_videos"
+            referencedColumns: ["id", "revue_id"]
+          },
+          {
+            foreignKeyName: "revue_details_full_video_fkey"
+            columns: ["full_video_id", "revue_id"]
+            isOneToOne: false
+            referencedRelation: "revue_videos"
+            referencedColumns: ["id", "revue_id"]
+          },
           {
             foreignKeyName: "revue_details_revue_id_fkey"
             columns: ["revue_id"]
@@ -720,66 +746,6 @@ export type Database = {
           },
         ]
       }
-      revue_video_selections: {
-        Row: {
-          act_one_video_id: string | null
-          act_two_video_id: string | null
-          featured_video_id: string | null
-          full_video_id: string | null
-          revue_id: string
-        }
-        Insert: {
-          act_one_video_id?: string | null
-          act_two_video_id?: string | null
-          featured_video_id?: string | null
-          full_video_id?: string | null
-          revue_id: string
-        }
-        Update: {
-          act_one_video_id?: string | null
-          act_two_video_id?: string | null
-          featured_video_id?: string | null
-          full_video_id?: string | null
-          revue_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "revue_video_selections_act_one_video_id_revue_id_fkey"
-            columns: ["act_one_video_id", "revue_id"]
-            isOneToOne: false
-            referencedRelation: "revue_videos"
-            referencedColumns: ["id", "revue_id"]
-          },
-          {
-            foreignKeyName: "revue_video_selections_act_two_video_id_revue_id_fkey"
-            columns: ["act_two_video_id", "revue_id"]
-            isOneToOne: false
-            referencedRelation: "revue_videos"
-            referencedColumns: ["id", "revue_id"]
-          },
-          {
-            foreignKeyName: "revue_video_selections_featured_video_id_revue_id_fkey"
-            columns: ["featured_video_id", "revue_id"]
-            isOneToOne: false
-            referencedRelation: "revue_videos"
-            referencedColumns: ["id", "revue_id"]
-          },
-          {
-            foreignKeyName: "revue_video_selections_full_video_id_revue_id_fkey"
-            columns: ["full_video_id", "revue_id"]
-            isOneToOne: false
-            referencedRelation: "revue_videos"
-            referencedColumns: ["id", "revue_id"]
-          },
-          {
-            foreignKeyName: "revue_video_selections_revue_id_fkey"
-            columns: ["revue_id"]
-            isOneToOne: true
-            referencedRelation: "revues"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       revue_videos: {
         Row: {
           created_at: string
@@ -844,6 +810,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "streams"
             referencedColumns: ["id", "revue_id"]
+          },
+          {
+            foreignKeyName: "revue_videos_stream_show_fkey"
+            columns: ["stream_id", "show_id", "revue_id"]
+            isOneToOne: false
+            referencedRelation: "streams"
+            referencedColumns: ["id", "show_id", "revue_id"]
           },
         ]
       }
@@ -975,78 +948,9 @@ export type Database = {
         }
         Relationships: []
       }
-      stream_access: {
-        Row: {
-          created_at: string
-          expires_at: string | null
-          granted_by: string | null
-          id: string
-          note: string | null
-          order_id: string | null
-          revoked_at: string | null
-          source: Database["public"]["Enums"]["access_source"]
-          stream_id: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          expires_at?: string | null
-          granted_by?: string | null
-          id?: string
-          note?: string | null
-          order_id?: string | null
-          revoked_at?: string | null
-          source: Database["public"]["Enums"]["access_source"]
-          stream_id: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          expires_at?: string | null
-          granted_by?: string | null
-          id?: string
-          note?: string | null
-          order_id?: string | null
-          revoked_at?: string | null
-          source?: Database["public"]["Enums"]["access_source"]
-          stream_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "stream_access_granted_by_fkey"
-            columns: ["granted_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "stream_access_order_id_fkey"
-            columns: ["order_id"]
-            isOneToOne: false
-            referencedRelation: "orders"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "stream_access_stream_id_fkey"
-            columns: ["stream_id"]
-            isOneToOne: false
-            referencedRelation: "streams"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "stream_access_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       stream_playback: {
         Row: {
           cloudflare_live_input_id: string | null
-          cloudflare_video_id: string | null
           created_at: string
           signed_urls_verified_at: string | null
           stream_id: string
@@ -1054,7 +958,6 @@ export type Database = {
         }
         Insert: {
           cloudflare_live_input_id?: string | null
-          cloudflare_video_id?: string | null
           created_at?: string
           signed_urls_verified_at?: string | null
           stream_id: string
@@ -1062,7 +965,6 @@ export type Database = {
         }
         Update: {
           cloudflare_live_input_id?: string | null
-          cloudflare_video_id?: string | null
           created_at?: string
           signed_urls_verified_at?: string | null
           stream_id?: string
@@ -1078,44 +980,6 @@ export type Database = {
           },
         ]
       }
-      stream_prices: {
-        Row: {
-          amount: number
-          created_at: string
-          currency: string
-          stream_id: string
-          stripe_price_id: string | null
-          updated_at: string
-          user_type: Database["public"]["Enums"]["user_type"]
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          currency?: string
-          stream_id: string
-          stripe_price_id?: string | null
-          updated_at?: string
-          user_type: Database["public"]["Enums"]["user_type"]
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          currency?: string
-          stream_id?: string
-          stripe_price_id?: string | null
-          updated_at?: string
-          user_type?: Database["public"]["Enums"]["user_type"]
-        }
-        Relationships: [
-          {
-            foreignKeyName: "stream_prices_stream_id_fkey"
-            columns: ["stream_id"]
-            isOneToOne: false
-            referencedRelation: "streams"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       streams: {
         Row: {
           chat_enabled: boolean
@@ -1123,10 +987,7 @@ export type Database = {
           description: string | null
           ends_at: string | null
           id: string
-          replay_available_until: string | null
           revue_id: string
-          sales_close_at: string | null
-          sales_open_at: string | null
           show_id: string | null
           slug: string
           starts_at: string
@@ -1143,10 +1004,7 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
-          replay_available_until?: string | null
           revue_id: string
-          sales_close_at?: string | null
-          sales_open_at?: string | null
           show_id?: string | null
           slug: string
           starts_at: string
@@ -1163,10 +1021,7 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
-          replay_available_until?: string | null
           revue_id?: string
-          sales_close_at?: string | null
-          sales_open_at?: string | null
           show_id?: string | null
           slug?: string
           starts_at?: string
@@ -1330,6 +1185,7 @@ export type Database = {
           state: string
           updated_at: string
           video_id: string
+          youtube_video_id: string | null
         }
         Insert: {
           created_at?: string
@@ -1341,6 +1197,7 @@ export type Database = {
           state?: string
           updated_at?: string
           video_id: string
+          youtube_video_id?: string | null
         }
         Update: {
           created_at?: string
@@ -1352,6 +1209,7 @@ export type Database = {
           state?: string
           updated_at?: string
           video_id?: string
+          youtube_video_id?: string | null
         }
         Relationships: [
           {
@@ -1360,32 +1218,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "revue_videos"
             referencedColumns: ["id", "revue_id"]
-          },
-        ]
-      }
-      youtube_video_sources: {
-        Row: {
-          provider: string
-          source_id: string
-          youtube_video_id: string
-        }
-        Insert: {
-          provider?: string
-          source_id: string
-          youtube_video_id: string
-        }
-        Update: {
-          provider?: string
-          source_id?: string
-          youtube_video_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "youtube_video_sources_source_id_provider_fkey"
-            columns: ["source_id", "provider"]
-            isOneToOne: false
-            referencedRelation: "video_sources"
-            referencedColumns: ["id", "provider"]
           },
         ]
       }
@@ -1410,9 +1242,43 @@ export type Database = {
         Args: { _order_id: string }
         Returns: boolean
       }
+      prepare_revue_checkout: {
+        Args: {
+          _accept_terms: boolean
+          _revue_id: string
+          _terms_version: string
+          _user_id: string
+        }
+        Returns: {
+          amount: number
+          cancellation_deadline_at: string | null
+          created_at: string
+          currency: string
+          eligibility_checked_at: string | null
+          first_show_at: string | null
+          id: string
+          paid_at: string | null
+          price_type: Database["public"]["Enums"]["user_type"] | null
+          refund_requested_at: string | null
+          refunded_at: string | null
+          revue_id: string
+          status: Database["public"]["Enums"]["order_status"]
+          stripe_checkout_session_id: string | null
+          stripe_payment_intent_id: string | null
+          terms_accepted_at: string | null
+          terms_version: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "orders"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
-      access_source: "purchase" | "granted"
       app_role: "user" | "moderator" | "editor" | "admin"
       order_status: "pending" | "paid" | "failed" | "expired" | "refunded"
       stream_status: "scheduled" | "live" | "ended" | "cancelled"
@@ -1544,7 +1410,6 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      access_source: ["purchase", "granted"],
       app_role: ["user", "moderator", "editor", "admin"],
       order_status: ["pending", "paid", "failed", "expired", "refunded"],
       stream_status: ["scheduled", "live", "ended", "cancelled"],
