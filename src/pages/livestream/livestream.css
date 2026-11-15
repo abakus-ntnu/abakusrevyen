@@ -111,6 +111,7 @@
 .livestream-theater .livestream-chat-slot > section {
   flex: 1;
   min-height: 0;
+  max-height: none;
   border: 0;
   border-radius: 0;
 }
