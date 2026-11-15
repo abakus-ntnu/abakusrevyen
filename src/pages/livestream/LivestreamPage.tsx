@@ -121,10 +121,8 @@ export function LivestreamPage() {
             </div>
           </header>
         </div>
-
-        <aside id="livestream-chat" aria-label="Chat til forestillingen" hidden={!showChat} className="livestream-chat-slot min-w-0 border-t bg-background p-3 lg:self-stretch lg:border-l lg:border-t-0">
+        <aside id="livestream-chat" aria-label="Chat til forestillingen" hidden={!showChat} className="livestream-chat-slot min-w-0 border-t bg-background p-3 lg:self-stretch lg:contain-size lg:border-l lg:border-t-0">
           <ChatPreview />
-          <p className="px-2 pb-1 pt-3 text-xs leading-5 text-muted-foreground">Chatten er en egen forhåndsvisning og er ikke koblet til sendingen.</p>
         </aside>
       </div>
 
