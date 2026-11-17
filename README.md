@@ -55,3 +55,7 @@ pnpm check
 - [Delte skills for Codex og Claude Code](docs/agent-skills.md)
 
 Repoet er offentlig. Ikke legg inn hemmelig revytema, upubliserte bilder eller tilgangsnøkler. Den opprinnelige [LICENSE](LICENSE) og hele Git-historikken er bevart.
+
+
+
+Das ist eine testen
