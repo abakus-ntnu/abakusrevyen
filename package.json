@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "test:db": "node supabase/tests/access-rules.test.mjs",
+    "test:db": "node supabase/tests/access-rules.test.mjs && node supabase/tests/seed.test.mjs",
     "check": "pnpm typecheck && pnpm lint && pnpm build"
   },
   "dependencies": {
